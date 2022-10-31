@@ -12,18 +12,21 @@ public class Main {
 		LinkedList<Equipo> fixture = new LinkedList<Equipo>();
 		carga(fixture);
 
-		for (int i = 0; i < fixture.size(); i++) {
+		/*for (int i = 0; i < fixture.size(); i++) {
 			System.out.println(fixture.get(i).getNombre());
 		}
-
+*/
 		int juegos[][] = { { 1, 1, 1, 2, 2, 3 }, { 2, 3, 4, 3, 4, 4 } };
 		int grupo[] = { -1, 3, 7, 11, 15, 19, 23, 27 };
 		for (int j = 0; j < grupo.length; j++) {
 
-			for (int i = 0; i < juegos.length; i++) {
-				Partido partido = new Partido(fixture.get(juegos[0][i]).getNombre(),
-						fixture.get(juegos[1][i]).getNombre(), null, 0, 0, 0);
-
+			for (int i = 0; i < juegos[1].length; i++) {
+				/*
+				 * Partido partido = new Partido(fixture.get(juegos[0][i]).getNombre(),
+				 * fixture.get(juegos[1][i]).getNombre(), null, 0, 0, 0);
+				 */
+				  System.out.println(fixture.get((grupo[j] + juegos[0][i])).getNombre() + "  "
+							+ fixture.get((grupo[j] + juegos[1][i])).getNombre());
 			}
 
 		}
