@@ -49,8 +49,9 @@ public class Main {
 					// arrayauxiliar = ;
 					int arrayauxiliar[] = fixture.get((vatiables[j] + Fecha1[k][i]) - 1).getGrupos();
 					arrayauxiliar[0] = aux2[k];
-					System.out.println(arrayauxiliar[0]);
-					;
+					test (arrayauxiliar[0]);
+					//System.out.println(arrayauxiliar[0]);
+					//;
 				}
 
 				System.out.println(fixture.get((vatiables[j] + Fecha1[0][i]) - 1).getNombre() + "  "
@@ -106,4 +107,21 @@ public class Main {
 		return fixture;
 	}
 
+	
+	private static void test (int dato) {
+		switch (dato) {
+		case 0:
+			System.err.println("no jugado");
+			break;
+		case 1:
+			System.err.println("ganado");
+			break;
+		case 2:
+			System.err.println("perdido");
+			break;
+		case 3:
+			System.err.println("empatado");
+			break;
+		}
+	}
 }
