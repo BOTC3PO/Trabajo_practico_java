@@ -5,7 +5,6 @@ public class Partido {
 	private int goles_1,goles_2,ID;
 	
 	public Partido(String equipo_1, String equipo_2, String estado, int goles_1, int goles_2, int iD) {
-		super();
 		this.equipo_1 = equipo_1;
 		this.equipo_2 = equipo_2;
 		this.estado = estado;
