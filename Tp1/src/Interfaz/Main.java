@@ -142,6 +142,7 @@ public class Main {
 	public static LinkedList<Equipo> mostrar_grupo(LinkedList<Equipo> fixture) {
 		String grupos[] = { "grupo A", "grupo B", "grupo C", "grupo D", "grupo E", "grupo F", "grupo G", "grupo H",
 				"salir" };
+		String Teams[]= new String[4];
 		String seleccion;
 		boolean comprobar = true;
 		int contador;
@@ -197,11 +198,17 @@ public class Main {
 					mensaje+=fixture.get(i).getNombre();
 					if (contador<=3) {
 						mensaje+="\n";
-						
+				
 					}
+					
+					Teams[contador]=fixture.get(i).getNombre();
+					
 					contador++;
 				}
-				JOptionPane.showMessageDialog(null, mensaje);
+				String opciones[]={"siguiente","salir"};
+				String datos = (String) JOptionPane.showInputDialog(null, mensaje,"seleccion equipo",JOptionPane.QUESTION_MESSAGE,null,opciones,"Seleccione");
+				
+				String fixture_equipo= (String) JOptionPane.showInputDialog(null,"seleccionar equipo","seleccion equipo",JOptionPane.QUESTION_MESSAGE,null,Teams,"Seleccione");
 			}
 
 		} while (!seleccion.equalsIgnoreCase("salir"));
