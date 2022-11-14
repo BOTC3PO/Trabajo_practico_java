@@ -21,13 +21,15 @@ public class Main {
 	public static int eliminatorias4[] = new int[8];
 	public static int eliminatorias2[] = new int[4];
 	public static LinkedList<Equipo> pociciones = new LinkedList<Equipo>();
-
+	
+	
+	
 	public static void main(String[] args) {
 
 		LinkedList<Equipo> fixture = new LinkedList<Equipo>();
 		carga(fixture);
 		pociciones = fixture;
-		pocicionamiento(fixture);
+		
 
 		/*
 		 * for (int i = 0; i < fixture.size(); i++) {
@@ -319,6 +321,7 @@ public class Main {
 					mostrar_grupo(fixture);
 				} else {
 					/* posiciones */
+					pocicionamiento(fixture);
 				}
 
 				break;
@@ -357,9 +360,11 @@ public class Main {
 	}
 
 	public static LinkedList<Equipo> pocicionamiento(LinkedList<Equipo> fixture) {
-		pociciones = fixture;
+		pociciones.clear();;
 		int min = 0, max = 0, contador = 0, subcontador = 0;
 		int aux[][] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+		int puntos[] = { 0, 0, 0, 0 };
+		int pocicion[] = { 0, 0, 0, 0 };
 		do {
 			switch (contador) {
 			case 0:
@@ -406,14 +411,91 @@ public class Main {
 					subcontador++;
 				}
 
-				
-				
+				for (int j = 0; j < aux.length; j++) {
+					for (int i = 0; i < aux[j].length; i++) {
+						switch (aux[j][i]) {
+						case 1:
+							puntos[j] = 3;
+							break;
+						case 0:
+						case 2:
+							puntos[j] = 0;
+							break;
+						case 3:
+							puntos[j] = 1;
+							break;
+
+						}
+					}
+
+				}
 			}
+
+			// min
+
+			if (puntos[0] > puntos[1] && puntos[0] > puntos[2] && puntos[0] > puntos[3]) {
+				pocicion[0]=min;
+			} else if (puntos[0] < puntos[1] && puntos[0] > puntos[2] && puntos[0] > puntos[3]) {
+				pocicion[0]=min+1;
+			} else if (puntos[0] < puntos[1] && puntos[0] < puntos[2] && puntos[0] > puntos[3]) {
+				pocicion[0]=min+2;
+			} else if (puntos[0] < puntos[1] && puntos[0] < puntos[2] && puntos[0] < puntos[3]) {
+				pocicion[0]=max;
+			}
+
+			// min+1
+
+			if (puntos[1] > puntos[0] && puntos[1] > puntos[2] && puntos[1] > puntos[3]) {
+				pocicion[1]=min;
+			} else if (puntos[1] < puntos[0] && puntos[1] > puntos[2] && puntos[1] > puntos[3]) {
+				pocicion[1]=min+1;
+			} else if (puntos[1] < puntos[0] && puntos[1] < puntos[2] && puntos[1] > puntos[3]) {
+				pocicion[1]=min+2;
+			} else if (puntos[1] < puntos[0] && puntos[1] < puntos[2] && puntos[1] < puntos[3]) {
+				pocicion[1]=max;
+			}
+
+			// max-1
+			if (puntos[2] > puntos[0] && puntos[2] > puntos[1] && puntos[2] > puntos[3]) {
+				pocicion[2]=min;
+			} else if (puntos[2] < puntos[0] && puntos[2] > puntos[1] && puntos[2] > puntos[3]) {
+				pocicion[2]=min+1;
+			} else if (puntos[2] < puntos[0] && puntos[2] < puntos[1] && puntos[2] > puntos[3]) {
+				pocicion[2]=min+2;
+			} else if (puntos[2] < puntos[0] && puntos[2] < puntos[1] && puntos[2] < puntos[3]) {
+				pocicion[2]=max;
+			}
+
+			// max
+
+			if (puntos[3] > puntos[0] && puntos[3] > puntos[1] && puntos[3] > puntos[2]) {
+				pocicion[3]=min;
+			} else if (puntos[3] < puntos[0] && puntos[3] > puntos[1] && puntos[3] > puntos[2]) {
+				pocicion[3]=min+1;
+			} else if (puntos[3] < puntos[0] && puntos[3] < puntos[1] && puntos[3] > puntos[2]) {
+				pocicion[3]=min+2;
+			} else if (puntos[3] < puntos[0] && puntos[3] < puntos[1] && puntos[3] < puntos[2]) {
+				pocicion[3]=max;
+			}
+			int subcontador_fixture=0;
+			for (int i = min; i < max; i++) {
+				 pociciones.add(fixture.get(pocicion[subcontador_fixture]));
+				 subcontador_fixture++;
+			}
+			
 
 			subcontador = 0;
 			contador++;
 		} while (contador != 8);
-		JOptionPane.showMessageDialog(null, "salida correcta" + contador);
+
+		//JOptionPane.showMessageDialog(null, "salida correcta" + contador);
+		for (int i = 0; i < 32; i++) {
+			System.out.println(pociciones.get(i));
+		}
+		
+		
+		
 		return fixture;
 	}
+
 }
