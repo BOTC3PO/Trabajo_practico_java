@@ -1,6 +1,5 @@
 package Interfaz;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -21,21 +20,18 @@ public class Main {
 	public static int eliminatorias4[] = new int[8];
 	public static int eliminatorias2[] = new int[4];
 	public static LinkedList<Equipo> pociciones = new LinkedList<Equipo>();
-	
-	
-	
+
 	public static void main(String[] args) {
 
 		LinkedList<Equipo> fixture = new LinkedList<Equipo>();
 		carga(fixture);
-		pociciones = fixture;
-		
+		// pociciones = fixture;
 
 		/*
 		 * for (int i = 0; i < fixture.size(); i++) {
 		 * System.out.println(fixture.get(i).getNombre()); }
 		 */
-
+		// System.out.println(fixture.get(0).getGrupos()[1]);
 		menu_inicio(fixture);
 
 		System.out.println(Numero_de_partido);
@@ -175,7 +171,7 @@ public class Main {
 					aux2[1] = 1;
 				}
 
-				System.err.println(aux1[0] + "  " + aux1[1]);
+				// System.err.println(aux1[0] + " " + aux1[1]);
 				for (int k = 0; k < 2; k++) {
 					// arrayauxiliar = ;
 					int arrayauxiliar[] = fixture.get((vatiables[j] + Fecha1[k][i]) - 1).getGrupos();
@@ -183,11 +179,12 @@ public class Main {
 					fixture.get(vatiables[j] + Fecha1[k][i] - 1).setGrupos(arrayauxiliar);
 					// System.out.println(arrayauxiliar[0]);
 					// ;
-					test(arrayauxiliar[0]);
+					// test(arrayauxiliar[0]);
 				}
 
-				System.out.println(fixture.get((vatiables[j] + Fecha1[0][i]) - 1).getNombre() + "  "
-						+ fixture.get((vatiables[j] + Fecha1[1][i]) - 1).getNombre());
+				// System.out.println(fixture.get((vatiables[j] + Fecha1[0][i]) - 1).getNombre()
+				// + " "
+				// + fixture.get((vatiables[j] + Fecha1[1][i]) - 1).getNombre());
 
 				Numero_de_partido++;
 			}
@@ -360,12 +357,16 @@ public class Main {
 	}
 
 	public static LinkedList<Equipo> pocicionamiento(LinkedList<Equipo> fixture) {
-		pociciones.clear();;
+		pociciones.clear();
+		// pociciones = (LinkedList<Equipo>) fixture.clone();
+		int main_contador = 0;
 		int min = 0, max = 0, contador = 0, subcontador = 0;
 		int aux[][] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+		int listaequipos[] = new int[32];
 		int puntos[] = { 0, 0, 0, 0 };
 		int pocicion[] = { 0, 0, 0, 0 };
 		do {
+			subcontador = 0;
 			switch (contador) {
 			case 0:
 				min = 0;
@@ -403,98 +404,201 @@ public class Main {
 
 				break;
 			}
+			// System.out.println(min +" " + max);
 			if (contador != 8) {
-				for (int i = min; i <= max; i++) {
-					for (int j = 0; i < 3; i++) {
-						aux[subcontador][i] = fixture.get(i).getGrupos()[j];
-					}
-					subcontador++;
+				// System.out.println(fixture.get(min).getGrupos());
+				for (int i = 0; i < puntos.length; i++) {
+					puntos[i] = 0;
 				}
+				int aux1[] = fixture.get(min).getGrupos();
+				int aux2[] = fixture.get(min + 1).getGrupos();
+				int aux3[] = fixture.get(min + 2).getGrupos();
+				int aux4[] = fixture.get(max).getGrupos();
+				aux[0] = aux1;
+				aux[1] = aux2;
+				aux[2] = aux3;
+				aux[3] = aux4;
 
 				for (int j = 0; j < aux.length; j++) {
 					for (int i = 0; i < aux[j].length; i++) {
+						// System.out.println(aux[j][i]);
 						switch (aux[j][i]) {
 						case 1:
-							puntos[j] = 3;
+							puntos[j] += 3;
 							break;
 						case 0:
+							puntos[j] += 0;
+							break;
 						case 2:
-							puntos[j] = 0;
+							puntos[j] += 0;
 							break;
 						case 3:
-							puntos[j] = 1;
+							puntos[j] += 1;
 							break;
-
 						}
+					}
+				}
+
+				// int subcontador_fixture = 0;
+
+				/*
+				 * 
+				 * 
+				 * for (int i = min; i <= max; i++) {
+				 * System.out.println(fixture.get(pocicion[subcontador_fixture]).getNombre());
+				 * pociciones.add(fixture.get(pocicion[subcontador_fixture]));
+				 * subcontador_fixture++; }
+				 */
+				if (puntos[0] != puntos[1] && puntos[1] != puntos[2] && puntos[2] != puntos[3]) {
+					// min
+
+					if (puntos[0] > puntos[1] && puntos[0] > puntos[2] && puntos[0] > puntos[3]) {
+						pocicion[0] = min;
+					} else if (puntos[0] < puntos[1] && puntos[0] > puntos[2] && puntos[0] > puntos[3]) {
+						pocicion[0] = (min + 1);
+					} else if (puntos[0] < puntos[1] && puntos[0] < puntos[2] && puntos[0] > puntos[3]) {
+						pocicion[0] = (min + 2);
+					} else if (puntos[0] < puntos[1] && puntos[0] < puntos[2] && puntos[0] < puntos[3]) {
+						pocicion[0] = (max);
+					}
+
+					// min+1
+
+					if (puntos[1] > puntos[0] && puntos[1] > puntos[2] && puntos[1] > puntos[3]) {
+						pocicion[1] = min;
+					} else if (puntos[1] < puntos[0] && puntos[1] > puntos[2] && puntos[1] > puntos[3]) {
+						pocicion[1] = min + 1;
+					} else if (puntos[1] < puntos[0] && puntos[1] < puntos[2] && puntos[1] > puntos[3]) {
+						pocicion[1] = min + 2;
+					} else if (puntos[1] < puntos[0] && puntos[1] < puntos[2] && puntos[1] < puntos[3]) {
+						pocicion[1] = max;
+					}
+
+					// max-1
+					if (puntos[2] > puntos[0] && puntos[2] > puntos[1] && puntos[2] > puntos[3]) {
+						pocicion[2] = min;
+					} else if (puntos[2] < puntos[0] && puntos[2] > puntos[1] && puntos[2] > puntos[3]) {
+						pocicion[2] = min + 1;
+					} else if (puntos[2] < puntos[0] && puntos[2] < puntos[1] && puntos[2] > puntos[3]) {
+						pocicion[2] = min + 2;
+					} else if (puntos[2] < puntos[0] && puntos[2] < puntos[1] && puntos[2] < puntos[3]) {
+						pocicion[2] = max;
+					}
+
+					// max
+
+					if (puntos[3] > puntos[0] && puntos[3] > puntos[1] && puntos[3] > puntos[2]) {
+						pocicion[3] = min;
+					} else if (puntos[3] < puntos[0] && puntos[3] > puntos[1] && puntos[3] > puntos[2]) {
+						pocicion[3] = min + 1;
+					} else if (puntos[3] < puntos[0] && puntos[3] < puntos[1] && puntos[3] > puntos[2]) {
+						pocicion[3] = min + 2;
+					} else if (puntos[3] < puntos[0] && puntos[3] < puntos[1] && puntos[3] < puntos[2]) {
+						pocicion[3] = max;
+					}
+
+				} else {
+					if (puntos[0] == puntos[1] && puntos[0] != puntos[2] && puntos[0] != puntos[3]) {
+						if (puntos[2] == puntos[3] && puntos[0] != puntos[2] && puntos[0] != puntos[3]) {
+							if (fixture.get(min).getGoles() > fixture.get(min + 1).getGoles()) {
+								pocicion[0] = min;
+								pocicion[1] = min+1;
+							} else {
+								pocicion[0] = min+1;
+								pocicion[1] = min;
+							}
+							
+							if (fixture.get(min+2).getGoles() > fixture.get(max).getGoles()) {
+								pocicion[2] = min;
+								pocicion[3] = min+2;
+							} else {
+								pocicion[2] = min+2;
+								pocicion[3] = min;
+							}
+							
+							
+						} else {
+							if (puntos[0] > puntos[1]) {
+								pocicion[0] = min;
+								pocicion[1] = min+1;
+							}else {
+								pocicion[0] = min+1;
+								pocicion[1] = min;
+							}
+							if (puntos[2] > puntos[3]) {
+								pocicion[2] = min;
+								pocicion[3] = min+2;
+							} else {
+								pocicion[2] = min+2;
+								pocicion[3] = min;
+							}
+						}
+					}
+					if (puntos[0] == puntos[2] && puntos[0] != puntos[1] && puntos[0] != puntos[3]) {
+						if (puntos[1] == puntos[3] && puntos[0] != puntos[1] && puntos[0] != puntos[3]) {
+							
+							if (fixture.get(min).getGoles() > fixture.get(min + 2).getGoles()) {
+								pocicion[0] = min;
+								pocicion[2] = min+1;
+							} else {
+								pocicion[0] = min+1;
+								pocicion[2] = min;
+							}
+						
+							if (fixture.get(min+1).getGoles() > fixture.get(max).getGoles()) {
+								pocicion[1] = min;
+								pocicion[3] = min+2;
+							} else {
+								pocicion[1] = min+2;
+								pocicion[3] = min;
+							}
+						
+						} else {
+							if (puntos[0] > puntos[1]) {
+								pocicion[0] = min;
+								pocicion[1] = min+1;
+							}else {
+								pocicion[0] = min+1;
+								pocicion[1] = min;
+							}
+							if (puntos[2] > puntos[3]) {
+								pocicion[2] = min;
+								pocicion[3] = min+2;
+							} else {
+								pocicion[2] = min+2;
+								pocicion[3] = min;
+							}
+					}}
+					if (puntos[0] == puntos[3] && puntos[0] != puntos[1] && puntos[0] != puntos[2]) {
+
 					}
 
 				}
+
 			}
-
-			// min
-
-			if (puntos[0] > puntos[1] && puntos[0] > puntos[2] && puntos[0] > puntos[3]) {
-				pocicion[0]=min;
-			} else if (puntos[0] < puntos[1] && puntos[0] > puntos[2] && puntos[0] > puntos[3]) {
-				pocicion[0]=min+1;
-			} else if (puntos[0] < puntos[1] && puntos[0] < puntos[2] && puntos[0] > puntos[3]) {
-				pocicion[0]=min+2;
-			} else if (puntos[0] < puntos[1] && puntos[0] < puntos[2] && puntos[0] < puntos[3]) {
-				pocicion[0]=max;
+			for (int z = 0; z < pocicion.length; z++) {
+				listaequipos[main_contador] = pocicion[z];
+				main_contador++;
+				// System.err.println(main_contador);
 			}
-
-			// min+1
-
-			if (puntos[1] > puntos[0] && puntos[1] > puntos[2] && puntos[1] > puntos[3]) {
-				pocicion[1]=min;
-			} else if (puntos[1] < puntos[0] && puntos[1] > puntos[2] && puntos[1] > puntos[3]) {
-				pocicion[1]=min+1;
-			} else if (puntos[1] < puntos[0] && puntos[1] < puntos[2] && puntos[1] > puntos[3]) {
-				pocicion[1]=min+2;
-			} else if (puntos[1] < puntos[0] && puntos[1] < puntos[2] && puntos[1] < puntos[3]) {
-				pocicion[1]=max;
-			}
-
-			// max-1
-			if (puntos[2] > puntos[0] && puntos[2] > puntos[1] && puntos[2] > puntos[3]) {
-				pocicion[2]=min;
-			} else if (puntos[2] < puntos[0] && puntos[2] > puntos[1] && puntos[2] > puntos[3]) {
-				pocicion[2]=min+1;
-			} else if (puntos[2] < puntos[0] && puntos[2] < puntos[1] && puntos[2] > puntos[3]) {
-				pocicion[2]=min+2;
-			} else if (puntos[2] < puntos[0] && puntos[2] < puntos[1] && puntos[2] < puntos[3]) {
-				pocicion[2]=max;
-			}
-
-			// max
-
-			if (puntos[3] > puntos[0] && puntos[3] > puntos[1] && puntos[3] > puntos[2]) {
-				pocicion[3]=min;
-			} else if (puntos[3] < puntos[0] && puntos[3] > puntos[1] && puntos[3] > puntos[2]) {
-				pocicion[3]=min+1;
-			} else if (puntos[3] < puntos[0] && puntos[3] < puntos[1] && puntos[3] > puntos[2]) {
-				pocicion[3]=min+2;
-			} else if (puntos[3] < puntos[0] && puntos[3] < puntos[1] && puntos[3] < puntos[2]) {
-				pocicion[3]=max;
-			}
-			int subcontador_fixture=0;
-			for (int i = min; i < max; i++) {
-				 pociciones.add(fixture.get(pocicion[subcontador_fixture]));
-				 subcontador_fixture++;
-			}
-			
 
 			subcontador = 0;
 			contador++;
+
 		} while (contador != 8);
 
-		//JOptionPane.showMessageDialog(null, "salida correcta" + contador);
-		for (int i = 0; i < 32; i++) {
-			System.out.println(pociciones.get(i));
+		// JOptionPane.showMessageDialog(null, "salida correcta" + contador);
+		for (int i = 0; i <= 31; i++) {
+			// System.out.println(pociciones.get(i));
+			// pociciones.add(i, fixture.get(listaequipos[i]));
 		}
-		
-		
-		
+
+		for (int i = 0; i < 32; i++) {
+			// System.out.println(i + pociciones.get(i).getNombre());
+			// System.out.println(i+ fixture.get(i).getNombre());
+			System.out.println(listaequipos[i]);
+		}
+
 		return fixture;
 	}
 

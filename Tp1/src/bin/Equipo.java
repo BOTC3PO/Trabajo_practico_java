@@ -1,5 +1,6 @@
 package bin;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Equipo {
@@ -57,6 +58,12 @@ public class Equipo {
 
 	public void setGrupos(int[] grupos) {
 		this.grupos = grupos;
+	}
+
+	@Override
+	public String toString() {
+		return "Equipo [Nombre=" + Nombre + ", Goles=" + Goles + ", grupos=" + Arrays.toString(grupos)
+				+ ", Clasificado=" + Clasificado + ", futbol=" + futbol + "]";
 	}
 
 }

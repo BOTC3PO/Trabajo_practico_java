@@ -48,6 +48,11 @@ public class Partido {
 	public void setID(int iD) {
 		ID = iD;
 	}
+	@Override
+	public String toString() {
+		return "Partido [equipo_1=" + equipo_1 + ", equipo_2=" + equipo_2 + ", estado=" + estado + ", goles_1="
+				+ goles_1 + ", goles_2=" + goles_2 + ", ID=" + ID + "]";
+	}
 	
 	
 	
