@@ -1,5 +1,6 @@
 package Interfaz;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -42,7 +43,7 @@ public class Main {
 
 		String[] equipos = { "qatar", "ecuador", "senegal", "paises bajos", "Inglaterra", "iran", "Estados unidos",
 				"Gales", "Argentina", "Arabia Saudita", "Mexico", "Polonia", "francia", "Australia", "Dinamarca",
-				"tunez", "España", "costa rica", "Alemania", "Japon", "Belgica", "Canada", "Marruecos", "Croacia",
+				"tunez", "Espaï¿½a", "costa rica", "Alemania", "Japon", "Belgica", "Canada", "Marruecos", "Croacia",
 				"Brasil", "serbia", "Suiza", "Camerun", "Portugal", "Ghana", "Uruguay", "Corea del sur" };
 		int data[] = { 0, 0, 0 };
 		for (int i = 0; i < equipos.length; i++) {
@@ -286,7 +287,7 @@ public class Main {
 		} else if (Efuse[6] == false) {
 			mensaje_gen2[0] = "ver grupos";
 			mensaje_gen2[1] = "ver eliminarorias";
-			mensaje_gen2[2] = "final y por el 3º puesto";
+			mensaje_gen2[2] = "final y por el 3ï¿½ puesto";
 			mensaje_gen2[3] = "salir";
 		} else {
 			mensaje_gen[0] = "ver grupos";
@@ -346,7 +347,7 @@ public class Main {
 			case "semifinal":
 
 				break;
-			case "final y por el 3º puesto":
+			case "final y por el 3ï¿½ puesto":
 
 				break;
 			default:
@@ -363,6 +364,7 @@ public class Main {
 		int min = 0, max = 0, contador = 0, subcontador = 0;
 		int aux[][] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 		int listaequipos[] = new int[32];
+		boolean[][] igual = new boolean[4][4];
 		int puntos[] = { 0, 0, 0, 0 };
 		int pocicion[] = { 0, 0, 0, 0 };
 		do {
@@ -421,7 +423,7 @@ public class Main {
 
 				for (int j = 0; j < aux.length; j++) {
 					for (int i = 0; i < aux[j].length; i++) {
-						// System.out.println(aux[j][i]);
+						System.out.println("dato" + aux[j][i]);
 						switch (aux[j][i]) {
 						case 1:
 							puntos[j] += 3;
@@ -449,137 +451,383 @@ public class Main {
 				 * pociciones.add(fixture.get(pocicion[subcontador_fixture]));
 				 * subcontador_fixture++; }
 				 */
-				if (puntos[0] != puntos[1] && puntos[1] != puntos[2] && puntos[2] != puntos[3]) {
-					// min
 
-					if (puntos[0] > puntos[1] && puntos[0] > puntos[2] && puntos[0] > puntos[3]) {
-						pocicion[0] = min;
-					} else if (puntos[0] < puntos[1] && puntos[0] > puntos[2] && puntos[0] > puntos[3]) {
-						pocicion[0] = (min + 1);
-					} else if (puntos[0] < puntos[1] && puntos[0] < puntos[2] && puntos[0] > puntos[3]) {
-						pocicion[0] = (min + 2);
-					} else if (puntos[0] < puntos[1] && puntos[0] < puntos[2] && puntos[0] < puntos[3]) {
-						pocicion[0] = (max);
+				/* igualdad */
+
+				for (int i = 0; i < aux4.length; i++) {
+					for (int j = 0; j < aux4.length; j++) {
+						igual[i][j] = puntos[i] == puntos[j];
 					}
+				}
 
-					// min+1
+				/**/
+				if (puntos[0] >= puntos[1] && puntos[0] >= puntos[2] && puntos[0] >= puntos[3]) {
+					if (igual[0][1] && !igual[0][2] && !igual[0][3]) {
+						if (fixture.get(min).getGoles() > fixture.get(min + 1).getGoles()) {
+							pocicion[0] = min;
+							pocicion[1] = min + 1;
 
-					if (puntos[1] > puntos[0] && puntos[1] > puntos[2] && puntos[1] > puntos[3]) {
-						pocicion[1] = min;
-					} else if (puntos[1] < puntos[0] && puntos[1] > puntos[2] && puntos[1] > puntos[3]) {
-						pocicion[1] = min + 1;
-					} else if (puntos[1] < puntos[0] && puntos[1] < puntos[2] && puntos[1] > puntos[3]) {
-						pocicion[1] = min + 2;
-					} else if (puntos[1] < puntos[0] && puntos[1] < puntos[2] && puntos[1] < puntos[3]) {
-						pocicion[1] = max;
-					}
-
-					// max-1
-					if (puntos[2] > puntos[0] && puntos[2] > puntos[1] && puntos[2] > puntos[3]) {
-						pocicion[2] = min;
-					} else if (puntos[2] < puntos[0] && puntos[2] > puntos[1] && puntos[2] > puntos[3]) {
-						pocicion[2] = min + 1;
-					} else if (puntos[2] < puntos[0] && puntos[2] < puntos[1] && puntos[2] > puntos[3]) {
-						pocicion[2] = min + 2;
-					} else if (puntos[2] < puntos[0] && puntos[2] < puntos[1] && puntos[2] < puntos[3]) {
-						pocicion[2] = max;
-					}
-
-					// max
-
-					if (puntos[3] > puntos[0] && puntos[3] > puntos[1] && puntos[3] > puntos[2]) {
-						pocicion[3] = min;
-					} else if (puntos[3] < puntos[0] && puntos[3] > puntos[1] && puntos[3] > puntos[2]) {
-						pocicion[3] = min + 1;
-					} else if (puntos[3] < puntos[0] && puntos[3] < puntos[1] && puntos[3] > puntos[2]) {
-						pocicion[3] = min + 2;
-					} else if (puntos[3] < puntos[0] && puntos[3] < puntos[1] && puntos[3] < puntos[2]) {
-						pocicion[3] = max;
-					}
-
-				} else {
-					if (puntos[0] == puntos[1] && puntos[0] != puntos[2] && puntos[0] != puntos[3]) {
-						if (puntos[2] == puntos[3] && puntos[0] != puntos[2] && puntos[0] != puntos[3]) {
-							if (fixture.get(min).getGoles() > fixture.get(min + 1).getGoles()) {
-								pocicion[0] = min;
-								pocicion[1] = min+1;
-							} else {
-								pocicion[0] = min+1;
-								pocicion[1] = min;
-							}
-							
-							if (fixture.get(min+2).getGoles() > fixture.get(max).getGoles()) {
-								pocicion[2] = min;
-								pocicion[3] = min+2;
-							} else {
-								pocicion[2] = min+2;
-								pocicion[3] = min;
-							}
-							
-							
 						} else {
-							if (puntos[0] > puntos[1]) {
-								pocicion[0] = min;
-								pocicion[1] = min+1;
-							}else {
-								pocicion[0] = min+1;
-								pocicion[1] = min;
-							}
-							if (puntos[2] > puntos[3]) {
-								pocicion[2] = min;
-								pocicion[3] = min+2;
+							pocicion[1] = min;
+							pocicion[0] = min + 1;
+						}
+
+						if (igual[3][2]) {
+							if (fixture.get(min + 2).getGoles() > fixture.get(min + 3).getGoles()) {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 3;
 							} else {
-								pocicion[2] = min+2;
+								pocicion[2] = min + 3;
+								pocicion[3] = min + 2;
+							}
+						} else {
+							if (puntos[2] > puntos[3]) {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 3;
+							} else {
+								pocicion[2] = min + 3;
+								pocicion[3] = min + 2;
+							}
+
+						}
+
+					} else if (igual[0][2] && !igual[0][2] && !igual[0][3]) {
+						if (fixture.get(min).getGoles() > fixture.get(min + 2).getGoles()) {
+							pocicion[0] = min;
+							pocicion[1] = min + 2;
+						} else {
+							pocicion[1] = min;
+							pocicion[0] = min + 2;
+						}
+
+						if (igual[3][1]) {
+							if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
+								pocicion[2] = min + 1;
+								pocicion[3] = min + 3;
+							} else {
+								pocicion[2] = min + 3;
+								pocicion[3] = min + 1;
+							}
+						} else {
+							if (puntos[1] > puntos[3]) {
+								pocicion[2] = min + 1;
+								pocicion[3] = min + 3;
+							} else {
+								pocicion[2] = min + 3;
+								pocicion[3] = min + 1;
+							}
+
+						}
+
+					} else if (igual[0][3] && !igual[0][2] && !igual[0][3]) {
+						if (fixture.get(min).getGoles() > fixture.get(min + 3).getGoles()) {
+							pocicion[0] = min;
+							pocicion[1] = min + 1;
+						} else {
+							pocicion[1] = min;
+							pocicion[0] = min + 1;
+						}
+
+						if (igual[2][1]) {
+							if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
+								pocicion[2] = min + 1;
+								pocicion[3] = min + 2;
+							} else {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 1;
+							}
+						} else {
+							if (puntos[1] > puntos[2]) {
+								pocicion[2] = min + 1;
+								pocicion[3] = min + 2;
+							} else {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 1;
+							}
+
+						}
+					} else {
+						pocicion[0] = min;
+						pocicion[1] = min + 1;
+						pocicion[2] = min + 2;
+						pocicion[3] = min + 3;
+					}
+
+				} else if (puntos[1] >= puntos[0] && puntos[1] >= puntos[2] && puntos[1] >= puntos[3]) {
+
+					if (igual[0][1] && !igual[1][2] && !igual[1][3]) {
+						if (fixture.get(min + 1).getGoles() > fixture.get(min).getGoles()) {
+							pocicion[1] = min;
+							pocicion[0] = min + 1;
+
+						} else {
+							pocicion[0] = min;
+							pocicion[1] = min + 1;
+						}
+
+						if (igual[3][2]) {
+							if (fixture.get(min + 2).getGoles() > fixture.get(min + 3).getGoles()) {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 3;
+							} else {
+								pocicion[2] = min + 3;
+								pocicion[3] = min + 2;
+							}
+
+						} else {
+							if (puntos[2] > puntos[3]) {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 3;
+							} else {
+								pocicion[2] = min + 3;
+								pocicion[3] = min + 2;
+							}
+
+						}
+					} else if (igual[1][2] && !igual[1][2] && !igual[1][3]) {
+						if (fixture.get(min + 1).getGoles() > fixture.get(min + 2).getGoles()) {
+							pocicion[0] = min;
+							pocicion[1] = min + 2;
+						} else {
+							pocicion[1] = min;
+							pocicion[0] = min + 2;
+						}
+
+						if (igual[3][0]) {
+							if (fixture.get(min).getGoles() > fixture.get(min + 3).getGoles()) {
+								pocicion[2] = min;
+								pocicion[3] = min + 3;
+							} else {
+								pocicion[2] = min + 3;
 								pocicion[3] = min;
 							}
+						} else {
+							if (puntos[0] > puntos[3]) {
+								pocicion[2] = min;
+								pocicion[3] = min + 3;
+							} else {
+								pocicion[2] = min + 3;
+								pocicion[3] = min;
+							}
+
+						}
+
+					} else if (igual[1][3] && !igual[1][2] && !igual[1][0]) {
+						if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
+							pocicion[0] = min + 1;
+							pocicion[1] = min + 3;
+						} else {
+							pocicion[1] = min + 3;
+							pocicion[0] = min + 1;
+						}
+
+						if (igual[2][1]) {
+							if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
+								pocicion[2] = min + 1;
+								pocicion[3] = min + 2;
+							} else {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 1;
+							}
+						} else {
+							if (puntos[1] > puntos[2]) {
+								pocicion[2] = min + 1;
+								pocicion[3] = min + 2;
+							} else {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 1;
+							}
+
 						}
 					}
-					if (puntos[0] == puntos[2] && puntos[0] != puntos[1] && puntos[0] != puntos[3]) {
-						if (puntos[1] == puntos[3] && puntos[0] != puntos[1] && puntos[0] != puntos[3]) {
-							
-							if (fixture.get(min).getGoles() > fixture.get(min + 2).getGoles()) {
-								pocicion[0] = min;
-								pocicion[2] = min+1;
+
+				} else if (puntos[2] >= puntos[0] && puntos[2] >= puntos[1] && puntos[2] >= puntos[3]) {
+
+					if (igual[2][0] && !igual[1][2] && !igual[2][3]) {
+						if (fixture.get(min + 2).getGoles() > fixture.get(min).getGoles()) {
+							pocicion[1] = min;
+							pocicion[0] = min + 2;
+
+						} else {
+							pocicion[0] = min;
+							pocicion[1] = min + 2;
+						}
+
+						if (igual[3][1]) {
+							if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
+								pocicion[2] = min + 1;
+								pocicion[3] = min + 3;
 							} else {
-								pocicion[0] = min+1;
-								pocicion[2] = min;
+								pocicion[2] = min + 3;
+								pocicion[3] = min + 1;
 							}
-						
-							if (fixture.get(min+1).getGoles() > fixture.get(max).getGoles()) {
-								pocicion[1] = min;
-								pocicion[3] = min+2;
+
+						} else {
+							if (puntos[1] > puntos[3]) {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 3;
 							} else {
-								pocicion[1] = min+2;
+								pocicion[2] = min + 3;
+								pocicion[3] = min + 2;
+							}
+
+						}
+					} else if (igual[1][2] && !igual[2][0] && !igual[2][3]) {
+						if (fixture.get(min + 1).getGoles() > fixture.get(min + 2).getGoles()) {
+							pocicion[0] = min + 1;
+							pocicion[1] = min + 2;
+						} else {
+							pocicion[1] = min + 1;
+							pocicion[0] = min + 2;
+						}
+
+						if (igual[3][0]) {
+							if (fixture.get(min).getGoles() > fixture.get(min + 3).getGoles()) {
+								pocicion[2] = min;
+								pocicion[3] = min + 3;
+							} else {
+								pocicion[2] = min + 3;
 								pocicion[3] = min;
 							}
-						
+						} else {
+							if (puntos[0] > puntos[3]) {
+								pocicion[2] = min;
+								pocicion[3] = min + 3;
+							} else {
+								pocicion[2] = min + 3;
+								pocicion[3] = min;
+							}
+
+						}
+
+					} else if (igual[1][3] && !igual[1][2] && !igual[1][0]) {
+						if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
+							pocicion[0] = min + 1;
+							pocicion[1] = min + 3;
+						} else {
+							pocicion[1] = min + 3;
+							pocicion[0] = min + 1;
+						}
+
+						if (igual[2][0]) {
+							if (fixture.get(min).getGoles() > fixture.get(min + 2).getGoles()) {
+								pocicion[2] = min;
+								pocicion[3] = min + 2;
+							} else {
+								pocicion[2] = min + 2;
+								pocicion[3] = min;
+							}
+						} else {
+							if (puntos[0] > puntos[2]) {
+								pocicion[2] = min;
+								pocicion[3] = min + 2;
+							} else {
+								pocicion[2] = min + 2;
+								pocicion[3] = min;
+							}
+
+						}
+					}
+
+				} else if (puntos[3] >= puntos[0] && puntos[3] >= puntos[1] && puntos[3] >= puntos[2]) {
+
+					if (igual[3][0] && !igual[1][3] && !igual[2][3]) {
+						if (fixture.get(min + 3).getGoles() > fixture.get(min).getGoles()) {
+							pocicion[1] = min;
+							pocicion[0] = min + 3;
+
+						} else {
+							pocicion[0] = min;
+							pocicion[1] = min + 3;
+						}
+
+						if (igual[2][1]) {
+							if (fixture.get(min + 1).getGoles() > fixture.get(min + 2).getGoles()) {
+								pocicion[2] = min + 1;
+								pocicion[3] = min + 2;
+							} else {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 1;
+							}
+
+						} else {
+							if (puntos[1] > puntos[2]) {
+								pocicion[2] = min + 2;
+								pocicion[3] = min + 1;
+							} else {
+								pocicion[2] = min + 1;
+								pocicion[3] = min + 2;
+							}
+
+						}
+					} else if (igual[1][3] && !igual[3][0] && !igual[2][3]) {
+						if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
+							pocicion[0] = min + 1;
+							pocicion[1] = min + 3;
+						} else {
+							pocicion[1] = min + 1;
+							pocicion[0] = min + 3;
+						}
+
+						if (igual[2][0]) {
+							if (fixture.get(min).getGoles() > fixture.get(min + 2).getGoles()) {
+								pocicion[2] = min;
+								pocicion[3] = min + 2;
+							} else {
+								pocicion[2] = min + 2;
+								pocicion[3] = min;
+							}
+						} else {
+							if (puntos[0] > puntos[2]) {
+								pocicion[2] = min;
+								pocicion[3] = min + 2;
+							} else {
+								pocicion[2] = min + 2;
+								pocicion[3] = min;
+							}
+
+						}
+
+					} else if (igual[2][3] && !igual[3][1] && !igual[3][0]) {
+						if (fixture.get(min + 2).getGoles() > fixture.get(min + 3).getGoles()) {
+							pocicion[0] = min + 2;
+							pocicion[1] = min + 3;
+						} else {
+							pocicion[1] = min + 3;
+							pocicion[0] = min + 2;
+						}
+
+						if (igual[1][0]) {
+							if (fixture.get(min).getGoles() > fixture.get(min + 1).getGoles()) {
+								pocicion[2] = min;
+								pocicion[3] = min + 1;
+							} else {
+								pocicion[2] = min + 1;
+								pocicion[3] = min;
+							}
 						} else {
 							if (puntos[0] > puntos[1]) {
-								pocicion[0] = min;
-								pocicion[1] = min+1;
-							}else {
-								pocicion[0] = min+1;
-								pocicion[1] = min;
-							}
-							if (puntos[2] > puntos[3]) {
 								pocicion[2] = min;
-								pocicion[3] = min+2;
+								pocicion[3] = min + 1;
 							} else {
-								pocicion[2] = min+2;
+								pocicion[2] = min + 1;
 								pocicion[3] = min;
 							}
-					}}
-					if (puntos[0] == puntos[3] && puntos[0] != puntos[1] && puntos[0] != puntos[2]) {
 
+						}
 					}
+
+				} else if (true) {
 
 				}
 
-			}
-			for (int z = 0; z < pocicion.length; z++) {
-				listaequipos[main_contador] = pocicion[z];
-				main_contador++;
-				// System.err.println(main_contador);
+				for (int z = 0; z < pocicion.length; z++) {
+					listaequipos[main_contador] = pocicion[z];
+					main_contador++;
+					System.err.println(pocicion[z]);
+
+				}
+
 			}
 
 			subcontador = 0;
@@ -590,16 +838,16 @@ public class Main {
 		// JOptionPane.showMessageDialog(null, "salida correcta" + contador);
 		for (int i = 0; i <= 31; i++) {
 			// System.out.println(pociciones.get(i));
-			// pociciones.add(i, fixture.get(listaequipos[i]));
+			pociciones.add(i, fixture.get(listaequipos[i]));
 		}
 
 		for (int i = 0; i < 32; i++) {
-			// System.out.println(i + pociciones.get(i).getNombre());
+			System.out.println(i + pociciones.get(i).getNombre());
 			// System.out.println(i+ fixture.get(i).getNombre());
-			System.out.println(listaequipos[i]);
+			// System.out.println(listaequipos[i]);
 		}
 
 		return fixture;
-	}
 
+	}
 }

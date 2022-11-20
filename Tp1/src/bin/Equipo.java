@@ -5,18 +5,20 @@ import java.util.LinkedList;
 
 public class Equipo {
 	private String Nombre;
-	private int Goles;
+	private int goles,pocision;
 	// 0 - no jugado 1- ganado - 2 perdido 3- empate
 	private int grupos[] = new int [3];
-	private boolean Clasificado;
+	private boolean clasificado;
 	private LinkedList<Partido> futbol = new LinkedList<Partido>();
 
 
-	public Equipo(String nombre, int goles, int[] grupos, boolean clasificado, LinkedList<Partido> futbol) {
+	public Equipo(String nombre, int goles, int[] grupos, boolean clasificado,
+			LinkedList<Partido> futbol) {
 		Nombre = nombre;
-		Goles = goles;
+		this.goles = goles;
+		this.pocision = 1;
 		this.grupos = grupos;
-		Clasificado = clasificado;
+		this.clasificado = clasificado;
 		this.futbol = futbol;
 	}
 
@@ -28,20 +30,29 @@ public class Equipo {
 		Nombre = nombre;
 	}
 
+
 	public int getGoles() {
-		return Goles;
+		return goles;
 	}
 
 	public void setGoles(int goles) {
-		Goles = goles;
+		this.goles = goles;
+	}
+
+	public int getPocision() {
+		return pocision;
+	}
+
+	public void setPocision(int pocision) {
+		this.pocision = pocision;
 	}
 
 	public boolean isClasificado() {
-		return Clasificado;
+		return clasificado;
 	}
 
 	public void setClasificado(boolean clasificado) {
-		Clasificado = clasificado;
+		this.clasificado = clasificado;
 	}
 
 	public LinkedList<Partido> getFutbol() {
@@ -62,8 +73,8 @@ public class Equipo {
 
 	@Override
 	public String toString() {
-		return "Equipo [Nombre=" + Nombre + ", Goles=" + Goles + ", grupos=" + Arrays.toString(grupos)
-				+ ", Clasificado=" + Clasificado + ", futbol=" + futbol + "]";
+		return "Equipo [Nombre=" + Nombre + ", Goles=" + goles + ", grupos=" + Arrays.toString(grupos)
+				+ ", Clasificado=" + clasificado + ", futbol=" + futbol + "]";
 	}
 
 }
