@@ -408,7 +408,7 @@ public class Main {
 				fecha5(fixture);
 				break;
 			case "semifinal":
-				fecha6(fixture);
+				fecha7(fixture);
 				break;
 			case "final y por el 3er puesto":
 				fecha8(fixture);
@@ -803,28 +803,29 @@ public class Main {
 	
 	public static LinkedList<Equipo> pocicionamiento_eliminatorias(LinkedList<Equipo> fixture) {
 		String mensajes = "";
-		if (Efuse[6]) {
-			for (int i = 0; i >= 0; i--) {
-				mensajes += fixture.get(eliminatorias1[i * 2]).getNombre() + " vs "
-						+ fixture.get(eliminatorias1[(i * 2) + 1]).getNombre();
+		
+		if (!Efuse[6]) {
+				mensajes += "final\n";
+				mensajes += fixture.get(eliminatorias1[0]).getNombre() + " vs "
+						+ fixture.get(eliminatorias1[1]).getNombre();
+				mensajes += "tercer puesto\n";
+				mensajes += fixture.get(eliminatorias[0]).getNombre() + " vs "
+						+ fixture.get(eliminatorias[1]).getNombre();
 				mensajes += "\n";
-				mensajes += fixture.get(eliminatorias[i * 2]).getNombre() + " vs "
-						+ fixture.get(eliminatorias[(i * 2) + 1]).getNombre();
-				mensajes += "\n";
-			}
+			
 		} else {
-			for (int i = 0; i >= 0; i--) {
-				mensajes += fixture.get(eliminatorias1[i * 2]).getNombre() + " "
-						+ fixture.get(eliminatorias1[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
-						+ fixture.get(eliminatorias1[i * 2]).getFutbol().get(3).getGoles_2()
-						+ fixture.get(eliminatorias1[(i * 2) + 1]).getNombre();
+			mensajes += "final\n";
+				mensajes += fixture.get(eliminatorias1[0]).getNombre() + " "
+						+ fixture.get(eliminatorias1[0]).getFutbol().get(3).getGoles_1() + " vs " + " "
+						+ fixture.get(eliminatorias1[ 1]).getFutbol().get(3).getGoles_2()
+						+ fixture.get(eliminatorias1[ 1]).getNombre();
+			mensajes += "\ntercer puesto\n";
+				mensajes += fixture.get(eliminatorias[0]).getNombre() + " "
+						+ fixture.get(eliminatorias[0]).getFutbol().get(3).getGoles_1() + " vs " + " "
+						+ fixture.get(eliminatorias[ 1]).getFutbol().get(3).getGoles_2()
+						+ fixture.get(eliminatorias[ 1]).getNombre();
 				mensajes += "\n";
-				mensajes += fixture.get(eliminatorias[i * 2]).getNombre() + " "
-						+ fixture.get(eliminatorias[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
-						+ fixture.get(eliminatorias[i * 2]).getFutbol().get(3).getGoles_2()
-						+ fixture.get(eliminatorias[(i * 2) + 1]).getNombre();
-				mensajes += "\n";
-			}
+			
 		}
 
 		JOptionPane.showMessageDialog(null, mensajes);
@@ -892,11 +893,11 @@ public class Main {
 				}
 				if (aux1[0] > aux1[1]) {
 					aux2[0] = 1;
-					eliminatorias2[i] = fixture.get(eliminatorias4[i * 4]).getId();
+					eliminatorias2[i] = fixture.get(eliminatorias4[i * 2]).getId();
 					aux2[1] = 2;
 				} else {
 					aux2[0] = 2;
-					eliminatorias2[i] = fixture.get(eliminatorias4[(i * 4) + 1]).getId();
+					eliminatorias2[i] = fixture.get(eliminatorias4[(i * 2) + 1]).getId();
 					aux2[1] = 1;
 				}
 				partido4.setGoles_1(aux1[0]);
@@ -924,7 +925,7 @@ public class Main {
 		Efuse[4] = true;
 		return fixture;
 	}
-
+/*
 	public static LinkedList<Equipo> fecha6(LinkedList<Equipo> fixture) {
 		for (int j = 0; j < vatiables.length; j++) {
 
@@ -964,16 +965,16 @@ public class Main {
 				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
 				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
 				 */
-				Numero_de_partido++;
+			/*	Numero_de_partido++;
 			}
 
 		}
 		Efuse[5] = true;
 		return fixture;
 	}
-
+*/
 	public static LinkedList<Equipo> fecha7(LinkedList<Equipo> fixture) {
-		for (int j = 0; j < vatiables.length; j++) {
+		
 
 			for (int i = 0; i <= 1; i++) {
 				Partido partido4 = new Partido(fixture.get(eliminatorias2[i * 2]).getNombre(),
@@ -986,15 +987,30 @@ public class Main {
 				}
 				if (aux1[0] > aux1[1]) {
 					aux2[0] = 1;
-					eliminatorias1[i] = fixture.get(eliminatorias2[i * 2]).getId();
 					aux2[1] = 2;
-					eliminatorias[i] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
+					if(i==0) {
+					eliminatorias1[0] = fixture.get(eliminatorias2[i * 2]).getId();
+					eliminatorias[0] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
+					}else {
+						eliminatorias1[1] = fixture.get(eliminatorias2[i * 2]).getId();
+						eliminatorias[1] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
+					}
+					
+					
 				} else {
 					aux2[0] = 2;
-					eliminatorias1[i] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
 					aux2[1] = 1;
-					eliminatorias[i] = fixture.get(eliminatorias2[i * 2]).getId();
+					
+					if(i==0) {
+						eliminatorias1[0] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
+						eliminatorias[0] = fixture.get(eliminatorias2[i * 2]).getId();
+					}else {
+						eliminatorias1[1] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
+						eliminatorias[1] = fixture.get(eliminatorias2[i * 2]).getId();
+					}
+					
 				}
+				System.out.println(eliminatorias1[1]);
 				partido4.setGoles_1(aux1[0]);
 				partido4.setGoles_2(aux1[1]);
 
@@ -1016,14 +1032,14 @@ public class Main {
 				Numero_de_partido++;
 			}
 
-		}
-		Efuse[6] = true;
+		
+		Efuse[5] = true;
 		return fixture;
 	}
 	
 	
-	public static LinkedList<Equipo> fecha8(LinkedList<Equipo> fixture) {
-		for (int j = 0; j < vatiables.length; j++) {
+	public static void fecha8(LinkedList<Equipo> fixture) {
+		
 
 			for (int i = 0; i < 1; i++) {
 				Partido partido4 = new Partido(fixture.get(eliminatorias1[i * 2]).getNombre(),
@@ -1075,50 +1091,50 @@ public class Main {
 				Numero_de_partido++;
 			}
 
-		}
 		
-		return fecha9(fixture);
+		
+		fecha9(fixture);
 	}
 	public static LinkedList<Equipo> fecha9(LinkedList<Equipo> fixture) {
-		for (int j = 0; j < vatiables.length; j++) {
+		
 
-			for (int i = 0; i < 1; i++) {
-				Partido partido4 = new Partido(fixture.get(eliminatorias[i * 2]).getNombre(),
-						fixture.get(eliminatorias[i * 2] + 1).getNombre(), null, 0, 0, 0);
+			
+				Partido partido4 = new Partido(fixture.get(eliminatorias[0]).getNombre(),
+						fixture.get(eliminatorias[1]).getNombre(), null, 0, 0, 0);
 				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
 				int aux2[] = { 0, 0 };
 				if (aux1[0] == aux1[1]) {
 					aux2[0] = 3;
 					aux2[1] = 3;
 					if (Math.random()*2==1) {
-						top4[0]=fixture.get(eliminatorias[i * 2]).getId();
-						top4[1]=fixture.get(eliminatorias[(i * 2)+1]).getId();
+						top4[0]=fixture.get(eliminatorias[0]).getId();
+						top4[1]=fixture.get(eliminatorias[1]).getId();
 					}else {
-						top4[1]=fixture.get(eliminatorias[i * 2]).getId();
-						top4[0]=fixture.get(eliminatorias[(i * 2)+1]).getId();
+						top4[1]=fixture.get(eliminatorias[0]).getId();
+						top4[0]=fixture.get(eliminatorias[1]).getId();
 					}
 				}
 				if (aux1[0] > aux1[1]) {
 					aux2[0] = 1;
-					top4[0]  = fixture.get(eliminatorias[i * 2]).getId();
+					top4[0]  = fixture.get(eliminatorias[0]).getId();
 					aux2[1] = 2;
-					top4[1]  = fixture.get(eliminatorias[(i * 2) + 1]).getId();
+					top4[1]  = fixture.get(eliminatorias[1]).getId();
 				} else {
 					aux2[0] = 2;
-					top4[0]  = fixture.get(eliminatorias[(i * 2) + 1]).getId();
+					top4[0]  = fixture.get(eliminatorias[1]).getId();
 					aux2[1] = 1;
-					top4[1]  = fixture.get(eliminatorias[i * 2]).getId();
+					top4[1]  = fixture.get(eliminatorias[0]).getId();
 				}
 				partido4.setGoles_1(aux1[0]);
 				partido4.setGoles_2(aux1[1]);
 
 				// arrayauxiliar = ;
-				LinkedList<Partido> aux4 = fixture.get(eliminatorias[i * 2]).getFutbol();
-				LinkedList<Partido> aux5 = fixture.get(eliminatorias[(i * 2) + 1]).getFutbol();
+				LinkedList<Partido> aux4 = fixture.get(eliminatorias[0]).getFutbol();
+				LinkedList<Partido> aux5 = fixture.get(eliminatorias[1]).getFutbol();
 				aux4.add(partido4);
 				aux5.add(partido4);
-				fixture.get(eliminatorias[i * 2]).setFutbol(aux4);
-				fixture.get(eliminatorias[(i * 2)+ 1] ).setFutbol(aux5);
+				fixture.get(eliminatorias[0]).setFutbol(aux4);
+				fixture.get(eliminatorias[1] ).setFutbol(aux5);
 				
 				
 				// System.out.println(arrayauxiliar[0]);
@@ -1130,9 +1146,9 @@ public class Main {
 				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
 				 */
 				Numero_de_partido++;
-			}
+			
 
-		}
+		
 		Efuse[6] = true;
 		return fixture;
 	}
