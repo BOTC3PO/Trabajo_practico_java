@@ -2,7 +2,7 @@ package bin;
 
 public class Partido {
 	private String equipo_1,equipo_2,estado;
-	private int goles_1,goles_2,ID;
+	private int goles_1,goles_2,ID,p1,p2;
 	
 	public Partido(String equipo_1, String equipo_2, String estado, int goles_1, int goles_2, int iD) {
 		this.equipo_1 = equipo_1;

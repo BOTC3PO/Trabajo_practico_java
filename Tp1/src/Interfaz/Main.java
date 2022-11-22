@@ -1,9 +1,12 @@
 package Interfaz;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
+import javax.swing.text.Position;
 
 import bin.Equipo;
 import bin.Partido;
@@ -17,9 +20,13 @@ public class Main {
 	public static int Fecha1[][] = { { 1, 5, 3, 7 }, { 2, 6, 4, 8 } };
 	public static int Fecha2[][] = { { 6, 1, 2, 5 }, { 8, 3, 4, 7 } };
 	public static int Fecha3[][] = { { 2, 6, 4, 8 }, { 3, 7, 1, 5 } };
+	public static int eliminatoriaspos[] = { 0, 5, 8, 13, 16, 21, 24, 29, 4, 1, 12, 9, 20, 17, 28, 25 };
 	public static int eliminatorias8[] = new int[16];
 	public static int eliminatorias4[] = new int[8];
 	public static int eliminatorias2[] = new int[4];
+	public static int eliminatorias1[] = new int[2];
+	public static int eliminatorias[] = new int[2];
+	public static int top4[] = new int[4];
 	public static LinkedList<Equipo> pociciones = new LinkedList<Equipo>();
 
 	public static void main(String[] args) {
@@ -43,12 +50,13 @@ public class Main {
 
 		String[] equipos = { "qatar", "ecuador", "senegal", "paises bajos", "Inglaterra", "iran", "Estados unidos",
 				"Gales", "Argentina", "Arabia Saudita", "Mexico", "Polonia", "francia", "Australia", "Dinamarca",
-				"tunez", "Espaï¿½a", "costa rica", "Alemania", "Japon", "Belgica", "Canada", "Marruecos", "Croacia",
+				"tunez", "España", "costa rica", "Alemania", "Japon", "Belgica", "Canada", "Marruecos", "Croacia",
 				"Brasil", "serbia", "Suiza", "Camerun", "Portugal", "Ghana", "Uruguay", "Corea del sur" };
 		int data[] = { 0, 0, 0 };
 		for (int i = 0; i < equipos.length; i++) {
-			Equipo equipo = new Equipo(equipos[i], 0, data, true, null);
+			Equipo equipo = new Equipo(equipos[i], 0, data, true, null, i);
 			fixture.add(equipo);
+			fixture.get(i).setGrupo(i);
 		}
 
 		return fixture;
@@ -84,7 +92,6 @@ public class Main {
 		do {
 			mensaje = "";
 			contador = 0;
-
 			seleccion = (String) JOptionPane.showInputDialog(null, "seleccione 1 grupo", "seleccion de grupo",
 					JOptionPane.QUESTION_MESSAGE, null, grupos, "seleccione");
 			switch (seleccion) {
@@ -171,15 +178,23 @@ public class Main {
 					aux2[0] = 2;
 					aux2[1] = 1;
 				}
-
+				partido.setGoles_1(aux1[0]);
+				partido.setGoles_2(aux1[1]);
 				// System.err.println(aux1[0] + " " + aux1[1]);
 				for (int k = 0; k < 2; k++) {
 					// arrayauxiliar = ;
 					int arrayauxiliar[] = fixture.get((vatiables[j] + Fecha1[k][i]) - 1).getGrupos();
 					arrayauxiliar[0] = aux2[k];
 					fixture.get(vatiables[j] + Fecha1[k][i] - 1).setGrupos(arrayauxiliar);
+					fixture.get(vatiables[j] + Fecha1[k][i] - 1)
+							.setGoles(fixture.get(vatiables[j] + Fecha1[k][i] - 1).getGoles() + aux1[k]);
+					// LinkedList<Partido> aux4 = fixture.get(vatiables[j] + Fecha1[k][i] -
+					// 1).getFutbol();
+					fixture.get(vatiables[j] + Fecha1[k][i] - 1).resultado(aux2[k]);
+					LinkedList<Partido> aux4 = new LinkedList<Partido>();
+					aux4.add(partido);
+					fixture.get(vatiables[j] + Fecha1[k][i] - 1).setFutbol(aux4);
 					// System.out.println(arrayauxiliar[0]);
-					// ;
 					// test(arrayauxiliar[0]);
 				}
 
@@ -214,8 +229,26 @@ public class Main {
 					aux2[0] = 2;
 					aux2[1] = 1;
 				}
-				System.out.println(fixture.get((vatiables[j] + Fecha2[0][i]) - 1).getNombre() + "  "
-						+ fixture.get((vatiables[j] + Fecha2[1][i]) - 1).getNombre());
+				partido1.setGoles_1(aux1[0]);
+				partido1.setGoles_2(aux1[1]);
+				for (int k = 0; k < 2; k++) {
+					// arrayauxiliar = ;
+					int arrayauxiliar[] = fixture.get((vatiables[j] + Fecha2[k][i]) - 1).getGrupos();
+					arrayauxiliar[1] = aux2[k];
+					fixture.get(vatiables[j] + Fecha2[k][i] - 1).setGrupos(arrayauxiliar);
+					fixture.get(vatiables[j] + Fecha2[k][i] - 1).resultado(aux2[k]);
+					LinkedList<Partido> aux4 = fixture.get(vatiables[j] + Fecha2[k][i] - 1).getFutbol();
+					aux4.add(partido1);
+					fixture.get(vatiables[j] + Fecha2[k][i] - 1).setFutbol(aux4);
+					// System.out.println(arrayauxiliar[0]);
+					// ;
+					// test(arrayauxiliar[0]);
+				}
+
+				/*
+				 * System.out.println(fixture.get((vatiables[j] + Fecha2[0][i]) - 1).getNombre()
+				 * + "  " + fixture.get((vatiables[j] + Fecha2[1][i]) - 1).getNombre());
+				 */
 				Numero_de_partido++;
 			}
 
@@ -244,8 +277,26 @@ public class Main {
 					aux2[0] = 2;
 					aux2[1] = 1;
 				}
-				System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre() + "  "
-						+ fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+				partido2.setGoles_1(aux1[0]);
+				partido2.setGoles_2(aux1[1]);
+				for (int k = 0; k < 2; k++) {
+					// arrayauxiliar = ;
+					int arrayauxiliar[] = fixture.get((vatiables[j] + Fecha3[k][i]) - 1).getGrupos();
+					arrayauxiliar[2] = aux2[k];
+					fixture.get(vatiables[j] + Fecha3[k][i] - 1).setGrupos(arrayauxiliar);
+					fixture.get(vatiables[j] + Fecha3[k][i] - 1).resultado(aux2[k]);
+					LinkedList<Partido> aux4 = fixture.get(vatiables[j] + Fecha2[k][i] - 1).getFutbol();
+					aux4.add(partido2);
+					fixture.get(vatiables[j] + Fecha3[k][i] - 1).setFutbol(aux4);
+					// System.out.println(arrayauxiliar[0]);
+					// ;
+					// test(arrayauxiliar[0]);
+				}
+
+				/*
+				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+				 */
 				Numero_de_partido++;
 			}
 
@@ -287,14 +338,18 @@ public class Main {
 		} else if (Efuse[6] == false) {
 			mensaje_gen2[0] = "ver grupos";
 			mensaje_gen2[1] = "ver eliminarorias";
-			mensaje_gen2[2] = "final y por el 3ï¿½ puesto";
+			mensaje_gen2[2] = "final y por el 3er puesto";
 			mensaje_gen2[3] = "salir";
 		} else {
 			mensaje_gen[0] = "ver grupos";
-			mensaje_gen[1] = "ver eliminatirias";
+			mensaje_gen[1] = "ver eliminarorias";
 			mensaje_gen[2] = "salir";
 		}
 
+		if (Efuse[6]) {
+			return mensaje_gen;
+		}
+		
 		if (Efuse[2] || Efuse[3] || Efuse[4] || Efuse[5]) {
 			return mensaje_gen2;
 		} else {
@@ -312,6 +367,8 @@ public class Main {
 			menu_select = (String) JOptionPane.showInputDialog(null, "Seleccione una opcion", "Menu principal",
 					JOptionPane.QUESTION_MESSAGE, null, Menu, "Seleccione");
 
+			System.out.println(menu_select);
+			
 			switch (menu_select) {
 			case "ver grupos":
 				/* mostrar equipos */
@@ -320,6 +377,7 @@ public class Main {
 				} else {
 					/* posiciones */
 					pocicionamiento(fixture);
+					mostrar_grupopos(fixture);
 				}
 
 				break;
@@ -336,19 +394,24 @@ public class Main {
 				fecha3(fixture);
 				break;
 			case "ver eliminarorias":
-
+				pocicionamiento(fixture);
+				submenu(fixture);
+				System.out.println("boton funciona");
+				// verpartido8eliminatorias(fixture);
 				break;
 			case "octavos de final":
-
+				pocicionamiento(fixture);
+				pocicionamiento_eliminatorias8(fixture);
+				fecha4(fixture);
 				break;
 			case "cartos de final":
-
+				fecha5(fixture);
 				break;
 			case "semifinal":
-
+				fecha6(fixture);
 				break;
-			case "final y por el 3ï¿½ puesto":
-
+			case "final y por el 3er puesto":
+				fecha8(fixture);
 				break;
 			default:
 				/* salir */
@@ -359,6 +422,7 @@ public class Main {
 
 	public static LinkedList<Equipo> pocicionamiento(LinkedList<Equipo> fixture) {
 		pociciones.clear();
+		pociciones = (LinkedList<Equipo>) fixture.clone();
 		// pociciones = (LinkedList<Equipo>) fixture.clone();
 		int main_contador = 0;
 		int min = 0, max = 0, contador = 0, subcontador = 0;
@@ -412,419 +476,27 @@ public class Main {
 				for (int i = 0; i < puntos.length; i++) {
 					puntos[i] = 0;
 				}
-				int aux1[] = fixture.get(min).getGrupos();
-				int aux2[] = fixture.get(min + 1).getGrupos();
-				int aux3[] = fixture.get(min + 2).getGrupos();
-				int aux4[] = fixture.get(max).getGrupos();
-				aux[0] = aux1;
-				aux[1] = aux2;
-				aux[2] = aux3;
-				aux[3] = aux4;
-
-				for (int j = 0; j < aux.length; j++) {
-					for (int i = 0; i < aux[j].length; i++) {
-						System.out.println("dato" + aux[j][i]);
-						switch (aux[j][i]) {
-						case 1:
-							puntos[j] += 3;
-							break;
-						case 0:
-							puntos[j] += 0;
-							break;
-						case 2:
-							puntos[j] += 0;
-							break;
-						case 3:
-							puntos[j] += 1;
-							break;
-						}
-					}
-				}
-
-				// int subcontador_fixture = 0;
-
 				/*
+				 * int aux1[] = fixture.get(min).getGrupos(); int aux2[] = fixture.get(min +
+				 * 1).getGrupos(); int aux3[] = fixture.get(min + 2).getGrupos(); int aux4[] =
+				 * fixture.get(max).getGrupos(); aux[0] = aux1; aux[1] = aux2; aux[2] = aux3;
+				 * aux[3] = aux4;
 				 * 
+				 * for (int j = 0; j < aux.length; j++) { for (int i = 0; i < aux[j].length;
+				 * i++) { //System.out.println("dato" + aux[j][i]); switch (aux[j][i]) { case 1:
+				 * puntos[j] = puntos[j] + 3; break; case 0: puntos[j] = puntos[j] + 0; break;
+				 * case 2: puntos[j] = puntos[j] + 0; break; case 3: puntos[j] = puntos[j] + 1;
+				 * break; } }
 				 * 
-				 * for (int i = min; i <= max; i++) {
-				 * System.out.println(fixture.get(pocicion[subcontador_fixture]).getNombre());
-				 * pociciones.add(fixture.get(pocicion[subcontador_fixture]));
-				 * subcontador_fixture++; }
+				 * } for (int i = 0; i < puntos.length; i++) { //System.err.println(puntos[i]);
+				 * fixture.get(i).setPuntos(puntos[i]); }
 				 */
 
-				/* igualdad */
-
-				for (int i = 0; i < aux4.length; i++) {
-					for (int j = 0; j < aux4.length; j++) {
-						igual[i][j] = puntos[i] == puntos[j];
-					}
-				}
-
-				/**/
-				if (puntos[0] >= puntos[1] && puntos[0] >= puntos[2] && puntos[0] >= puntos[3]) {
-					if (igual[0][1] && !igual[0][2] && !igual[0][3]) {
-						if (fixture.get(min).getGoles() > fixture.get(min + 1).getGoles()) {
-							pocicion[0] = min;
-							pocicion[1] = min + 1;
-
-						} else {
-							pocicion[1] = min;
-							pocicion[0] = min + 1;
-						}
-
-						if (igual[3][2]) {
-							if (fixture.get(min + 2).getGoles() > fixture.get(min + 3).getGoles()) {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min + 2;
-							}
-						} else {
-							if (puntos[2] > puntos[3]) {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min + 2;
-							}
-
-						}
-
-					} else if (igual[0][2] && !igual[0][2] && !igual[0][3]) {
-						if (fixture.get(min).getGoles() > fixture.get(min + 2).getGoles()) {
-							pocicion[0] = min;
-							pocicion[1] = min + 2;
-						} else {
-							pocicion[1] = min;
-							pocicion[0] = min + 2;
-						}
-
-						if (igual[3][1]) {
-							if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
-								pocicion[2] = min + 1;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min + 1;
-							}
-						} else {
-							if (puntos[1] > puntos[3]) {
-								pocicion[2] = min + 1;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min + 1;
-							}
-
-						}
-
-					} else if (igual[0][3] && !igual[0][2] && !igual[0][3]) {
-						if (fixture.get(min).getGoles() > fixture.get(min + 3).getGoles()) {
-							pocicion[0] = min;
-							pocicion[1] = min + 1;
-						} else {
-							pocicion[1] = min;
-							pocicion[0] = min + 1;
-						}
-
-						if (igual[2][1]) {
-							if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
-								pocicion[2] = min + 1;
-								pocicion[3] = min + 2;
-							} else {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 1;
-							}
-						} else {
-							if (puntos[1] > puntos[2]) {
-								pocicion[2] = min + 1;
-								pocicion[3] = min + 2;
-							} else {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 1;
-							}
-
-						}
-					} else {
-						pocicion[0] = min;
-						pocicion[1] = min + 1;
-						pocicion[2] = min + 2;
-						pocicion[3] = min + 3;
-					}
-
-				} else if (puntos[1] >= puntos[0] && puntos[1] >= puntos[2] && puntos[1] >= puntos[3]) {
-
-					if (igual[0][1] && !igual[1][2] && !igual[1][3]) {
-						if (fixture.get(min + 1).getGoles() > fixture.get(min).getGoles()) {
-							pocicion[1] = min;
-							pocicion[0] = min + 1;
-
-						} else {
-							pocicion[0] = min;
-							pocicion[1] = min + 1;
-						}
-
-						if (igual[3][2]) {
-							if (fixture.get(min + 2).getGoles() > fixture.get(min + 3).getGoles()) {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min + 2;
-							}
-
-						} else {
-							if (puntos[2] > puntos[3]) {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min + 2;
-							}
-
-						}
-					} else if (igual[1][2] && !igual[1][2] && !igual[1][3]) {
-						if (fixture.get(min + 1).getGoles() > fixture.get(min + 2).getGoles()) {
-							pocicion[0] = min;
-							pocicion[1] = min + 2;
-						} else {
-							pocicion[1] = min;
-							pocicion[0] = min + 2;
-						}
-
-						if (igual[3][0]) {
-							if (fixture.get(min).getGoles() > fixture.get(min + 3).getGoles()) {
-								pocicion[2] = min;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min;
-							}
-						} else {
-							if (puntos[0] > puntos[3]) {
-								pocicion[2] = min;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min;
-							}
-
-						}
-
-					} else if (igual[1][3] && !igual[1][2] && !igual[1][0]) {
-						if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
-							pocicion[0] = min + 1;
-							pocicion[1] = min + 3;
-						} else {
-							pocicion[1] = min + 3;
-							pocicion[0] = min + 1;
-						}
-
-						if (igual[2][1]) {
-							if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
-								pocicion[2] = min + 1;
-								pocicion[3] = min + 2;
-							} else {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 1;
-							}
-						} else {
-							if (puntos[1] > puntos[2]) {
-								pocicion[2] = min + 1;
-								pocicion[3] = min + 2;
-							} else {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 1;
-							}
-
-						}
-					}
-
-				} else if (puntos[2] >= puntos[0] && puntos[2] >= puntos[1] && puntos[2] >= puntos[3]) {
-
-					if (igual[2][0] && !igual[1][2] && !igual[2][3]) {
-						if (fixture.get(min + 2).getGoles() > fixture.get(min).getGoles()) {
-							pocicion[1] = min;
-							pocicion[0] = min + 2;
-
-						} else {
-							pocicion[0] = min;
-							pocicion[1] = min + 2;
-						}
-
-						if (igual[3][1]) {
-							if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
-								pocicion[2] = min + 1;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min + 1;
-							}
-
-						} else {
-							if (puntos[1] > puntos[3]) {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min + 2;
-							}
-
-						}
-					} else if (igual[1][2] && !igual[2][0] && !igual[2][3]) {
-						if (fixture.get(min + 1).getGoles() > fixture.get(min + 2).getGoles()) {
-							pocicion[0] = min + 1;
-							pocicion[1] = min + 2;
-						} else {
-							pocicion[1] = min + 1;
-							pocicion[0] = min + 2;
-						}
-
-						if (igual[3][0]) {
-							if (fixture.get(min).getGoles() > fixture.get(min + 3).getGoles()) {
-								pocicion[2] = min;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min;
-							}
-						} else {
-							if (puntos[0] > puntos[3]) {
-								pocicion[2] = min;
-								pocicion[3] = min + 3;
-							} else {
-								pocicion[2] = min + 3;
-								pocicion[3] = min;
-							}
-
-						}
-
-					} else if (igual[1][3] && !igual[1][2] && !igual[1][0]) {
-						if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
-							pocicion[0] = min + 1;
-							pocicion[1] = min + 3;
-						} else {
-							pocicion[1] = min + 3;
-							pocicion[0] = min + 1;
-						}
-
-						if (igual[2][0]) {
-							if (fixture.get(min).getGoles() > fixture.get(min + 2).getGoles()) {
-								pocicion[2] = min;
-								pocicion[3] = min + 2;
-							} else {
-								pocicion[2] = min + 2;
-								pocicion[3] = min;
-							}
-						} else {
-							if (puntos[0] > puntos[2]) {
-								pocicion[2] = min;
-								pocicion[3] = min + 2;
-							} else {
-								pocicion[2] = min + 2;
-								pocicion[3] = min;
-							}
-
-						}
-					}
-
-				} else if (puntos[3] >= puntos[0] && puntos[3] >= puntos[1] && puntos[3] >= puntos[2]) {
-
-					if (igual[3][0] && !igual[1][3] && !igual[2][3]) {
-						if (fixture.get(min + 3).getGoles() > fixture.get(min).getGoles()) {
-							pocicion[1] = min;
-							pocicion[0] = min + 3;
-
-						} else {
-							pocicion[0] = min;
-							pocicion[1] = min + 3;
-						}
-
-						if (igual[2][1]) {
-							if (fixture.get(min + 1).getGoles() > fixture.get(min + 2).getGoles()) {
-								pocicion[2] = min + 1;
-								pocicion[3] = min + 2;
-							} else {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 1;
-							}
-
-						} else {
-							if (puntos[1] > puntos[2]) {
-								pocicion[2] = min + 2;
-								pocicion[3] = min + 1;
-							} else {
-								pocicion[2] = min + 1;
-								pocicion[3] = min + 2;
-							}
-
-						}
-					} else if (igual[1][3] && !igual[3][0] && !igual[2][3]) {
-						if (fixture.get(min + 1).getGoles() > fixture.get(min + 3).getGoles()) {
-							pocicion[0] = min + 1;
-							pocicion[1] = min + 3;
-						} else {
-							pocicion[1] = min + 1;
-							pocicion[0] = min + 3;
-						}
-
-						if (igual[2][0]) {
-							if (fixture.get(min).getGoles() > fixture.get(min + 2).getGoles()) {
-								pocicion[2] = min;
-								pocicion[3] = min + 2;
-							} else {
-								pocicion[2] = min + 2;
-								pocicion[3] = min;
-							}
-						} else {
-							if (puntos[0] > puntos[2]) {
-								pocicion[2] = min;
-								pocicion[3] = min + 2;
-							} else {
-								pocicion[2] = min + 2;
-								pocicion[3] = min;
-							}
-
-						}
-
-					} else if (igual[2][3] && !igual[3][1] && !igual[3][0]) {
-						if (fixture.get(min + 2).getGoles() > fixture.get(min + 3).getGoles()) {
-							pocicion[0] = min + 2;
-							pocicion[1] = min + 3;
-						} else {
-							pocicion[1] = min + 3;
-							pocicion[0] = min + 2;
-						}
-
-						if (igual[1][0]) {
-							if (fixture.get(min).getGoles() > fixture.get(min + 1).getGoles()) {
-								pocicion[2] = min;
-								pocicion[3] = min + 1;
-							} else {
-								pocicion[2] = min + 1;
-								pocicion[3] = min;
-							}
-						} else {
-							if (puntos[0] > puntos[1]) {
-								pocicion[2] = min;
-								pocicion[3] = min + 1;
-							} else {
-								pocicion[2] = min + 1;
-								pocicion[3] = min;
-							}
-
-						}
-					}
-
-				} else if (true) {
-
-				}
-
+				System.err.println(pocicion[2]);
 				for (int z = 0; z < pocicion.length; z++) {
 					listaequipos[main_contador] = pocicion[z];
 					main_contador++;
-					System.err.println(pocicion[z]);
+					/* System.err.println(pocicion[z]); */
 
 				}
 
@@ -834,20 +506,634 @@ public class Main {
 			contador++;
 
 		} while (contador != 8);
+		/*
+		 * Collections.sort(fixture, new Comparator<Equipo>() {
+		 * 
+		 * @Override public int compare(Equipo a, Equipo b) { int resultado =
+		 * (a.getGrupo() + "").compareTo(b.getGrupo() + ""); return resultado; } });
+		 */
+		Collections.sort(pociciones, new Comparator<Equipo>() {
+			@Override
+			public int compare(Equipo a, Equipo b) {
+				int resultado;
+				if (a.getGrupo() == b.getGrupo()) {
+					if (a.getPuntos() > b.getPuntos()) {
+						resultado = -1;
+					} else if (a.getPuntos() == b.getPuntos()) {
+						if (a.getGoles() > b.getGoles()) {
+							resultado = -1;
+						} else {
+							resultado = 0;
+						}
+					} else {
+						resultado = 0;
+					}
+				} else {
+					resultado = 0;
+				}
+				return resultado;
+			}
+		});
+
+		for (int i = 0; i < fixture.size(); i++) {
+			System.out.println(pociciones.get(i).getNombre() + " " + pociciones.get(i).getPuntos());
+		}
 
 		// JOptionPane.showMessageDialog(null, "salida correcta" + contador);
 		for (int i = 0; i <= 31; i++) {
 			// System.out.println(pociciones.get(i));
-			pociciones.add(i, fixture.get(listaequipos[i]));
+			// pociciones.add(i, fixture.get(listaequipos[i]));
 		}
 
 		for (int i = 0; i < 32; i++) {
-			System.out.println(i + pociciones.get(i).getNombre());
+			// System.out.println(i + pociciones.get(i).getNombre());
 			// System.out.println(i+ fixture.get(i).getNombre());
 			// System.out.println(listaequipos[i]);
 		}
 
 		return fixture;
 
+	}
+
+	public static LinkedList<Equipo> mostrar_grupopos(LinkedList<Equipo> fixture) {
+		String grupos[] = { "grupo A", "grupo B", "grupo C", "grupo D", "grupo E", "grupo F", "grupo G", "grupo H",
+				"salir" };
+		String Teams[] = new String[4];
+		String seleccion;
+		boolean comprobar = true;
+		int contador;
+		String mensaje;
+		int min = 0;
+		int max = 0;
+		do {
+			mensaje = "";
+			contador = 0;
+			seleccion = (String) JOptionPane.showInputDialog(null, "seleccione 1 grupo", "seleccion de grupo",
+					JOptionPane.QUESTION_MESSAGE, null, grupos, "seleccione");
+			switch (seleccion) {
+			case "grupo A":
+				min = 0;
+				max = 3;
+				break;
+			case "grupo B":
+				min = 4;
+				max = 7;
+				break;
+			case "grupo C":
+				min = 8;
+				max = 11;
+				break;
+			case "grupo D":
+				min = 12;
+				max = 15;
+				break;
+			case "grupo E":
+				min = 16;
+				max = 19;
+				break;
+			case "grupo F":
+				min = 20;
+				max = 23;
+				break;
+			case "grupo G":
+				min = 24;
+				max = 27;
+				break;
+			case "grupo H":
+				min = 28;
+				max = 31;
+				break;
+			default:
+				comprobar = false;
+				break;
+			}
+
+			if (comprobar) {
+				mensaje += "Pais     Puntos     Goles\n";
+				for (int i = min; i <= max; i++) {
+					mensaje += pociciones.get(i).getNombre();
+					mensaje += "      ";
+					mensaje += pociciones.get(i).getPuntos();
+					mensaje += "      ";
+					mensaje += pociciones.get(i).getGoles();
+					if (contador <= 3) {
+						mensaje += "\n";
+
+					}
+
+					Teams[contador] = pociciones.get(i).getNombre();
+
+					contador++;
+				}
+				String opciones[] = { "salir" };
+				String datos = (String) JOptionPane.showInputDialog(null, mensaje, "seleccion equipo",
+						JOptionPane.QUESTION_MESSAGE, null, opciones, "Seleccione");
+
+			}
+
+		} while (!seleccion.equalsIgnoreCase("salir"));
+		return fixture;
+	}
+
+	public static LinkedList<Equipo> pocicionamiento_eliminatorias8(LinkedList<Equipo> fixture) {
+		if (!Efuse[3]) {
+			for (int i = 0; i < eliminatoriaspos.length; i++) {
+				eliminatorias8[i] = pociciones.get(eliminatoriaspos[i]).getId();
+				System.out.println(eliminatorias8[i]);
+			}
+		}
+
+		return fixture;
+	}
+
+	public static LinkedList<Equipo> submenu(LinkedList<Equipo> fixture) {
+		int auxiliar = 0;
+		System.out.println("eliminatorias funciona");
+		String respuestas_elim[] = { "octavos de final", "cuartos de final", "semifinal", "final" };
+		if (Efuse[3]) {
+			auxiliar = 1;
+		}
+		if (Efuse[4]) {
+			auxiliar = 2;
+		}
+		if (Efuse[5]) {
+			auxiliar = 3;
+		} 
+		if(Efuse[6]) {
+			auxiliar = 4;
+		}
+		
+		String submenu[] = new String[auxiliar];
+		for (int i = 0; i < auxiliar; i++) {
+			submenu[i] = respuestas_elim[i];
+		}
+		
+		String partidoelim = null;
+		partidoelim = (String) JOptionPane.showInputDialog(null, "seleccione un equipo", "seleccion equipo",
+				JOptionPane.QUESTION_MESSAGE, null, submenu, "Seleccione");
+
+		switch (partidoelim) {
+		case "octavos de final":
+			pocicionamiento_eliminatorias8(fixture);
+			pocicionamiento_eliminatorias8p(fixture);
+			break;
+		case "cuartos de final":
+			pocicionamiento_eliminatorias4(fixture);
+			break;
+		case "semifinal":
+			pocicionamiento_eliminatorias2(fixture);
+			break;
+		case "final":
+			pocicionamiento_eliminatorias(fixture);
+			break;
+		}
+		return fixture;
+	}
+
+	public static LinkedList<Equipo> pocicionamiento_eliminatorias8p(LinkedList<Equipo> fixture) {
+		String partidoeli[] = {
+				fixture.get(eliminatorias8[0]).getNombre() + " vs " + fixture.get(eliminatorias8[1]).getNombre(),
+				fixture.get(eliminatorias8[2]).getNombre() + " vs " + fixture.get(eliminatorias8[3]).getNombre(),
+				fixture.get(eliminatorias8[4]).getNombre() + " vs " + fixture.get(eliminatorias8[5]).getNombre(),
+				fixture.get(eliminatorias8[6]).getNombre() + " vs " + fixture.get(eliminatorias8[7]).getNombre(),
+				fixture.get(eliminatorias8[8]).getNombre() + " vs " + fixture.get(eliminatorias8[9]).getNombre(),
+				fixture.get(eliminatorias8[10]).getNombre() + " vs " + fixture.get(eliminatorias8[11]).getNombre(),
+				fixture.get(eliminatorias8[12]).getNombre() + " vs " + fixture.get(eliminatorias8[13]).getNombre(),
+				fixture.get(eliminatorias8[14]).getNombre() + " vs " + fixture.get(eliminatorias8[15]).getNombre() };
+
+		if (false) {
+
+			/* para el final */
+			/* ver resultados partidos */
+			/* pos cada partido */
+			String partidoelim = (String) JOptionPane.showInputDialog(null, "seleccione un equipo", "seleccion equipo",
+					JOptionPane.QUESTION_MESSAGE, null, partidoeli, "Seleccione");
+
+			if (partidoelim.equals(
+					fixture.get(eliminatorias8[0]).getNombre() + " vs " + fixture.get(eliminatorias8[1]).getNombre())) {
+
+			} else if (partidoelim.equals(
+					fixture.get(eliminatorias8[2]).getNombre() + " vs " + fixture.get(eliminatorias8[3]).getNombre())) {
+
+			} else if (partidoelim.equals(
+					fixture.get(eliminatorias8[4]).getNombre() + " vs " + fixture.get(eliminatorias8[5]).getNombre())) {
+
+			} else if (partidoelim.equals(
+					fixture.get(eliminatorias8[6]).getNombre() + " vs " + fixture.get(eliminatorias8[7]).getNombre())) {
+
+			} else if (partidoelim.equals(
+					fixture.get(eliminatorias8[8]).getNombre() + " vs " + fixture.get(eliminatorias8[9]).getNombre())) {
+
+			} else if (partidoelim.equals(fixture.get(eliminatorias8[10]).getNombre() + " vs "
+					+ fixture.get(eliminatorias8[11]).getNombre())) {
+
+			} else if (partidoelim.equals(fixture.get(eliminatorias8[12]).getNombre() + " vs "
+					+ fixture.get(eliminatorias8[13]).getNombre())) {
+
+			} else if (partidoelim.equals(fixture.get(eliminatorias8[14]).getNombre() + " vs "
+					+ fixture.get(eliminatorias8[15]).getNombre())) {
+
+			}
+		} else {
+			String mensajes = "";
+			if (!Efuse[4]) {
+				for (int i = 7; i >= 0; i--) {
+					mensajes += fixture.get(eliminatorias8[i * 2]).getNombre() + " vs "
+							+ fixture.get(eliminatorias8[(i * 2) + 1]).getNombre();
+					mensajes += "\n";
+				}
+			} else {
+				for (int i = 7; i >= 0; i--) {
+					mensajes += fixture.get(eliminatorias8[i * 2]).getNombre() + " "
+							+ fixture.get(eliminatorias8[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
+							+ fixture.get(eliminatorias8[i * 2]).getFutbol().get(3).getGoles_2()
+							+ fixture.get(eliminatorias8[(i * 2) + 1]).getNombre();
+					mensajes += "\n";
+				}
+			}
+
+			JOptionPane.showMessageDialog(null, mensajes);
+		}
+		return fixture;
+	}
+
+	public static LinkedList<Equipo> pocicionamiento_eliminatorias4(LinkedList<Equipo> fixture) {
+		String mensajes = "";
+		if (!Efuse[5]) {
+			for (int i = 3; i >= 0; i--) {
+				mensajes += fixture.get(eliminatorias4[i * 2]).getNombre() + " vs "
+						+ fixture.get(eliminatorias4[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+			}
+		} else {
+			for (int i = 3; i >= 0; i--) {
+				mensajes += fixture.get(eliminatorias4[i * 2]).getNombre() + " "
+						+ fixture.get(eliminatorias4[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
+						+ fixture.get(eliminatorias4[i * 2]).getFutbol().get(3).getGoles_2()
+						+ fixture.get(eliminatorias4[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+			}
+		}
+
+		JOptionPane.showMessageDialog(null, mensajes);
+		return fixture;
+	}
+
+	public static LinkedList<Equipo> pocicionamiento_eliminatorias2(LinkedList<Equipo> fixture) {
+		String mensajes = "";
+		if (!Efuse[6]) {
+			for (int i = 1; i >= 0; i--) {
+				mensajes += fixture.get(eliminatorias2[i * 2]).getNombre() + " vs "
+						+ fixture.get(eliminatorias2[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+			}
+		} else {
+			for (int i = 1; i >= 0; i--) {
+				mensajes += fixture.get(eliminatorias2[i * 2]).getNombre() + " "
+						+ fixture.get(eliminatorias2[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
+						+ fixture.get(eliminatorias2[i * 2]).getFutbol().get(3).getGoles_2()
+						+ fixture.get(eliminatorias2[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+			}
+		}
+
+		JOptionPane.showMessageDialog(null, mensajes);
+		return fixture;
+	}
+	
+	public static LinkedList<Equipo> pocicionamiento_eliminatorias(LinkedList<Equipo> fixture) {
+		String mensajes = "";
+		if (Efuse[6]) {
+			for (int i = 0; i >= 0; i--) {
+				mensajes += fixture.get(eliminatorias1[i * 2]).getNombre() + " vs "
+						+ fixture.get(eliminatorias1[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+				mensajes += fixture.get(eliminatorias[i * 2]).getNombre() + " vs "
+						+ fixture.get(eliminatorias[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+			}
+		} else {
+			for (int i = 0; i >= 0; i--) {
+				mensajes += fixture.get(eliminatorias1[i * 2]).getNombre() + " "
+						+ fixture.get(eliminatorias1[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
+						+ fixture.get(eliminatorias1[i * 2]).getFutbol().get(3).getGoles_2()
+						+ fixture.get(eliminatorias1[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+				mensajes += fixture.get(eliminatorias[i * 2]).getNombre() + " "
+						+ fixture.get(eliminatorias[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
+						+ fixture.get(eliminatorias[i * 2]).getFutbol().get(3).getGoles_2()
+						+ fixture.get(eliminatorias[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+			}
+		}
+
+		JOptionPane.showMessageDialog(null, mensajes);
+		return fixture;
+	}
+	
+	public static LinkedList<Equipo> fecha4(LinkedList<Equipo> fixture) {
+		for (int j = 0; j < vatiables.length; j++) {
+
+			for (int i = 0; i < 8; i++) {
+				Partido partido3 = new Partido(fixture.get(eliminatorias8[i * 2]).getNombre(),
+						fixture.get(eliminatorias8[(i * 2)+ 1] ).getNombre(), null, 0, 0, 0);
+				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
+				int aux2[] = { 0, 0 };
+				if (aux1[0] == aux1[1]) {
+					aux2[0] = 3;
+					aux2[1] = 3;
+				}
+				if (aux1[0] > aux1[1]) {
+					aux2[0] = 1;
+					eliminatorias4[i] = fixture.get(eliminatorias8[i * 2]).getId();
+					aux2[1] = 2;
+				} else {
+					aux2[0] = 2;
+					eliminatorias4[i] = fixture.get(eliminatorias8[(i * 2) + 1]).getId();
+					aux2[1] = 1;
+				}
+				partido3.setGoles_1(aux1[0]);
+				partido3.setGoles_2(aux1[1]);
+
+				// arrayauxiliar = ;
+				LinkedList<Partido> aux4 = fixture.get(eliminatorias8[i * 2]).getFutbol();
+				LinkedList<Partido> aux5 = fixture.get(eliminatorias8[(i * 2) + 1]).getFutbol();
+				aux4.add(partido3);
+				aux5.add(partido3);
+				fixture.get(eliminatorias8[i * 2]).setFutbol(aux4);
+				fixture.get(eliminatorias8[(i * 2)+ 1]).setFutbol(aux5);
+				// System.out.println(arrayauxiliar[0]);
+				// ;
+				// test(arrayauxiliar[0]);
+
+				/*
+				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+				 */
+				Numero_de_partido++;
+			}
+
+		}
+		Efuse[3] = true;
+		return fixture;
+	}
+
+	public static LinkedList<Equipo> fecha5(LinkedList<Equipo> fixture) {
+		for (int j = 0; j < vatiables.length; j++) {
+
+			for (int i = 0; i < 4; i++) {
+				Partido partido4 = new Partido(fixture.get(eliminatorias4[i * 2]).getNombre(),
+						fixture.get(eliminatorias4[i * 2] + 1).getNombre(), null, 0, 0, 0);
+				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
+				int aux2[] = { 0, 0 };
+				if (aux1[0] == aux1[1]) {
+					aux2[0] = 3;
+					aux2[1] = 3;
+				}
+				if (aux1[0] > aux1[1]) {
+					aux2[0] = 1;
+					eliminatorias2[i] = fixture.get(eliminatorias4[i * 4]).getId();
+					aux2[1] = 2;
+				} else {
+					aux2[0] = 2;
+					eliminatorias2[i] = fixture.get(eliminatorias4[(i * 4) + 1]).getId();
+					aux2[1] = 1;
+				}
+				partido4.setGoles_1(aux1[0]);
+				partido4.setGoles_2(aux1[1]);
+
+				// arrayauxiliar = ;
+				LinkedList<Partido> aux4 = fixture.get(eliminatorias4[i * 2]).getFutbol();
+				LinkedList<Partido> aux5 = fixture.get(eliminatorias4[(i * 2)+1 ]).getFutbol();
+				aux4.add(partido4);
+				aux5.add(partido4);
+				fixture.get(eliminatorias4[i * 2]).setFutbol(aux4);
+				fixture.get(eliminatorias4[(i * 2)+ 1] ).setFutbol(aux5);
+				// System.out.println(arrayauxiliar[0]);
+				// ;
+				// test(arrayauxiliar[0]);
+
+				/*
+				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+				 */
+				Numero_de_partido++;
+			}
+
+		}
+		Efuse[4] = true;
+		return fixture;
+	}
+
+	public static LinkedList<Equipo> fecha6(LinkedList<Equipo> fixture) {
+		for (int j = 0; j < vatiables.length; j++) {
+
+			for (int i = 0; i < 2; i++) {
+				Partido partido4 = new Partido(fixture.get(eliminatorias4[i * 2]).getNombre(),
+						fixture.get(eliminatorias4[(i * 2)+ 1] ).getNombre(), null, 0, 0, 0);
+				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
+				int aux2[] = { 0, 0 };
+				if (aux1[0] == aux1[1]) {
+					aux2[0] = 3;
+					aux2[1] = 3;
+				}
+				if (aux1[0] > aux1[1]) {
+					aux2[0] = 1;
+					eliminatorias2[i] = fixture.get(eliminatorias4[i * 2]).getId();
+					aux2[1] = 2;
+				} else {
+					aux2[0] = 2;
+					eliminatorias2[i] = fixture.get(eliminatorias4[(i * 2) + 1]).getId();
+					aux2[1] = 1;
+				}
+				partido4.setGoles_1(aux1[0]);
+				partido4.setGoles_2(aux1[1]);
+
+				// arrayauxiliar = ;
+				LinkedList<Partido> aux4 = fixture.get(eliminatorias4[i * 2]).getFutbol();
+				LinkedList<Partido> aux5 = fixture.get(eliminatorias4[(i * 2) + 1]).getFutbol();
+				aux4.add(partido4);
+				aux5.add(partido4);
+				fixture.get(eliminatorias4[i * 2]).setFutbol(aux4);
+				fixture.get(eliminatorias4[(i * 2)+ 1] ).setFutbol(aux5);
+				// System.out.println(arrayauxiliar[0]);
+				// ;
+				// test(arrayauxiliar[0]);
+
+				/*
+				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+				 */
+				Numero_de_partido++;
+			}
+
+		}
+		Efuse[5] = true;
+		return fixture;
+	}
+
+	public static LinkedList<Equipo> fecha7(LinkedList<Equipo> fixture) {
+		for (int j = 0; j < vatiables.length; j++) {
+
+			for (int i = 0; i <= 1; i++) {
+				Partido partido4 = new Partido(fixture.get(eliminatorias2[i * 2]).getNombre(),
+						fixture.get(eliminatorias2[i * 2] + 1).getNombre(), null, 0, 0, 0);
+				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
+				int aux2[] = { 0, 0 };
+				if (aux1[0] == aux1[1]) {
+					aux2[0] = 3;
+					aux2[1] = 3;
+				}
+				if (aux1[0] > aux1[1]) {
+					aux2[0] = 1;
+					eliminatorias1[i] = fixture.get(eliminatorias2[i * 2]).getId();
+					aux2[1] = 2;
+					eliminatorias[i] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
+				} else {
+					aux2[0] = 2;
+					eliminatorias1[i] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
+					aux2[1] = 1;
+					eliminatorias[i] = fixture.get(eliminatorias2[i * 2]).getId();
+				}
+				partido4.setGoles_1(aux1[0]);
+				partido4.setGoles_2(aux1[1]);
+
+				// arrayauxiliar = ;
+				LinkedList<Partido> aux4 = fixture.get(eliminatorias2[i * 2]).getFutbol();
+				LinkedList<Partido> aux5 = fixture.get(eliminatorias2[(i * 2) + 1]).getFutbol();
+				aux4.add(partido4);
+				aux5.add(partido4);
+				fixture.get(eliminatorias2[i * 2]).setFutbol(aux4);
+				fixture.get(eliminatorias2[(i * 2)+ 1] ).setFutbol(aux5);
+				// System.out.println(arrayauxiliar[0]);
+				// ;
+				// test(arrayauxiliar[0]);
+
+				/*
+				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+				 */
+				Numero_de_partido++;
+			}
+
+		}
+		Efuse[6] = true;
+		return fixture;
+	}
+	
+	
+	public static LinkedList<Equipo> fecha8(LinkedList<Equipo> fixture) {
+		for (int j = 0; j < vatiables.length; j++) {
+
+			for (int i = 0; i < 1; i++) {
+				Partido partido4 = new Partido(fixture.get(eliminatorias1[i * 2]).getNombre(),
+						fixture.get(eliminatorias1[i * 2] + 1).getNombre(), null, 0, 0, 0);
+				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
+				int aux2[] = { 0, 0 };
+				if (aux1[0] == aux1[1]) {
+					aux2[0] = 3;
+					aux2[1] = 3;
+					if (Math.random()*2==1) {
+						top4[0]=fixture.get(eliminatorias1[i * 2]).getId();
+						top4[1]=fixture.get(eliminatorias1[(i * 2)+1]).getId();
+					}else {
+						top4[1]=fixture.get(eliminatorias1[i * 2]).getId();
+						top4[0]=fixture.get(eliminatorias1[(i * 2)+1]).getId();
+					}
+				}
+				if (aux1[0] > aux1[1]) {
+					aux2[0] = 1;
+					top4[i]  = fixture.get(eliminatorias1[i * 2]).getId();
+					aux2[1] = 2;
+					top4[i]  = fixture.get(eliminatorias1[(i * 2) + 1]).getId();
+				} else {
+					aux2[0] = 2;
+					top4[i]  = fixture.get(eliminatorias1[(i * 2) + 1]).getId();
+					aux2[1] = 1;
+					top4[i]  = fixture.get(eliminatorias1[i * 2]).getId();
+				}
+				partido4.setGoles_1(aux1[0]);
+				partido4.setGoles_2(aux1[1]);
+
+				// arrayauxiliar = ;
+				LinkedList<Partido> aux4 = fixture.get(eliminatorias1[i * 2]).getFutbol();
+				LinkedList<Partido> aux5 = fixture.get(eliminatorias1[(i * 2) + 1]).getFutbol();
+				aux4.add(partido4);
+				aux5.add(partido4);
+				fixture.get(eliminatorias1[i * 2]).setFutbol(aux4);
+				fixture.get(eliminatorias1[(i * 2) + 1]).setFutbol(aux5);
+				
+				
+				// System.out.println(arrayauxiliar[0]);
+				// ;
+				// test(arrayauxiliar[0]);
+
+				/*
+				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+				 */
+				Numero_de_partido++;
+			}
+
+		}
+		
+		return fecha9(fixture);
+	}
+	public static LinkedList<Equipo> fecha9(LinkedList<Equipo> fixture) {
+		for (int j = 0; j < vatiables.length; j++) {
+
+			for (int i = 0; i < 1; i++) {
+				Partido partido4 = new Partido(fixture.get(eliminatorias[i * 2]).getNombre(),
+						fixture.get(eliminatorias[i * 2] + 1).getNombre(), null, 0, 0, 0);
+				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
+				int aux2[] = { 0, 0 };
+				if (aux1[0] == aux1[1]) {
+					aux2[0] = 3;
+					aux2[1] = 3;
+					if (Math.random()*2==1) {
+						top4[0]=fixture.get(eliminatorias[i * 2]).getId();
+						top4[1]=fixture.get(eliminatorias[(i * 2)+1]).getId();
+					}else {
+						top4[1]=fixture.get(eliminatorias[i * 2]).getId();
+						top4[0]=fixture.get(eliminatorias[(i * 2)+1]).getId();
+					}
+				}
+				if (aux1[0] > aux1[1]) {
+					aux2[0] = 1;
+					top4[0]  = fixture.get(eliminatorias[i * 2]).getId();
+					aux2[1] = 2;
+					top4[1]  = fixture.get(eliminatorias[(i * 2) + 1]).getId();
+				} else {
+					aux2[0] = 2;
+					top4[0]  = fixture.get(eliminatorias[(i * 2) + 1]).getId();
+					aux2[1] = 1;
+					top4[1]  = fixture.get(eliminatorias[i * 2]).getId();
+				}
+				partido4.setGoles_1(aux1[0]);
+				partido4.setGoles_2(aux1[1]);
+
+				// arrayauxiliar = ;
+				LinkedList<Partido> aux4 = fixture.get(eliminatorias[i * 2]).getFutbol();
+				LinkedList<Partido> aux5 = fixture.get(eliminatorias[(i * 2) + 1]).getFutbol();
+				aux4.add(partido4);
+				aux5.add(partido4);
+				fixture.get(eliminatorias[i * 2]).setFutbol(aux4);
+				fixture.get(eliminatorias[(i * 2)+ 1] ).setFutbol(aux5);
+				
+				
+				// System.out.println(arrayauxiliar[0]);
+				// ;
+				// test(arrayauxiliar[0]);
+
+				/*
+				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+				 */
+				Numero_de_partido++;
+			}
+
+		}
+		Efuse[6] = true;
+		return fixture;
 	}
 }
