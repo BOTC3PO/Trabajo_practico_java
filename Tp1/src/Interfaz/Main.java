@@ -62,6 +62,7 @@ public class Main {
 		return fixture;
 	}
 
+	@SuppressWarnings("unused")
 	private static void test(int dato) {
 		switch (dato) {
 		case 0:
