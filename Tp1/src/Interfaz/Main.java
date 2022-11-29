@@ -650,16 +650,16 @@ public class Main {
 		int auxiliar = 0;
 		System.out.println("eliminatorias funciona");
 		String respuestas_elim[] = { "octavos de final", "cuartos de final", "semifinal", "final" };
-		if (Efuse[3]) {
+		if (Efuse[2]) {
 			auxiliar = 1;
 		}
-		if (Efuse[4]) {
+		if (Efuse[3]) {
 			auxiliar = 2;
 		}
-		if (Efuse[5]) {
+		if (Efuse[4]) {
 			auxiliar = 3;
 		} 
-		if(Efuse[6]) {
+		if(Efuse[5]) {
 			auxiliar = 4;
 		}
 		
@@ -736,7 +736,7 @@ public class Main {
 			}
 		} else {
 			String mensajes = "";
-			if (!Efuse[4]) {
+			if (!Efuse[3]) {
 				for (int i = 7; i >= 0; i--) {
 					mensajes += fixture.get(eliminatorias8[i * 2]).getNombre() + " vs "
 							+ fixture.get(eliminatorias8[(i * 2) + 1]).getNombre();
@@ -746,7 +746,7 @@ public class Main {
 				for (int i = 7; i >= 0; i--) {
 					mensajes += fixture.get(eliminatorias8[i * 2]).getNombre() + " "
 							+ fixture.get(eliminatorias8[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
-							+ fixture.get(eliminatorias8[i * 2]).getFutbol().get(3).getGoles_2()
+							+ fixture.get(eliminatorias8[i * 2]).getFutbol().get(3).getGoles_2() + " "
 							+ fixture.get(eliminatorias8[(i * 2) + 1]).getNombre();
 					mensajes += "\n";
 				}
@@ -759,7 +759,7 @@ public class Main {
 
 	public static LinkedList<Equipo> pocicionamiento_eliminatorias4(LinkedList<Equipo> fixture) {
 		String mensajes = "";
-		if (!Efuse[5]) {
+		if (!Efuse[4]) {
 			for (int i = 3; i >= 0; i--) {
 				mensajes += fixture.get(eliminatorias4[i * 2]).getNombre() + " vs "
 						+ fixture.get(eliminatorias4[(i * 2) + 1]).getNombre();
@@ -769,7 +769,7 @@ public class Main {
 			for (int i = 3; i >= 0; i--) {
 				mensajes += fixture.get(eliminatorias4[i * 2]).getNombre() + " "
 						+ fixture.get(eliminatorias4[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
-						+ fixture.get(eliminatorias4[i * 2]).getFutbol().get(3).getGoles_2()
+						+ fixture.get(eliminatorias4[i * 2]).getFutbol().get(3).getGoles_2() + " "
 						+ fixture.get(eliminatorias4[(i * 2) + 1]).getNombre();
 				mensajes += "\n";
 			}
@@ -781,7 +781,7 @@ public class Main {
 
 	public static LinkedList<Equipo> pocicionamiento_eliminatorias2(LinkedList<Equipo> fixture) {
 		String mensajes = "";
-		if (!Efuse[6]) {
+		if (!Efuse[5]) {
 			for (int i = 1; i >= 0; i--) {
 				mensajes += fixture.get(eliminatorias2[i * 2]).getNombre() + " vs "
 						+ fixture.get(eliminatorias2[(i * 2) + 1]).getNombre();
@@ -791,7 +791,7 @@ public class Main {
 			for (int i = 1; i >= 0; i--) {
 				mensajes += fixture.get(eliminatorias2[i * 2]).getNombre() + " "
 						+ fixture.get(eliminatorias2[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
-						+ fixture.get(eliminatorias2[i * 2]).getFutbol().get(3).getGoles_2()
+						+ fixture.get(eliminatorias2[i * 2]).getFutbol().get(3).getGoles_2() + " "
 						+ fixture.get(eliminatorias2[(i * 2) + 1]).getNombre();
 				mensajes += "\n";
 			}
@@ -808,7 +808,7 @@ public class Main {
 				mensajes += "final\n";
 				mensajes += fixture.get(eliminatorias1[0]).getNombre() + " vs "
 						+ fixture.get(eliminatorias1[1]).getNombre();
-				mensajes += "tercer puesto\n";
+				mensajes += "\ntercer puesto\n";
 				mensajes += fixture.get(eliminatorias[0]).getNombre() + " vs "
 						+ fixture.get(eliminatorias[1]).getNombre();
 				mensajes += "\n";
@@ -819,7 +819,7 @@ public class Main {
 						+ fixture.get(eliminatorias1[0]).getFutbol().get(3).getGoles_1() + " vs " + " "
 						+ fixture.get(eliminatorias1[ 1]).getFutbol().get(3).getGoles_2()
 						+ fixture.get(eliminatorias1[ 1]).getNombre();
-			mensajes += "\ntercer puesto\n";
+			mensajes += "\ntercer puesto \n";
 				mensajes += fixture.get(eliminatorias[0]).getNombre() + " "
 						+ fixture.get(eliminatorias[0]).getFutbol().get(3).getGoles_1() + " vs " + " "
 						+ fixture.get(eliminatorias[ 1]).getFutbol().get(3).getGoles_2()
