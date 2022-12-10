@@ -50,7 +50,7 @@ public class Main {
 
 		String[] equipos = { "qatar", "ecuador", "senegal", "paises bajos", "Inglaterra", "iran", "Estados unidos",
 				"Gales", "Argentina", "Arabia Saudita", "Mexico", "Polonia", "francia", "Australia", "Dinamarca",
-				"tunez", "España", "costa rica", "Alemania", "Japon", "Belgica", "Canada", "Marruecos", "Croacia",
+				"tunez", "Espaï¿½a", "costa rica", "Alemania", "Japon", "Belgica", "Canada", "Marruecos", "Croacia",
 				"Brasil", "serbia", "Suiza", "Camerun", "Portugal", "Ghana", "Uruguay", "Corea del sur" };
 		int data[] = { 0, 0, 0 };
 		for (int i = 0; i < equipos.length; i++) {
@@ -84,7 +84,7 @@ public class Main {
 		String grupos[] = { "grupo A", "grupo B", "grupo C", "grupo D", "grupo E", "grupo F", "grupo G", "grupo H",
 				"salir" };
 		String Teams[] = new String[4];
-		String seleccion;
+		String seleccion=grupos[0];
 		boolean comprobar = true;
 		int contador;
 		String mensaje;
@@ -94,7 +94,7 @@ public class Main {
 			mensaje = "";
 			contador = 0;
 			seleccion = (String) JOptionPane.showInputDialog(null, "seleccione 1 grupo", "seleccion de grupo",
-					JOptionPane.QUESTION_MESSAGE, null, grupos, "seleccione");
+					JOptionPane.QUESTION_MESSAGE, null, grupos, seleccion);
 			switch (seleccion) {
 			case "grupo A":
 				min = 0;
@@ -145,13 +145,16 @@ public class Main {
 
 					contador++;
 				}
+				
+				JOptionPane.showMessageDialog(null, mensaje);
+				/*
 				String opciones[] = { "siguiente", "salir" };
 				String datos = (String) JOptionPane.showInputDialog(null, mensaje, "seleccion equipo",
 						JOptionPane.QUESTION_MESSAGE, null, opciones, "Seleccione");
 				if (datos.equalsIgnoreCase("siguiente")) {
 					String fixture_equipo = (String) JOptionPane.showInputDialog(null, "seleccionar equipo",
 							"seleccion equipo", JOptionPane.QUESTION_MESSAGE, null, Teams, "Seleccione");
-				}
+				}*/
 
 			}
 
@@ -560,7 +563,7 @@ public class Main {
 		String grupos[] = { "grupo A", "grupo B", "grupo C", "grupo D", "grupo E", "grupo F", "grupo G", "grupo H",
 				"salir" };
 		String Teams[] = new String[4];
-		String seleccion;
+		String seleccion=grupos[0];
 		boolean comprobar = true;
 		int contador;
 		String mensaje;
@@ -570,7 +573,7 @@ public class Main {
 			mensaje = "";
 			contador = 0;
 			seleccion = (String) JOptionPane.showInputDialog(null, "seleccione 1 grupo", "seleccion de grupo",
-					JOptionPane.QUESTION_MESSAGE, null, grupos, "seleccione");
+					JOptionPane.QUESTION_MESSAGE, null, grupos, seleccion);
 			switch (seleccion) {
 			case "grupo A":
 				min = 0;
@@ -626,9 +629,8 @@ public class Main {
 
 					contador++;
 				}
-				String opciones[] = { "salir" };
-				String datos = (String) JOptionPane.showInputDialog(null, mensaje, "seleccion equipo",
-						JOptionPane.QUESTION_MESSAGE, null, opciones, "Seleccione");
+				//String opciones[] = { "salir" };
+				JOptionPane.showMessageDialog(null, mensaje, seleccion, 1);
 
 			}
 
@@ -692,50 +694,7 @@ public class Main {
 	}
 
 	public static LinkedList<Equipo> pocicionamiento_eliminatorias8p(LinkedList<Equipo> fixture) {
-		String partidoeli[] = {
-				fixture.get(eliminatorias8[0]).getNombre() + " vs " + fixture.get(eliminatorias8[1]).getNombre(),
-				fixture.get(eliminatorias8[2]).getNombre() + " vs " + fixture.get(eliminatorias8[3]).getNombre(),
-				fixture.get(eliminatorias8[4]).getNombre() + " vs " + fixture.get(eliminatorias8[5]).getNombre(),
-				fixture.get(eliminatorias8[6]).getNombre() + " vs " + fixture.get(eliminatorias8[7]).getNombre(),
-				fixture.get(eliminatorias8[8]).getNombre() + " vs " + fixture.get(eliminatorias8[9]).getNombre(),
-				fixture.get(eliminatorias8[10]).getNombre() + " vs " + fixture.get(eliminatorias8[11]).getNombre(),
-				fixture.get(eliminatorias8[12]).getNombre() + " vs " + fixture.get(eliminatorias8[13]).getNombre(),
-				fixture.get(eliminatorias8[14]).getNombre() + " vs " + fixture.get(eliminatorias8[15]).getNombre() };
-
-		if (false) {
-
-			/* para el final */
-			/* ver resultados partidos */
-			/* pos cada partido */
-			String partidoelim = (String) JOptionPane.showInputDialog(null, "seleccione un equipo", "seleccion equipo",
-					JOptionPane.QUESTION_MESSAGE, null, partidoeli, "Seleccione");
-
-			if (partidoelim.equals(
-					fixture.get(eliminatorias8[0]).getNombre() + " vs " + fixture.get(eliminatorias8[1]).getNombre())) {
-
-			} else if (partidoelim.equals(
-					fixture.get(eliminatorias8[2]).getNombre() + " vs " + fixture.get(eliminatorias8[3]).getNombre())) {
-
-			} else if (partidoelim.equals(
-					fixture.get(eliminatorias8[4]).getNombre() + " vs " + fixture.get(eliminatorias8[5]).getNombre())) {
-
-			} else if (partidoelim.equals(
-					fixture.get(eliminatorias8[6]).getNombre() + " vs " + fixture.get(eliminatorias8[7]).getNombre())) {
-
-			} else if (partidoelim.equals(
-					fixture.get(eliminatorias8[8]).getNombre() + " vs " + fixture.get(eliminatorias8[9]).getNombre())) {
-
-			} else if (partidoelim.equals(fixture.get(eliminatorias8[10]).getNombre() + " vs "
-					+ fixture.get(eliminatorias8[11]).getNombre())) {
-
-			} else if (partidoelim.equals(fixture.get(eliminatorias8[12]).getNombre() + " vs "
-					+ fixture.get(eliminatorias8[13]).getNombre())) {
-
-			} else if (partidoelim.equals(fixture.get(eliminatorias8[14]).getNombre() + " vs "
-					+ fixture.get(eliminatorias8[15]).getNombre())) {
-
-			}
-		} else {
+		
 			String mensajes = "";
 			if (!Efuse[3]) {
 				for (int i = 7; i >= 0; i--) {
@@ -754,7 +713,7 @@ public class Main {
 			}
 
 			JOptionPane.showMessageDialog(null, mensajes);
-		}
+		
 		return fixture;
 	}
 
