@@ -1,11 +1,16 @@
 package Interfaz;
 
+import java.awt.Dimension;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 import bin.Equipo;
 import bin.Partido;
@@ -39,8 +44,8 @@ public class Main {
 		 * System.out.println(fixture.get(i).getNombre()); }
 		 */
 		// System.out.println(fixture.get(0).getGrupos()[1]);
+		apuesta(fixture);
 		menu_inicio(fixture);
-
 		System.out.println(Numero_de_partido);
 	}
 
@@ -1083,17 +1088,56 @@ public class Main {
 		return fixture;
 	}
 
+	static Boolean apostar = false;
+	
 	public static void apuesta(LinkedList<Equipo> fixture) {
 		String posibilidades[] = { "gana", "pierde", "empata" };
 		String equipos[] = new String[fixture.size()];
-		Boolean apostar = false;
+		apostar=false;
 		for (int i = 0; i < equipos.length; i++) {
 			equipos[i] = fixture.get(i).getNombre();
 		}
 		JOptionPane.showMessageDialog(null, "elige 1 seleccion y predice el resultado");
+		 JFrame frame = new JFrame();
+		String opcion_elegida = (String) JOptionPane.showInputDialog(frame, "elije 1 seleccion", " predice el resultado",JOptionPane.QUESTION_MESSAGE, null, equipos,2);
+		System.err.println(opcion_elegida);
 		// JOptionPane.showInputDialog();
 		int equipo_seleccionado = 0;
 		JOptionPane.showMessageDialog(null, "elije el resultado");
+		// fecha 1
+		int valor=0;
+		if (!Efuse[0]) {
+			valor = 4;
+		}else if (!Efuse[1]) {
+			valor = 3;
+		}else {
+			 valor = 2;
+		}
+		
+		String opciones_equipo[] =new String[valor];
+		
+		
+		opciones_equipo=opciones_apuesta(fixture,equipos,opcion_elegida,valor);
+		
+		if (apostar) {
+			JOptionPane.showInputDialog(opciones_equipo[0]);
+		}
+		
+		
+		
+
+	}
+
+	
+	public static String[] opciones_apuesta(LinkedList<Equipo> fixture,String[] equipos,String opcion_elegida,int valor) {
+		int equipo_seleccionado;
+		for (int i = 0; i < fixture.size(); i++) {
+			if (fixture.get(i).getNombre().equals(opcion_elegida)) {
+				equipo_seleccionado=fixture.get(i).getId();
+			}
+		}
+		
+		
 		// fecha 1
 		if (!Efuse[0]) {
 			String opciones_equipo[] = { "fecha 1", "fecha 2", "fecha 3", "salir" };
@@ -1169,10 +1213,9 @@ public class Main {
 		}
 		
 		
-		
-		
-		
-
+		return opciones_equipo;
 	}
-
+	
+	
+	
 }
