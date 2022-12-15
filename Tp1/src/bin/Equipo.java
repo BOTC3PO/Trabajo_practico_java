@@ -8,16 +8,18 @@ public class Equipo {
 	private int goles,puntos,grupo,id;
 	// 0 - no jugado 1- ganado - 2 perdido 3- empate
 	private int grupos[] = new int [3];
+	private int apuesta[]= new int [7];
 	private boolean clasificado;
 	private LinkedList<Partido> futbol = new LinkedList<Partido>();
 
-	public Equipo(String nombre, int goles, int[] grupos, boolean clasificado,
+	public Equipo(String nombre, int goles, int[] grupos,int[] apuesta, boolean clasificado,
 			LinkedList<Partido> futbol,int id) {
 		Nombre = nombre;
 		this.goles = goles;
 		this.puntos = 0;
 		this.grupos = grupos;
 		this.grupo=0;
+		this.apuesta=apuesta;
 		this.clasificado = clasificado;
 		this.futbol = futbol;
 		this.id=id;
@@ -131,6 +133,14 @@ public class Equipo {
 		this.grupo = grupo;
 	}
 
+	public int[] getApuesta() {
+		return apuesta;
+	}
+
+	public void setApuesta(int apuesta[]) {
+		this.apuesta = apuesta;
+	}
+	
 	@Override
 	public String toString() {
 		return "Equipo [Nombre=" + Nombre + ", Goles=" + goles + ", grupos=" + Arrays.toString(grupos)

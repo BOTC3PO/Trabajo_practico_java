@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
-import javax.swing.text.Position;
 
 import bin.Equipo;
 import bin.Partido;
@@ -15,11 +14,11 @@ public class Main {
 
 	public static int Numero_de_partido = 0;
 	public static boolean Efuse[] = { false, false, false, false, false, false, false };
-	public static int vatiables[] = { 0, 8, 16, 24 };
+	public static final int vatiables[] = { 0, 8, 16, 24 };
 	public static String Menu[] = {};
-	public static int Fecha1[][] = { { 1, 5, 3, 7 }, { 2, 6, 4, 8 } };
-	public static int Fecha2[][] = { { 6, 1, 2, 5 }, { 8, 3, 4, 7 } };
-	public static int Fecha3[][] = { { 2, 6, 4, 8 }, { 3, 7, 1, 5 } };
+	public static final int Fecha1[][] = { { 1, 5, 3, 7 }, { 2, 6, 4, 8 } };
+	public static final int Fecha2[][] = { { 6, 1, 2, 5 }, { 8, 3, 4, 7 } };
+	public static final int Fecha3[][] = { { 2, 6, 4, 8 }, { 3, 7, 1, 5 } };
 	public static int eliminatoriaspos[] = { 0, 5, 8, 13, 16, 21, 24, 29, 4, 1, 12, 9, 20, 17, 28, 25 };
 	public static int eliminatorias8[] = new int[16];
 	public static int eliminatorias4[] = new int[8];
@@ -53,8 +52,9 @@ public class Main {
 				"tunez", "Espa�a", "costa rica", "Alemania", "Japon", "Belgica", "Canada", "Marruecos", "Croacia",
 				"Brasil", "serbia", "Suiza", "Camerun", "Portugal", "Ghana", "Uruguay", "Corea del sur" };
 		int data[] = { 0, 0, 0 };
+		int data2[] = { 0, 0, 0, 0, 0, 0, 0 };
 		for (int i = 0; i < equipos.length; i++) {
-			Equipo equipo = new Equipo(equipos[i], 0, data, true, null, i);
+			Equipo equipo = new Equipo(equipos[i], 0, data, data2, true, null, i);
 			fixture.add(equipo);
 			fixture.get(i).setGrupo(i);
 		}
@@ -84,7 +84,7 @@ public class Main {
 		String grupos[] = { "grupo A", "grupo B", "grupo C", "grupo D", "grupo E", "grupo F", "grupo G", "grupo H",
 				"salir" };
 		String Teams[] = new String[4];
-		String seleccion=grupos[0];
+		String seleccion = grupos[0];
 		boolean comprobar = true;
 		int contador;
 		String mensaje;
@@ -145,16 +145,16 @@ public class Main {
 
 					contador++;
 				}
-				
+
 				JOptionPane.showMessageDialog(null, mensaje);
 				/*
-				String opciones[] = { "siguiente", "salir" };
-				String datos = (String) JOptionPane.showInputDialog(null, mensaje, "seleccion equipo",
-						JOptionPane.QUESTION_MESSAGE, null, opciones, "Seleccione");
-				if (datos.equalsIgnoreCase("siguiente")) {
-					String fixture_equipo = (String) JOptionPane.showInputDialog(null, "seleccionar equipo",
-							"seleccion equipo", JOptionPane.QUESTION_MESSAGE, null, Teams, "Seleccione");
-				}*/
+				 * String opciones[] = { "siguiente", "salir" }; String datos = (String)
+				 * JOptionPane.showInputDialog(null, mensaje, "seleccion equipo",
+				 * JOptionPane.QUESTION_MESSAGE, null, opciones, "Seleccione"); if
+				 * (datos.equalsIgnoreCase("siguiente")) { String fixture_equipo = (String)
+				 * JOptionPane.showInputDialog(null, "seleccionar equipo", "seleccion equipo",
+				 * JOptionPane.QUESTION_MESSAGE, null, Teams, "Seleccione"); }
+				 */
 
 			}
 
@@ -353,7 +353,7 @@ public class Main {
 		if (Efuse[6]) {
 			return mensaje_gen;
 		}
-		
+
 		if (Efuse[2] || Efuse[3] || Efuse[4] || Efuse[5]) {
 			return mensaje_gen2;
 		} else {
@@ -368,11 +368,11 @@ public class Main {
 
 			Menu = crear_menu();
 
-			menu_select = (String) JOptionPane.showInputDialog(null, "Seleccione una opcion", "Menu principal",
-					JOptionPane.QUESTION_MESSAGE, null, Menu, "Seleccione");
+			menu_select = Menu[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])];
 
 			System.out.println(menu_select);
-			
+
 			switch (menu_select) {
 			case "ver grupos":
 				/* mostrar equipos */
@@ -563,7 +563,7 @@ public class Main {
 		String grupos[] = { "grupo A", "grupo B", "grupo C", "grupo D", "grupo E", "grupo F", "grupo G", "grupo H",
 				"salir" };
 		String Teams[] = new String[4];
-		String seleccion=grupos[0];
+		String seleccion = grupos[0];
 		boolean comprobar = true;
 		int contador;
 		String mensaje;
@@ -629,7 +629,7 @@ public class Main {
 
 					contador++;
 				}
-				//String opciones[] = { "salir" };
+				// String opciones[] = { "salir" };
 				JOptionPane.showMessageDialog(null, mensaje, seleccion, 1);
 
 			}
@@ -661,16 +661,16 @@ public class Main {
 		}
 		if (Efuse[4]) {
 			auxiliar = 3;
-		} 
-		if(Efuse[5]) {
+		}
+		if (Efuse[5]) {
 			auxiliar = 4;
 		}
-		
+
 		String submenu[] = new String[auxiliar];
 		for (int i = 0; i < auxiliar; i++) {
 			submenu[i] = respuestas_elim[i];
 		}
-		
+
 		String partidoelim = null;
 		partidoelim = (String) JOptionPane.showInputDialog(null, "seleccione un equipo", "seleccion equipo",
 				JOptionPane.QUESTION_MESSAGE, null, submenu, "Seleccione");
@@ -694,26 +694,26 @@ public class Main {
 	}
 
 	public static LinkedList<Equipo> pocicionamiento_eliminatorias8p(LinkedList<Equipo> fixture) {
-		
-			String mensajes = "";
-			if (!Efuse[3]) {
-				for (int i = 7; i >= 0; i--) {
-					mensajes += fixture.get(eliminatorias8[i * 2]).getNombre() + " vs "
-							+ fixture.get(eliminatorias8[(i * 2) + 1]).getNombre();
-					mensajes += "\n";
-				}
-			} else {
-				for (int i = 7; i >= 0; i--) {
-					mensajes += fixture.get(eliminatorias8[i * 2]).getNombre() + " "
-							+ fixture.get(eliminatorias8[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
-							+ fixture.get(eliminatorias8[i * 2]).getFutbol().get(3).getGoles_2() + " "
-							+ fixture.get(eliminatorias8[(i * 2) + 1]).getNombre();
-					mensajes += "\n";
-				}
-			}
 
-			JOptionPane.showMessageDialog(null, mensajes);
-		
+		String mensajes = "";
+		if (!Efuse[3]) {
+			for (int i = 7; i >= 0; i--) {
+				mensajes += fixture.get(eliminatorias8[i * 2]).getNombre() + " vs "
+						+ fixture.get(eliminatorias8[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+			}
+		} else {
+			for (int i = 7; i >= 0; i--) {
+				mensajes += fixture.get(eliminatorias8[i * 2]).getNombre() + " "
+						+ fixture.get(eliminatorias8[i * 2]).getFutbol().get(3).getGoles_1() + " vs " + " "
+						+ fixture.get(eliminatorias8[i * 2]).getFutbol().get(3).getGoles_2() + " "
+						+ fixture.get(eliminatorias8[(i * 2) + 1]).getNombre();
+				mensajes += "\n";
+			}
+		}
+
+		JOptionPane.showMessageDialog(null, mensajes);
+
 		return fixture;
 	}
 
@@ -760,44 +760,43 @@ public class Main {
 		JOptionPane.showMessageDialog(null, mensajes);
 		return fixture;
 	}
-	
+
 	public static LinkedList<Equipo> pocicionamiento_eliminatorias(LinkedList<Equipo> fixture) {
 		String mensajes = "";
-		
+
 		if (!Efuse[6]) {
-				mensajes += "final\n";
-				mensajes += fixture.get(eliminatorias1[0]).getNombre() + " vs "
-						+ fixture.get(eliminatorias1[1]).getNombre();
-				mensajes += "\ntercer puesto\n";
-				mensajes += fixture.get(eliminatorias[0]).getNombre() + " vs "
-						+ fixture.get(eliminatorias[1]).getNombre();
-				mensajes += "\n";
-			
+			mensajes += "final\n";
+			mensajes += fixture.get(eliminatorias1[0]).getNombre() + " vs "
+					+ fixture.get(eliminatorias1[1]).getNombre();
+			mensajes += "\ntercer puesto\n";
+			mensajes += fixture.get(eliminatorias[0]).getNombre() + " vs " + fixture.get(eliminatorias[1]).getNombre();
+			mensajes += "\n";
+
 		} else {
 			mensajes += "final\n";
-				mensajes += fixture.get(eliminatorias1[0]).getNombre() + " "
-						+ fixture.get(eliminatorias1[0]).getFutbol().get(3).getGoles_1() + " vs " + " "
-						+ fixture.get(eliminatorias1[ 1]).getFutbol().get(3).getGoles_2()
-						+ fixture.get(eliminatorias1[ 1]).getNombre();
+			mensajes += fixture.get(eliminatorias1[0]).getNombre() + " "
+					+ fixture.get(eliminatorias1[0]).getFutbol().get(3).getGoles_1() + " vs " + " "
+					+ fixture.get(eliminatorias1[1]).getFutbol().get(3).getGoles_2()
+					+ fixture.get(eliminatorias1[1]).getNombre();
 			mensajes += "\ntercer puesto \n";
-				mensajes += fixture.get(eliminatorias[0]).getNombre() + " "
-						+ fixture.get(eliminatorias[0]).getFutbol().get(3).getGoles_1() + " vs " + " "
-						+ fixture.get(eliminatorias[ 1]).getFutbol().get(3).getGoles_2()
-						+ fixture.get(eliminatorias[ 1]).getNombre();
-				mensajes += "\n";
-			
+			mensajes += fixture.get(eliminatorias[0]).getNombre() + " "
+					+ fixture.get(eliminatorias[0]).getFutbol().get(3).getGoles_1() + " vs " + " "
+					+ fixture.get(eliminatorias[1]).getFutbol().get(3).getGoles_2()
+					+ fixture.get(eliminatorias[1]).getNombre();
+			mensajes += "\n";
+
 		}
 
 		JOptionPane.showMessageDialog(null, mensajes);
 		return fixture;
 	}
-	
+
 	public static LinkedList<Equipo> fecha4(LinkedList<Equipo> fixture) {
 		for (int j = 0; j < vatiables.length; j++) {
 
 			for (int i = 0; i < 8; i++) {
 				Partido partido3 = new Partido(fixture.get(eliminatorias8[i * 2]).getNombre(),
-						fixture.get(eliminatorias8[(i * 2)+ 1] ).getNombre(), null, 0, 0, 0);
+						fixture.get(eliminatorias8[(i * 2) + 1]).getNombre(), null, 0, 0, 0);
 				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
 				int aux2[] = { 0, 0 };
 				if (aux1[0] == aux1[1]) {
@@ -822,7 +821,7 @@ public class Main {
 				aux4.add(partido3);
 				aux5.add(partido3);
 				fixture.get(eliminatorias8[i * 2]).setFutbol(aux4);
-				fixture.get(eliminatorias8[(i * 2)+ 1]).setFutbol(aux5);
+				fixture.get(eliminatorias8[(i * 2) + 1]).setFutbol(aux5);
 				// System.out.println(arrayauxiliar[0]);
 				// ;
 				// test(arrayauxiliar[0]);
@@ -865,11 +864,11 @@ public class Main {
 
 				// arrayauxiliar = ;
 				LinkedList<Partido> aux4 = fixture.get(eliminatorias4[i * 2]).getFutbol();
-				LinkedList<Partido> aux5 = fixture.get(eliminatorias4[(i * 2)+1 ]).getFutbol();
+				LinkedList<Partido> aux5 = fixture.get(eliminatorias4[(i * 2) + 1]).getFutbol();
 				aux4.add(partido4);
 				aux5.add(partido4);
 				fixture.get(eliminatorias4[i * 2]).setFutbol(aux4);
-				fixture.get(eliminatorias4[(i * 2)+ 1] ).setFutbol(aux5);
+				fixture.get(eliminatorias4[(i * 2) + 1]).setFutbol(aux5);
 				// System.out.println(arrayauxiliar[0]);
 				// ;
 				// test(arrayauxiliar[0]);
@@ -885,231 +884,295 @@ public class Main {
 		Efuse[4] = true;
 		return fixture;
 	}
-/*
-	public static LinkedList<Equipo> fecha6(LinkedList<Equipo> fixture) {
-		for (int j = 0; j < vatiables.length; j++) {
 
-			for (int i = 0; i < 2; i++) {
-				Partido partido4 = new Partido(fixture.get(eliminatorias4[i * 2]).getNombre(),
-						fixture.get(eliminatorias4[(i * 2)+ 1] ).getNombre(), null, 0, 0, 0);
-				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
-				int aux2[] = { 0, 0 };
-				if (aux1[0] == aux1[1]) {
-					aux2[0] = 3;
-					aux2[1] = 3;
-				}
-				if (aux1[0] > aux1[1]) {
-					aux2[0] = 1;
-					eliminatorias2[i] = fixture.get(eliminatorias4[i * 2]).getId();
-					aux2[1] = 2;
-				} else {
-					aux2[0] = 2;
-					eliminatorias2[i] = fixture.get(eliminatorias4[(i * 2) + 1]).getId();
-					aux2[1] = 1;
-				}
-				partido4.setGoles_1(aux1[0]);
-				partido4.setGoles_2(aux1[1]);
-
-				// arrayauxiliar = ;
-				LinkedList<Partido> aux4 = fixture.get(eliminatorias4[i * 2]).getFutbol();
-				LinkedList<Partido> aux5 = fixture.get(eliminatorias4[(i * 2) + 1]).getFutbol();
-				aux4.add(partido4);
-				aux5.add(partido4);
-				fixture.get(eliminatorias4[i * 2]).setFutbol(aux4);
-				fixture.get(eliminatorias4[(i * 2)+ 1] ).setFutbol(aux5);
-				// System.out.println(arrayauxiliar[0]);
-				// ;
-				// test(arrayauxiliar[0]);
-
-				/*
-				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
-				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
-				 */
-			/*	Numero_de_partido++;
-			}
-
-		}
-		Efuse[5] = true;
-		return fixture;
-	}
-*/
+	/*
+	 * public static LinkedList<Equipo> fecha6(LinkedList<Equipo> fixture) { for
+	 * (int j = 0; j < vatiables.length; j++) {
+	 * 
+	 * for (int i = 0; i < 2; i++) { Partido partido4 = new
+	 * Partido(fixture.get(eliminatorias4[i * 2]).getNombre(),
+	 * fixture.get(eliminatorias4[(i * 2)+ 1] ).getNombre(), null, 0, 0, 0); int
+	 * aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) }; int
+	 * aux2[] = { 0, 0 }; if (aux1[0] == aux1[1]) { aux2[0] = 3; aux2[1] = 3; } if
+	 * (aux1[0] > aux1[1]) { aux2[0] = 1; eliminatorias2[i] =
+	 * fixture.get(eliminatorias4[i * 2]).getId(); aux2[1] = 2; } else { aux2[0] =
+	 * 2; eliminatorias2[i] = fixture.get(eliminatorias4[(i * 2) + 1]).getId();
+	 * aux2[1] = 1; } partido4.setGoles_1(aux1[0]); partido4.setGoles_2(aux1[1]);
+	 * 
+	 * // arrayauxiliar = ; LinkedList<Partido> aux4 = fixture.get(eliminatorias4[i
+	 * * 2]).getFutbol(); LinkedList<Partido> aux5 = fixture.get(eliminatorias4[(i *
+	 * 2) + 1]).getFutbol(); aux4.add(partido4); aux5.add(partido4);
+	 * fixture.get(eliminatorias4[i * 2]).setFutbol(aux4);
+	 * fixture.get(eliminatorias4[(i * 2)+ 1] ).setFutbol(aux5); //
+	 * System.out.println(arrayauxiliar[0]); // ; // test(arrayauxiliar[0]);
+	 * 
+	 * /* System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) -
+	 * 1).getNombre() + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) -
+	 * 1).getNombre());
+	 */
+	/*
+	 * Numero_de_partido++; }
+	 * 
+	 * } Efuse[5] = true; return fixture; }
+	 */
 	public static LinkedList<Equipo> fecha7(LinkedList<Equipo> fixture) {
-		
 
-			for (int i = 0; i <= 1; i++) {
-				Partido partido4 = new Partido(fixture.get(eliminatorias2[i * 2]).getNombre(),
-						fixture.get(eliminatorias2[i * 2] + 1).getNombre(), null, 0, 0, 0);
-				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
-				int aux2[] = { 0, 0 };
-				if (aux1[0] == aux1[1]) {
-					aux2[0] = 3;
-					aux2[1] = 3;
-				}
-				if (aux1[0] > aux1[1]) {
-					aux2[0] = 1;
-					aux2[1] = 2;
-					if(i==0) {
+		for (int i = 0; i <= 1; i++) {
+			Partido partido4 = new Partido(fixture.get(eliminatorias2[i * 2]).getNombre(),
+					fixture.get(eliminatorias2[i * 2] + 1).getNombre(), null, 0, 0, 0);
+			int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
+			int aux2[] = { 0, 0 };
+			if (aux1[0] == aux1[1]) {
+				aux2[0] = 3;
+				aux2[1] = 3;
+			}
+			if (aux1[0] > aux1[1]) {
+				aux2[0] = 1;
+				aux2[1] = 2;
+				if (i == 0) {
 					eliminatorias1[0] = fixture.get(eliminatorias2[i * 2]).getId();
 					eliminatorias[0] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
-					}else {
-						eliminatorias1[1] = fixture.get(eliminatorias2[i * 2]).getId();
-						eliminatorias[1] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
-					}
-					
-					
 				} else {
-					aux2[0] = 2;
-					aux2[1] = 1;
-					
-					if(i==0) {
-						eliminatorias1[0] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
-						eliminatorias[0] = fixture.get(eliminatorias2[i * 2]).getId();
-					}else {
-						eliminatorias1[1] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
-						eliminatorias[1] = fixture.get(eliminatorias2[i * 2]).getId();
-					}
-					
+					eliminatorias1[1] = fixture.get(eliminatorias2[i * 2]).getId();
+					eliminatorias[1] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
 				}
-				System.out.println(eliminatorias1[1]);
-				partido4.setGoles_1(aux1[0]);
-				partido4.setGoles_2(aux1[1]);
 
-				// arrayauxiliar = ;
-				LinkedList<Partido> aux4 = fixture.get(eliminatorias2[i * 2]).getFutbol();
-				LinkedList<Partido> aux5 = fixture.get(eliminatorias2[(i * 2) + 1]).getFutbol();
-				aux4.add(partido4);
-				aux5.add(partido4);
-				fixture.get(eliminatorias2[i * 2]).setFutbol(aux4);
-				fixture.get(eliminatorias2[(i * 2)+ 1] ).setFutbol(aux5);
-				// System.out.println(arrayauxiliar[0]);
-				// ;
-				// test(arrayauxiliar[0]);
+			} else {
+				aux2[0] = 2;
+				aux2[1] = 1;
 
-				/*
-				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
-				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
-				 */
-				Numero_de_partido++;
+				if (i == 0) {
+					eliminatorias1[0] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
+					eliminatorias[0] = fixture.get(eliminatorias2[i * 2]).getId();
+				} else {
+					eliminatorias1[1] = fixture.get(eliminatorias2[(i * 2) + 1]).getId();
+					eliminatorias[1] = fixture.get(eliminatorias2[i * 2]).getId();
+				}
+
 			}
+			System.out.println(eliminatorias1[1]);
+			partido4.setGoles_1(aux1[0]);
+			partido4.setGoles_2(aux1[1]);
 
-		
+			// arrayauxiliar = ;
+			LinkedList<Partido> aux4 = fixture.get(eliminatorias2[i * 2]).getFutbol();
+			LinkedList<Partido> aux5 = fixture.get(eliminatorias2[(i * 2) + 1]).getFutbol();
+			aux4.add(partido4);
+			aux5.add(partido4);
+			fixture.get(eliminatorias2[i * 2]).setFutbol(aux4);
+			fixture.get(eliminatorias2[(i * 2) + 1]).setFutbol(aux5);
+			// System.out.println(arrayauxiliar[0]);
+			// ;
+			// test(arrayauxiliar[0]);
+
+			/*
+			 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+			 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+			 */
+			Numero_de_partido++;
+		}
+
 		Efuse[5] = true;
 		return fixture;
 	}
-	
-	
+
 	public static void fecha8(LinkedList<Equipo> fixture) {
-		
 
-			for (int i = 0; i < 1; i++) {
-				Partido partido4 = new Partido(fixture.get(eliminatorias1[i * 2]).getNombre(),
-						fixture.get(eliminatorias1[i * 2] + 1).getNombre(), null, 0, 0, 0);
-				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
-				int aux2[] = { 0, 0 };
-				if (aux1[0] == aux1[1]) {
-					aux2[0] = 3;
-					aux2[1] = 3;
-					if (Math.random()*2==1) {
-						top4[0]=fixture.get(eliminatorias1[i * 2]).getId();
-						top4[1]=fixture.get(eliminatorias1[(i * 2)+1]).getId();
-					}else {
-						top4[1]=fixture.get(eliminatorias1[i * 2]).getId();
-						top4[0]=fixture.get(eliminatorias1[(i * 2)+1]).getId();
-					}
-				}
-				if (aux1[0] > aux1[1]) {
-					aux2[0] = 1;
-					top4[i]  = fixture.get(eliminatorias1[i * 2]).getId();
-					aux2[1] = 2;
-					top4[i]  = fixture.get(eliminatorias1[(i * 2) + 1]).getId();
+		for (int i = 0; i < 1; i++) {
+			Partido partido4 = new Partido(fixture.get(eliminatorias1[i * 2]).getNombre(),
+					fixture.get(eliminatorias1[i * 2] + 1).getNombre(), null, 0, 0, 0);
+			int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
+			int aux2[] = { 0, 0 };
+			if (aux1[0] == aux1[1]) {
+				aux2[0] = 3;
+				aux2[1] = 3;
+				if (Math.random() * 2 == 1) {
+					top4[0] = fixture.get(eliminatorias1[i * 2]).getId();
+					top4[1] = fixture.get(eliminatorias1[(i * 2) + 1]).getId();
 				} else {
-					aux2[0] = 2;
-					top4[i]  = fixture.get(eliminatorias1[(i * 2) + 1]).getId();
-					aux2[1] = 1;
-					top4[i]  = fixture.get(eliminatorias1[i * 2]).getId();
+					top4[1] = fixture.get(eliminatorias1[i * 2]).getId();
+					top4[0] = fixture.get(eliminatorias1[(i * 2) + 1]).getId();
 				}
-				partido4.setGoles_1(aux1[0]);
-				partido4.setGoles_2(aux1[1]);
-
-				// arrayauxiliar = ;
-				LinkedList<Partido> aux4 = fixture.get(eliminatorias1[i * 2]).getFutbol();
-				LinkedList<Partido> aux5 = fixture.get(eliminatorias1[(i * 2) + 1]).getFutbol();
-				aux4.add(partido4);
-				aux5.add(partido4);
-				fixture.get(eliminatorias1[i * 2]).setFutbol(aux4);
-				fixture.get(eliminatorias1[(i * 2) + 1]).setFutbol(aux5);
-				
-				
-				// System.out.println(arrayauxiliar[0]);
-				// ;
-				// test(arrayauxiliar[0]);
-
-				/*
-				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
-				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
-				 */
-				Numero_de_partido++;
 			}
+			if (aux1[0] > aux1[1]) {
+				aux2[0] = 1;
+				top4[i] = fixture.get(eliminatorias1[i * 2]).getId();
+				aux2[1] = 2;
+				top4[i] = fixture.get(eliminatorias1[(i * 2) + 1]).getId();
+			} else {
+				aux2[0] = 2;
+				top4[i] = fixture.get(eliminatorias1[(i * 2) + 1]).getId();
+				aux2[1] = 1;
+				top4[i] = fixture.get(eliminatorias1[i * 2]).getId();
+			}
+			partido4.setGoles_1(aux1[0]);
+			partido4.setGoles_2(aux1[1]);
 
-		
-		
+			// arrayauxiliar = ;
+			LinkedList<Partido> aux4 = fixture.get(eliminatorias1[i * 2]).getFutbol();
+			LinkedList<Partido> aux5 = fixture.get(eliminatorias1[(i * 2) + 1]).getFutbol();
+			aux4.add(partido4);
+			aux5.add(partido4);
+			fixture.get(eliminatorias1[i * 2]).setFutbol(aux4);
+			fixture.get(eliminatorias1[(i * 2) + 1]).setFutbol(aux5);
+
+			// System.out.println(arrayauxiliar[0]);
+			// ;
+			// test(arrayauxiliar[0]);
+
+			/*
+			 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+			 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+			 */
+			Numero_de_partido++;
+		}
+
 		fecha9(fixture);
 	}
+
 	public static LinkedList<Equipo> fecha9(LinkedList<Equipo> fixture) {
-		
 
-			
-				Partido partido4 = new Partido(fixture.get(eliminatorias[0]).getNombre(),
-						fixture.get(eliminatorias[1]).getNombre(), null, 0, 0, 0);
-				int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
-				int aux2[] = { 0, 0 };
-				if (aux1[0] == aux1[1]) {
-					aux2[0] = 3;
-					aux2[1] = 3;
-					if (Math.random()*2==1) {
-						top4[0]=fixture.get(eliminatorias[0]).getId();
-						top4[1]=fixture.get(eliminatorias[1]).getId();
-					}else {
-						top4[1]=fixture.get(eliminatorias[0]).getId();
-						top4[0]=fixture.get(eliminatorias[1]).getId();
-					}
-				}
-				if (aux1[0] > aux1[1]) {
-					aux2[0] = 1;
-					top4[0]  = fixture.get(eliminatorias[0]).getId();
-					aux2[1] = 2;
-					top4[1]  = fixture.get(eliminatorias[1]).getId();
-				} else {
-					aux2[0] = 2;
-					top4[0]  = fixture.get(eliminatorias[1]).getId();
-					aux2[1] = 1;
-					top4[1]  = fixture.get(eliminatorias[0]).getId();
-				}
-				partido4.setGoles_1(aux1[0]);
-				partido4.setGoles_2(aux1[1]);
+		Partido partido4 = new Partido(fixture.get(eliminatorias[0]).getNombre(),
+				fixture.get(eliminatorias[1]).getNombre(), null, 0, 0, 0);
+		int aux1[] = { (int) (Math.random() * 11), (int) (Math.random() * 11) };
+		int aux2[] = { 0, 0 };
+		if (aux1[0] == aux1[1]) {
+			aux2[0] = 3;
+			aux2[1] = 3;
+			if (Math.random() * 2 == 1) {
+				top4[0] = fixture.get(eliminatorias[0]).getId();
+				top4[1] = fixture.get(eliminatorias[1]).getId();
+			} else {
+				top4[1] = fixture.get(eliminatorias[0]).getId();
+				top4[0] = fixture.get(eliminatorias[1]).getId();
+			}
+		}
+		if (aux1[0] > aux1[1]) {
+			aux2[0] = 1;
+			top4[0] = fixture.get(eliminatorias[0]).getId();
+			aux2[1] = 2;
+			top4[1] = fixture.get(eliminatorias[1]).getId();
+		} else {
+			aux2[0] = 2;
+			top4[0] = fixture.get(eliminatorias[1]).getId();
+			aux2[1] = 1;
+			top4[1] = fixture.get(eliminatorias[0]).getId();
+		}
+		partido4.setGoles_1(aux1[0]);
+		partido4.setGoles_2(aux1[1]);
 
-				// arrayauxiliar = ;
-				LinkedList<Partido> aux4 = fixture.get(eliminatorias[0]).getFutbol();
-				LinkedList<Partido> aux5 = fixture.get(eliminatorias[1]).getFutbol();
-				aux4.add(partido4);
-				aux5.add(partido4);
-				fixture.get(eliminatorias[0]).setFutbol(aux4);
-				fixture.get(eliminatorias[1] ).setFutbol(aux5);
-				
-				
-				// System.out.println(arrayauxiliar[0]);
-				// ;
-				// test(arrayauxiliar[0]);
+		// arrayauxiliar = ;
+		LinkedList<Partido> aux4 = fixture.get(eliminatorias[0]).getFutbol();
+		LinkedList<Partido> aux5 = fixture.get(eliminatorias[1]).getFutbol();
+		aux4.add(partido4);
+		aux5.add(partido4);
+		fixture.get(eliminatorias[0]).setFutbol(aux4);
+		fixture.get(eliminatorias[1]).setFutbol(aux5);
 
-				/*
-				 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
-				 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
-				 */
-				Numero_de_partido++;
-			
+		// System.out.println(arrayauxiliar[0]);
+		// ;
+		// test(arrayauxiliar[0]);
 
-		
+		/*
+		 * System.out.println(fixture.get((vatiables[j] + Fecha3[0][i]) - 1).getNombre()
+		 * + "  " + fixture.get((vatiables[j] + Fecha3[1][i]) - 1).getNombre());
+		 */
+		Numero_de_partido++;
+
 		Efuse[6] = true;
 		return fixture;
 	}
+
+	public static void apuesta(LinkedList<Equipo> fixture) {
+		String posibilidades[] = { "gana", "pierde", "empata" };
+		String equipos[] = new String[fixture.size()];
+		Boolean apostar = false;
+		for (int i = 0; i < equipos.length; i++) {
+			equipos[i] = fixture.get(i).getNombre();
+		}
+		JOptionPane.showMessageDialog(null, "elige 1 seleccion y predice el resultado");
+		// JOptionPane.showInputDialog();
+		int equipo_seleccionado = 0;
+		JOptionPane.showMessageDialog(null, "elije el resultado");
+		// fecha 1
+		if (!Efuse[0]) {
+			String opciones_equipo[] = { "fecha 1", "fecha 2", "fecha 3", "salir" };
+		}
+		// fecha 2
+		if (!Efuse[1]) {
+			String opciones_equipo[] = { "fecha 2", "fecha 3", "salir" };
+		}
+		// fecha 3
+		if (!Efuse[2]) {
+			String opciones_equipo[] = { "fecha 3", "salir" };
+		}
+		// octavos
+		if (!Efuse[3] && Efuse[2]) {
+			for (int j = 0; j < equipos.length; j++) {
+				if (fixture.get(equipo_seleccionado).getId() == eliminatorias8[j]) {
+					apostar = true;
+				}
+			}
+			if (apostar) {
+				String opciones_equipo[] = { "octavos", "salir" };
+			} else {
+				JOptionPane.showMessageDialog(null, "este equipo no esta en octavos de final");
+			}
+
+		}
+		// cuartos
+		if (!Efuse[4] && Efuse[3]) {
+			for (int j = 0; j < equipos.length; j++) {
+				if (fixture.get(equipo_seleccionado).getId() == eliminatorias4[j]) {
+					apostar = true;
+				}
+			}
+
+			if (apostar) {
+				String opciones_equipo[] = { "cuartos", "salir" };
+			} else {
+				JOptionPane.showMessageDialog(null, "este equipo no esta en cuartos de final");
+			}
+
+		}
+		// semi
+		if (!Efuse[5] && Efuse[4]) {
+
+			for (int j = 0; j < equipos.length; j++) {
+				if (fixture.get(equipo_seleccionado).getId() == eliminatorias4[j]) {
+					apostar = true;
+				}
+			}
+
+			if (apostar) {
+				String opciones_equipo[] = { "semi", "salir" };
+			} else {
+				JOptionPane.showMessageDialog(null, "este equipo no esta en semifinal");
+			}
+
+		}
+		// final
+		if (!Efuse[6] && Efuse[5]) {
+
+			for (int j = 0; j < equipos.length; j++) {
+				if (fixture.get(equipo_seleccionado).getId() == eliminatorias4[j]) {
+					apostar = true;
+				}
+			}
+
+			if (apostar) {
+				String opciones_equipo[] = { "final", "salir" };
+			} else {
+				JOptionPane.showMessageDialog(null, "este equipo no esta en la final o el tercer puesto");
+			}
+
+		}
+		
+		
+		
+		
+		
+
+	}
+
 }
