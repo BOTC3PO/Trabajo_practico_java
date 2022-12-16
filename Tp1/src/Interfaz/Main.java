@@ -44,7 +44,7 @@ public class Main {
 		 * System.out.println(fixture.get(i).getNombre()); }
 		 */
 		// System.out.println(fixture.get(0).getGrupos()[1]);
-		apuesta(fixture);
+		//apuesta(fixture);
 		menu_inicio(fixture);
 		System.out.println(Numero_de_partido);
 	}
@@ -63,7 +63,6 @@ public class Main {
 			fixture.add(equipo);
 			fixture.get(i).setGrupo(i);
 		}
-
 		return fixture;
 	}
 
@@ -315,44 +314,52 @@ public class Main {
 	}
 
 	public static String[] crear_menu() {
-		String mensaje_gen[] = { "", "", "" };
-		String mensaje_gen2[] = { "", "", "", "" };
+		String mensaje_gen[] = { "", "", "","" };
+		String mensaje_gen2[] = { "", "", "", "","" };
 		if (Efuse[0] == false) {
 			mensaje_gen[0] = "ver grupos";
 			mensaje_gen[1] = "jugar fecha 1";
-			mensaje_gen[2] = "salir";
+			mensaje_gen[2] = "apuesta";
+			mensaje_gen[3] = "salir";
 		} else if (Efuse[1] == false) {
 			mensaje_gen[0] = "ver grupos";
 			mensaje_gen[1] = "jugar fecha 2";
-			mensaje_gen[2] = "salir";
+			mensaje_gen[2] = "apuesta";
+			mensaje_gen[3] = "salir";
 		} else if (Efuse[2] == false) {
 			mensaje_gen[0] = "ver grupos";
 			mensaje_gen[1] = "jugar fecha 3";
-			mensaje_gen[2] = "salir";
+			mensaje_gen[2] = "apuesta";
+			mensaje_gen[3] = "salir";
 		} else if (Efuse[3] == false) {
 			mensaje_gen2[0] = "ver grupos";
 			mensaje_gen2[1] = "ver eliminarorias";
 			mensaje_gen2[2] = "octavos de final";
-			mensaje_gen2[3] = "salir";
+			mensaje_gen2[3] = "apuesta";
+			mensaje_gen2[4] = "salir";
 		} else if (Efuse[4] == false) {
 			mensaje_gen2[0] = "ver grupos";
 			mensaje_gen2[1] = "ver eliminarorias";
 			mensaje_gen2[2] = "cartos de final";
-			mensaje_gen2[3] = "salir";
+			mensaje_gen2[3] = "apuesta";
+			mensaje_gen2[4] = "salir";
 		} else if (Efuse[5] == false) {
 			mensaje_gen2[0] = "ver grupos";
 			mensaje_gen2[1] = "ver eliminarorias";
 			mensaje_gen2[2] = "semifinal";
-			mensaje_gen2[3] = "salir";
+			mensaje_gen2[3] = "apuesta";
+			mensaje_gen2[4] = "salir";
 		} else if (Efuse[6] == false) {
 			mensaje_gen2[0] = "ver grupos";
 			mensaje_gen2[1] = "ver eliminarorias";
 			mensaje_gen2[2] = "final y por el 3er puesto";
-			mensaje_gen2[3] = "salir";
+			mensaje_gen2[3] = "apuesta";
+			mensaje_gen2[4] = "salir";
 		} else {
 			mensaje_gen[0] = "ver grupos";
 			mensaje_gen[1] = "ver eliminarorias";
-			mensaje_gen[2] = "salir";
+			mensaje_gen[2] = "apuesta";
+			mensaje_gen[3] = "salir";
 		}
 
 		if (Efuse[6]) {
@@ -405,7 +412,7 @@ public class Main {
 			case "ver eliminarorias":
 				pocicionamiento(fixture);
 				submenu(fixture);
-				System.out.println("boton funciona");
+				//System.out.println("boton funciona");
 				// verpartido8eliminatorias(fixture);
 				break;
 			case "octavos de final":
@@ -421,6 +428,13 @@ public class Main {
 				break;
 			case "final y por el 3er puesto":
 				fecha8(fixture);
+				break;
+			case "apuesta":
+				if (Efuse[2]) {
+				pocicionamiento(fixture);
+				pocicionamiento_eliminatorias8(fixture);
+				}
+				apuesta(fixture);
 				break;
 			default:
 				/* salir */
@@ -1090,20 +1104,64 @@ public class Main {
 
 	static Boolean apostar = false;
 
+
 	public static void apuesta(LinkedList<Equipo> fixture) {
 		String posibilidades[] = { "gana", "pierde", "empata" };
-		String equipos[] = new String[fixture.size()];
-		apostar = false;
-		for (int i = 0; i < equipos.length; i++) {
-			equipos[i] = fixture.get(i).getNombre();
+		int equipos_cant=0;
+		if (!Efuse[0]||!Efuse[1]||!Efuse[2]) {
+			equipos_cant=fixture.size();
+		}else if(!Efuse[3]&&Efuse[2]){
+			equipos_cant=eliminatorias8.length;
+		}else if(!Efuse[4]&&Efuse[3]){
+			equipos_cant=eliminatorias4.length;
+		}else if(!Efuse[5]&&Efuse[4]){
+			equipos_cant=eliminatorias2.length;
+		}else{
+			equipos_cant=eliminatorias2.length;
 		}
+
+
+
+
+
+		String equipos[] = new String[equipos_cant];
+		apostar = false;
+		if(!Efuse[0]||!Efuse[1]||!Efuse[2]){
+		for (int i = 0; i < equipos.length; i++) {
+			equipos[i] = fixture.get(i).getNombre() ;
+			}
+		 }
+			
+		if (!Efuse[3]&&Efuse[2]) {
+				for(int j = 0; j < eliminatorias8.length; j++){
+				equipos[j] =  fixture.get(eliminatorias8[j]).getNombre() ;
+				System.err.println(eliminatorias8[j]);
+			}
+			}
+			if(!Efuse[4]&&Efuse[3]){
+			for(int j = 0; j < eliminatorias4.length; j++){
+				equipos[j] =  fixture.get( eliminatorias4[j]).getNombre() ;
+			}
+			}
+			
+			if(!Efuse[5]&&Efuse[4]){
+				for(int j = 0; j < eliminatorias2.length; j++){ 
+				equipos[j] =  fixture.get(eliminatorias2[j]).getNombre() ;
+				}
+				for(int j = 0; j < eliminatorias.length; j++){
+				if (Efuse[5]) {
+				equipos[j+2] =  fixture.get(eliminatorias[j]).getNombre() ;
+				}
+			}
+			}
+
+		
 		JOptionPane.showMessageDialog(null, "elige 1 seleccion y predice el resultado");
 		JFrame frame = new JFrame();
 		String opcion_elegida = (String) JOptionPane.showInputDialog(frame, "elije 1 seleccion",
 				" predice el resultado", JOptionPane.QUESTION_MESSAGE, null, equipos, 2);
 		System.err.println(opcion_elegida);
 		// JOptionPane.showInputDialog();
-		int equipo_seleccionado = 0;
 		//JOptionPane.showMessageDialog(null, "elije el resultado");
 		
 		
@@ -1123,17 +1181,46 @@ public class Main {
 
 		String	Menuop=opciones_equipo[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones_equipo, opciones_equipo[0])];
 		
+		System.err.println(Menuop);
+
 		if (apostar) {
-			JOptionPane.showInputDialog(opciones_equipo[0]);
+			switch (Menuop) {
+				case "octavos":
+					JOptionPane.showMessageDialog(null, "octavos", "octavos", JOptionPane.DEFAULT_OPTION);
+					break;
+				case "cuartos":
+				JOptionPane.showMessageDialog(null, "cuartos", "cuartos", JOptionPane.DEFAULT_OPTION);
+					break;
+				case "semi":
+				JOptionPane.showMessageDialog(null, "semi", "semi", JOptionPane.DEFAULT_OPTION);
+					break;
+				case "final":
+				JOptionPane.showMessageDialog(null, "final", "final", JOptionPane.DEFAULT_OPTION);
+					break;
+			}
+		}else{
+			switch (Menuop) {
+				case "fecha 1":
+					JOptionPane.showMessageDialog(null, "fecha 1", "fecha 1", JOptionPane.DEFAULT_OPTION);
+					break;
+				case "fecha 2":
+				JOptionPane.showMessageDialog(null, "fecha 2", "fecha 2", JOptionPane.DEFAULT_OPTION);
+					break;
+				case "fecha 3":
+				JOptionPane.showMessageDialog(null, "fecha 3", "fecha 3", JOptionPane.DEFAULT_OPTION);
+					break;
+			}
 		}
 
 	}
 
 	public static String[] opciones_apuesta(LinkedList<Equipo> fixture, String[] equipos, String opcion_elegida,
 			int valor) {
+				
 		int equipo_seleccionado = 0;
 		String opciones_equipo[] = new String[valor];
 		// String[] opciones_equipos = null;
+		
 		for (int i = 0; i < fixture.size(); i++) {
 			if (fixture.get(i).getNombre().equals(opcion_elegida)) {
 				equipo_seleccionado = fixture.get(i).getId();
@@ -1148,19 +1235,19 @@ public class Main {
 			opciones_equipo[3] = "salir";
 		}
 		// fecha 2
-		if (!Efuse[1]) {
+		if (!Efuse[1]&&Efuse[0]) {
 			opciones_equipo[0] = "fecha 2";
 			opciones_equipo[1] = "fecha 3";
 			opciones_equipo[2] = "salir";
 		}
 		// fecha 3
-		if (!Efuse[2]) {
+		if (!Efuse[2]&&Efuse[1]) {
 			opciones_equipo[0] = "fecha 3";
 			opciones_equipo[1] = "salir";
 		}
 		// octavos
 		if (!Efuse[3] && Efuse[2]) {
-			for (int j = 0; j < equipos.length; j++) {
+			for (int j = 0; j < eliminatorias8.length; j++) {
 				if (fixture.get(equipo_seleccionado).getId() == eliminatorias8[j]) {
 					apostar = true;
 				}
@@ -1175,7 +1262,7 @@ public class Main {
 		}
 		// cuartos
 		if (!Efuse[4] && Efuse[3]) {
-			for (int j = 0; j < equipos.length; j++) {
+			for (int j = 0; j < eliminatorias4.length; j++) {
 				if (fixture.get(equipo_seleccionado).getId() == eliminatorias4[j]) {
 					apostar = true;
 				}
@@ -1191,9 +1278,8 @@ public class Main {
 		}
 		// semi
 		if (!Efuse[5] && Efuse[4]) {
-
-			for (int j = 0; j < equipos.length; j++) {
-				if (fixture.get(equipo_seleccionado).getId() == eliminatorias4[j]) {
+			for (int j = 0; j < eliminatorias2.length; j++) {
+				if (fixture.get(equipo_seleccionado).getId() == eliminatorias2[j]) {
 					apostar = true;
 				}
 			}
@@ -1208,9 +1294,12 @@ public class Main {
 		}
 		// final
 		if (!Efuse[6] && Efuse[5]) {
+			for (int j = 0; j < eliminatorias1.length; j++) {
+				if (fixture.get(equipo_seleccionado).getId() == eliminatorias1[j]) {
+					apostar = true;
+				}
 
-			for (int j = 0; j < equipos.length; j++) {
-				if (fixture.get(equipo_seleccionado).getId() == eliminatorias4[j]) {
+				if (fixture.get(equipo_seleccionado).getId() == eliminatorias[j]) {
 					apostar = true;
 				}
 			}
