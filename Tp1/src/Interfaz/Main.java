@@ -1089,66 +1089,74 @@ public class Main {
 	}
 
 	static Boolean apostar = false;
-	
+
 	public static void apuesta(LinkedList<Equipo> fixture) {
 		String posibilidades[] = { "gana", "pierde", "empata" };
 		String equipos[] = new String[fixture.size()];
-		apostar=false;
+		apostar = false;
 		for (int i = 0; i < equipos.length; i++) {
 			equipos[i] = fixture.get(i).getNombre();
 		}
 		JOptionPane.showMessageDialog(null, "elige 1 seleccion y predice el resultado");
-		 JFrame frame = new JFrame();
-		String opcion_elegida = (String) JOptionPane.showInputDialog(frame, "elije 1 seleccion", " predice el resultado",JOptionPane.QUESTION_MESSAGE, null, equipos,2);
+		JFrame frame = new JFrame();
+		String opcion_elegida = (String) JOptionPane.showInputDialog(frame, "elije 1 seleccion",
+				" predice el resultado", JOptionPane.QUESTION_MESSAGE, null, equipos, 2);
 		System.err.println(opcion_elegida);
 		// JOptionPane.showInputDialog();
 		int equipo_seleccionado = 0;
-		JOptionPane.showMessageDialog(null, "elije el resultado");
+		//JOptionPane.showMessageDialog(null, "elije el resultado");
+		
+		
 		// fecha 1
-		int valor=0;
+		int valor = 0;
 		if (!Efuse[0]) {
 			valor = 4;
-		}else if (!Efuse[1]) {
+		} else if (!Efuse[1]) {
 			valor = 3;
-		}else {
-			 valor = 2;
+		} else {
+			valor = 2;
 		}
-		
-		String opciones_equipo[] =new String[valor];
-		
-		
-		opciones_equipo=opciones_apuesta(fixture,equipos,opcion_elegida,valor);
+
+		String opciones_equipo[] = new String[valor];
+
+		opciones_equipo = opciones_apuesta(fixture, equipos, opcion_elegida, valor);
+
+		String	Menuop=opciones_equipo[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones_equipo, opciones_equipo[0])];
 		
 		if (apostar) {
 			JOptionPane.showInputDialog(opciones_equipo[0]);
 		}
-		
-		
-		
 
 	}
 
-	
-	public static String[] opciones_apuesta(LinkedList<Equipo> fixture,String[] equipos,String opcion_elegida,int valor) {
-		int equipo_seleccionado;
+	public static String[] opciones_apuesta(LinkedList<Equipo> fixture, String[] equipos, String opcion_elegida,
+			int valor) {
+		int equipo_seleccionado = 0;
+		String opciones_equipo[] = new String[valor];
+		// String[] opciones_equipos = null;
 		for (int i = 0; i < fixture.size(); i++) {
 			if (fixture.get(i).getNombre().equals(opcion_elegida)) {
-				equipo_seleccionado=fixture.get(i).getId();
+				equipo_seleccionado = fixture.get(i).getId();
 			}
 		}
-		
-		
+
 		// fecha 1
 		if (!Efuse[0]) {
-			String opciones_equipo[] = { "fecha 1", "fecha 2", "fecha 3", "salir" };
+			opciones_equipo[0] = "fecha 1";
+			opciones_equipo[1] = "fecha 2";
+			opciones_equipo[2] = "fecha 3";
+			opciones_equipo[3] = "salir";
 		}
 		// fecha 2
 		if (!Efuse[1]) {
-			String opciones_equipo[] = { "fecha 2", "fecha 3", "salir" };
+			opciones_equipo[0] = "fecha 2";
+			opciones_equipo[1] = "fecha 3";
+			opciones_equipo[2] = "salir";
 		}
 		// fecha 3
 		if (!Efuse[2]) {
-			String opciones_equipo[] = { "fecha 3", "salir" };
+			opciones_equipo[0] = "fecha 3";
+			opciones_equipo[1] = "salir";
 		}
 		// octavos
 		if (!Efuse[3] && Efuse[2]) {
@@ -1158,7 +1166,8 @@ public class Main {
 				}
 			}
 			if (apostar) {
-				String opciones_equipo[] = { "octavos", "salir" };
+				opciones_equipo[0] = "octavos";
+				opciones_equipo[1] = "salir";
 			} else {
 				JOptionPane.showMessageDialog(null, "este equipo no esta en octavos de final");
 			}
@@ -1173,7 +1182,8 @@ public class Main {
 			}
 
 			if (apostar) {
-				String opciones_equipo[] = { "cuartos", "salir" };
+				opciones_equipo[0] = "cuartos";
+				opciones_equipo[1] = "salir";
 			} else {
 				JOptionPane.showMessageDialog(null, "este equipo no esta en cuartos de final");
 			}
@@ -1189,7 +1199,8 @@ public class Main {
 			}
 
 			if (apostar) {
-				String opciones_equipo[] = { "semi", "salir" };
+				opciones_equipo[0] = "semi";
+				opciones_equipo[1] = "salir";
 			} else {
 				JOptionPane.showMessageDialog(null, "este equipo no esta en semifinal");
 			}
@@ -1205,17 +1216,16 @@ public class Main {
 			}
 
 			if (apostar) {
-				String opciones_equipo[] = { "final", "salir" };
+				opciones_equipo[0] = "final";
+				opciones_equipo[1] = "salir";
 			} else {
 				JOptionPane.showMessageDialog(null, "este equipo no esta en la final o el tercer puesto");
 			}
 
 		}
-		
-		
+
+
 		return opciones_equipo;
 	}
-	
-	
-	
+
 }
