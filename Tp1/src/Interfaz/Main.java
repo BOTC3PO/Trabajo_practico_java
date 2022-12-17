@@ -1163,7 +1163,13 @@ public class Main {
 		System.err.println(opcion_elegida);
 		// JOptionPane.showInputDialog();
 		//JOptionPane.showMessageDialog(null, "elije el resultado");
-		
+		int id_equipo=0;
+		for (int i = 0; i < equipos.length; i++) {
+			if (opcion_elegida.equals(fixture.get(i).getNombre())) {
+				id_equipo=fixture.get(i).getId();
+			}
+		}
+
 		
 		// fecha 1
 		int valor = 0;
@@ -1201,7 +1207,12 @@ public class Main {
 		}else{
 			switch (Menuop) {
 				case "fecha 1":
-					JOptionPane.showMessageDialog(null, "fecha 1", "fecha 1", JOptionPane.DEFAULT_OPTION);
+					//JOptionPane.showMessageDialog(null, "fecha 1", "fecha 1", JOptionPane.DEFAULT_OPTION);
+					int resultado_prediccion = prediccion(posibilidades[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])]);
+					int auxiliar_equipos[]=fixture.get(id_equipo).getApuesta();
+					auxiliar_equipos[0]=resultado_prediccion;
+					System.err.println(resultado_prediccion);
+					fixture.get(id_equipo).setApuesta(auxiliar_equipos);
 					break;
 				case "fecha 2":
 				JOptionPane.showMessageDialog(null, "fecha 2", "fecha 2", JOptionPane.DEFAULT_OPTION);
@@ -1316,5 +1327,24 @@ public class Main {
 
 		return opciones_equipo;
 	}
+
+
+	public static int prediccion(String x) {
+		int z=0; 
+		switch (x) {
+			case "gana":
+			z=1;
+				break;
+			case "pierde":
+			z=2;
+				break;
+			case "empata":
+			z=3;
+				break;
+		}
+
+		return z;
+	}
+
 
 }
