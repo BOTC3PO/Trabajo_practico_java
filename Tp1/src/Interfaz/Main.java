@@ -44,7 +44,7 @@ public class Main {
 		 * System.out.println(fixture.get(i).getNombre()); }
 		 */
 		// System.out.println(fixture.get(0).getGrupos()[1]);
-		//apuesta(fixture);
+		// apuesta(fixture);
 		menu_inicio(fixture);
 		System.out.println(Numero_de_partido);
 	}
@@ -67,21 +67,23 @@ public class Main {
 	}
 
 	@SuppressWarnings("unused")
-	private static void test(int dato) {
+	private static String partido(int dato) {
+		String datoi = null;
 		switch (dato) {
-		case 0:
-			System.err.println("no jugado");
-			break;
-		case 1:
-			System.err.println("ganado");
-			break;
-		case 2:
-			System.err.println("perdido");
-			break;
-		case 3:
-			System.err.println("empatado");
-			break;
+			case 0:
+				datoi = "no jugado";
+				break;
+			case 1:
+				datoi = "ganado";
+				break;
+			case 2:
+				datoi = "perdido";
+				break;
+			case 3:
+				datoi = "empatado";
+				break;
 		}
+		return datoi;
 	}
 
 	public static LinkedList<Equipo> mostrar_grupo(LinkedList<Equipo> fixture) {
@@ -100,41 +102,41 @@ public class Main {
 			seleccion = (String) JOptionPane.showInputDialog(null, "seleccione 1 grupo", "seleccion de grupo",
 					JOptionPane.QUESTION_MESSAGE, null, grupos, seleccion);
 			switch (seleccion) {
-			case "grupo A":
-				min = 0;
-				max = 3;
-				break;
-			case "grupo B":
-				min = 4;
-				max = 7;
-				break;
-			case "grupo C":
-				min = 8;
-				max = 11;
-				break;
-			case "grupo D":
-				min = 12;
-				max = 15;
-				break;
-			case "grupo E":
-				min = 16;
-				max = 19;
-				break;
-			case "grupo F":
-				min = 20;
-				max = 23;
-				break;
-			case "grupo G":
-				min = 24;
-				max = 27;
-				break;
-			case "grupo H":
-				min = 28;
-				max = 31;
-				break;
-			default:
-				comprobar = false;
-				break;
+				case "grupo A":
+					min = 0;
+					max = 3;
+					break;
+				case "grupo B":
+					min = 4;
+					max = 7;
+					break;
+				case "grupo C":
+					min = 8;
+					max = 11;
+					break;
+				case "grupo D":
+					min = 12;
+					max = 15;
+					break;
+				case "grupo E":
+					min = 16;
+					max = 19;
+					break;
+				case "grupo F":
+					min = 20;
+					max = 23;
+					break;
+				case "grupo G":
+					min = 24;
+					max = 27;
+					break;
+				case "grupo H":
+					min = 28;
+					max = 31;
+					break;
+				default:
+					comprobar = false;
+					break;
 			}
 
 			if (comprobar) {
@@ -200,6 +202,7 @@ public class Main {
 					// 1).getFutbol();
 					fixture.get(vatiables[j] + Fecha1[k][i] - 1).resultado(aux2[k]);
 					LinkedList<Partido> aux4 = new LinkedList<Partido>();
+					partido.setEstado(partido(aux2[k]));
 					aux4.add(partido);
 					fixture.get(vatiables[j] + Fecha1[k][i] - 1).setFutbol(aux4);
 					// System.out.println(arrayauxiliar[0]);
@@ -246,6 +249,7 @@ public class Main {
 					fixture.get(vatiables[j] + Fecha2[k][i] - 1).setGrupos(arrayauxiliar);
 					fixture.get(vatiables[j] + Fecha2[k][i] - 1).resultado(aux2[k]);
 					LinkedList<Partido> aux4 = fixture.get(vatiables[j] + Fecha2[k][i] - 1).getFutbol();
+					partido1.setEstado(partido(aux2[k]));
 					aux4.add(partido1);
 					fixture.get(vatiables[j] + Fecha2[k][i] - 1).setFutbol(aux4);
 					// System.out.println(arrayauxiliar[0]);
@@ -294,6 +298,7 @@ public class Main {
 					fixture.get(vatiables[j] + Fecha3[k][i] - 1).setGrupos(arrayauxiliar);
 					fixture.get(vatiables[j] + Fecha3[k][i] - 1).resultado(aux2[k]);
 					LinkedList<Partido> aux4 = fixture.get(vatiables[j] + Fecha2[k][i] - 1).getFutbol();
+					partido2.setEstado(partido(aux2[k]));
 					aux4.add(partido2);
 					fixture.get(vatiables[j] + Fecha3[k][i] - 1).setFutbol(aux4);
 					// System.out.println(arrayauxiliar[0]);
@@ -314,8 +319,8 @@ public class Main {
 	}
 
 	public static String[] crear_menu() {
-		String mensaje_gen[] = { "", "", "","" };
-		String mensaje_gen2[] = { "", "", "", "","" };
+		String mensaje_gen[] = { "", "", "", "" };
+		String mensaje_gen2[] = { "", "", "", "", "" };
 		if (Efuse[0] == false) {
 			mensaje_gen[0] = "ver grupos";
 			mensaje_gen[1] = "jugar fecha 1";
@@ -386,59 +391,59 @@ public class Main {
 			System.out.println(menu_select);
 
 			switch (menu_select) {
-			case "ver grupos":
-				/* mostrar equipos */
-				if (!Efuse[0]) {
-					mostrar_grupo(fixture);
-				} else {
-					/* posiciones */
-					pocicionamiento(fixture);
-					mostrar_grupopos(fixture);
-				}
+				case "ver grupos":
+					/* mostrar equipos */
+					if (!Efuse[0]) {
+						mostrar_grupo(fixture);
+					} else {
+						/* posiciones */
+						pocicionamiento(fixture);
+						mostrar_grupopos(fixture);
+					}
 
-				break;
-			case "jugar fecha 1":
-				/* fecha 1 */
-				fecha1(fixture);
-				break;
-			case "jugar fecha 2":
-				/* fecha 2 */
-				fecha2(fixture);
-				break;
-			case "jugar fecha 3":
-				/* fecha 3 */
-				fecha3(fixture);
-				break;
-			case "ver eliminarorias":
-				pocicionamiento(fixture);
-				submenu(fixture);
-				//System.out.println("boton funciona");
-				// verpartido8eliminatorias(fixture);
-				break;
-			case "octavos de final":
-				pocicionamiento(fixture);
-				pocicionamiento_eliminatorias8(fixture);
-				fecha4(fixture);
-				break;
-			case "cartos de final":
-				fecha5(fixture);
-				break;
-			case "semifinal":
-				fecha7(fixture);
-				break;
-			case "final y por el 3er puesto":
-				fecha8(fixture);
-				break;
-			case "apuesta":
-				if (Efuse[2]) {
-				pocicionamiento(fixture);
-				pocicionamiento_eliminatorias8(fixture);
-				}
-				apuesta(fixture);
-				break;
-			default:
-				/* salir */
-				break;
+					break;
+				case "jugar fecha 1":
+					/* fecha 1 */
+					fecha1(fixture);
+					break;
+				case "jugar fecha 2":
+					/* fecha 2 */
+					fecha2(fixture);
+					break;
+				case "jugar fecha 3":
+					/* fecha 3 */
+					fecha3(fixture);
+					break;
+				case "ver eliminarorias":
+					pocicionamiento(fixture);
+					submenu(fixture);
+					// System.out.println("boton funciona");
+					// verpartido8eliminatorias(fixture);
+					break;
+				case "octavos de final":
+					pocicionamiento(fixture);
+					pocicionamiento_eliminatorias8(fixture);
+					fecha4(fixture);
+					break;
+				case "cartos de final":
+					fecha5(fixture);
+					break;
+				case "semifinal":
+					fecha7(fixture);
+					break;
+				case "final y por el 3er puesto":
+					fecha8(fixture);
+					break;
+				case "apuesta":
+					if (Efuse[2]) {
+						pocicionamiento(fixture);
+						pocicionamiento_eliminatorias8(fixture);
+					}
+					apuesta(fixture);
+					break;
+				default:
+					/* salir */
+					break;
 			}
 		} while (!menu_select.equalsIgnoreCase("salir"));
 	}
@@ -457,41 +462,41 @@ public class Main {
 		do {
 			subcontador = 0;
 			switch (contador) {
-			case 0:
-				min = 0;
-				max = 3;
-				break;
-			case 1:
-				min = 4;
-				max = 7;
-				break;
-			case 2:
-				min = 8;
-				max = 11;
-				break;
-			case 3:
-				min = 12;
-				max = 15;
-				break;
-			case 4:
-				min = 16;
-				max = 19;
-				break;
-			case 5:
-				min = 20;
-				max = 23;
-				break;
-			case 6:
-				min = 24;
-				max = 27;
-				break;
-			case 7:
-				min = 28;
-				max = 31;
-				break;
-			default:
+				case 0:
+					min = 0;
+					max = 3;
+					break;
+				case 1:
+					min = 4;
+					max = 7;
+					break;
+				case 2:
+					min = 8;
+					max = 11;
+					break;
+				case 3:
+					min = 12;
+					max = 15;
+					break;
+				case 4:
+					min = 16;
+					max = 19;
+					break;
+				case 5:
+					min = 20;
+					max = 23;
+					break;
+				case 6:
+					min = 24;
+					max = 27;
+					break;
+				case 7:
+					min = 28;
+					max = 31;
+					break;
+				default:
 
-				break;
+					break;
 			}
 			// System.out.println(min +" " + max);
 			if (contador != 8) {
@@ -594,41 +599,41 @@ public class Main {
 			seleccion = (String) JOptionPane.showInputDialog(null, "seleccione 1 grupo", "seleccion de grupo",
 					JOptionPane.QUESTION_MESSAGE, null, grupos, seleccion);
 			switch (seleccion) {
-			case "grupo A":
-				min = 0;
-				max = 3;
-				break;
-			case "grupo B":
-				min = 4;
-				max = 7;
-				break;
-			case "grupo C":
-				min = 8;
-				max = 11;
-				break;
-			case "grupo D":
-				min = 12;
-				max = 15;
-				break;
-			case "grupo E":
-				min = 16;
-				max = 19;
-				break;
-			case "grupo F":
-				min = 20;
-				max = 23;
-				break;
-			case "grupo G":
-				min = 24;
-				max = 27;
-				break;
-			case "grupo H":
-				min = 28;
-				max = 31;
-				break;
-			default:
-				comprobar = false;
-				break;
+				case "grupo A":
+					min = 0;
+					max = 3;
+					break;
+				case "grupo B":
+					min = 4;
+					max = 7;
+					break;
+				case "grupo C":
+					min = 8;
+					max = 11;
+					break;
+				case "grupo D":
+					min = 12;
+					max = 15;
+					break;
+				case "grupo E":
+					min = 16;
+					max = 19;
+					break;
+				case "grupo F":
+					min = 20;
+					max = 23;
+					break;
+				case "grupo G":
+					min = 24;
+					max = 27;
+					break;
+				case "grupo H":
+					min = 28;
+					max = 31;
+					break;
+				default:
+					comprobar = false;
+					break;
 			}
 
 			if (comprobar) {
@@ -695,19 +700,19 @@ public class Main {
 				JOptionPane.QUESTION_MESSAGE, null, submenu, "Seleccione");
 
 		switch (partidoelim) {
-		case "octavos de final":
-			pocicionamiento_eliminatorias8(fixture);
-			pocicionamiento_eliminatorias8p(fixture);
-			break;
-		case "cuartos de final":
-			pocicionamiento_eliminatorias4(fixture);
-			break;
-		case "semifinal":
-			pocicionamiento_eliminatorias2(fixture);
-			break;
-		case "final":
-			pocicionamiento_eliminatorias(fixture);
-			break;
+			case "octavos de final":
+				pocicionamiento_eliminatorias8(fixture);
+				pocicionamiento_eliminatorias8p(fixture);
+				break;
+			case "cuartos de final":
+				pocicionamiento_eliminatorias4(fixture);
+				break;
+			case "semifinal":
+				pocicionamiento_eliminatorias2(fixture);
+				break;
+			case "final":
+				pocicionamiento_eliminatorias(fixture);
+				break;
 		}
 		return fixture;
 	}
@@ -837,7 +842,9 @@ public class Main {
 				// arrayauxiliar = ;
 				LinkedList<Partido> aux4 = fixture.get(eliminatorias8[i * 2]).getFutbol();
 				LinkedList<Partido> aux5 = fixture.get(eliminatorias8[(i * 2) + 1]).getFutbol();
+				partido3.setEstado(partido(aux2[0]));
 				aux4.add(partido3);
+				partido3.setEstado(partido(aux2[1]));
 				aux5.add(partido3);
 				fixture.get(eliminatorias8[i * 2]).setFutbol(aux4);
 				fixture.get(eliminatorias8[(i * 2) + 1]).setFutbol(aux5);
@@ -884,7 +891,9 @@ public class Main {
 				// arrayauxiliar = ;
 				LinkedList<Partido> aux4 = fixture.get(eliminatorias4[i * 2]).getFutbol();
 				LinkedList<Partido> aux5 = fixture.get(eliminatorias4[(i * 2) + 1]).getFutbol();
+				partido4.setEstado(partido(aux2[0]));
 				aux4.add(partido4);
+				partido4.setEstado(partido(aux2[1]));
 				aux5.add(partido4);
 				fixture.get(eliminatorias4[i * 2]).setFutbol(aux4);
 				fixture.get(eliminatorias4[(i * 2) + 1]).setFutbol(aux5);
@@ -976,7 +985,9 @@ public class Main {
 			// arrayauxiliar = ;
 			LinkedList<Partido> aux4 = fixture.get(eliminatorias2[i * 2]).getFutbol();
 			LinkedList<Partido> aux5 = fixture.get(eliminatorias2[(i * 2) + 1]).getFutbol();
+			partido4.setEstado(partido(aux2[0]));
 			aux4.add(partido4);
+			partido4.setEstado(partido(aux2[1]));
 			aux5.add(partido4);
 			fixture.get(eliminatorias2[i * 2]).setFutbol(aux4);
 			fixture.get(eliminatorias2[(i * 2) + 1]).setFutbol(aux5);
@@ -1030,7 +1041,9 @@ public class Main {
 			// arrayauxiliar = ;
 			LinkedList<Partido> aux4 = fixture.get(eliminatorias1[i * 2]).getFutbol();
 			LinkedList<Partido> aux5 = fixture.get(eliminatorias1[(i * 2) + 1]).getFutbol();
+			partido4.setEstado(partido(aux2[0]));
 			aux4.add(partido4);
+			partido4.setEstado(partido(aux2[1]));
 			aux5.add(partido4);
 			fixture.get(eliminatorias1[i * 2]).setFutbol(aux4);
 			fixture.get(eliminatorias1[(i * 2) + 1]).setFutbol(aux5);
@@ -1083,7 +1096,9 @@ public class Main {
 		// arrayauxiliar = ;
 		LinkedList<Partido> aux4 = fixture.get(eliminatorias[0]).getFutbol();
 		LinkedList<Partido> aux5 = fixture.get(eliminatorias[1]).getFutbol();
+		partido4.setEstado(partido(aux2[0]));
 		aux4.add(partido4);
+		partido4.setEstado(partido(aux2[1]));
 		aux5.add(partido4);
 		fixture.get(eliminatorias[0]).setFutbol(aux4);
 		fixture.get(eliminatorias[1]).setFutbol(aux5);
@@ -1104,73 +1119,66 @@ public class Main {
 
 	static Boolean apostar = false;
 
-
 	public static void apuesta(LinkedList<Equipo> fixture) {
 		String posibilidades[] = { "gana", "pierde", "empata" };
-		int equipos_cant=0;
-		if (!Efuse[0]||!Efuse[1]||!Efuse[2]) {
-			equipos_cant=fixture.size();
-		}else if(!Efuse[3]&&Efuse[2]){
-			equipos_cant=eliminatorias8.length;
-		}else if(!Efuse[4]&&Efuse[3]){
-			equipos_cant=eliminatorias4.length;
-		}else if(!Efuse[5]&&Efuse[4]){
-			equipos_cant=eliminatorias2.length;
-		}else{
-			equipos_cant=eliminatorias2.length;
+		int equipos_cant = 0;
+		if (!Efuse[0] || !Efuse[1] || !Efuse[2]) {
+			equipos_cant = fixture.size();
+		} else if (!Efuse[3] && Efuse[2]) {
+			equipos_cant = eliminatorias8.length;
+		} else if (!Efuse[4] && Efuse[3]) {
+			equipos_cant = eliminatorias4.length;
+		} else if (!Efuse[5] && Efuse[4]) {
+			equipos_cant = eliminatorias2.length;
+		} else {
+			equipos_cant = eliminatorias2.length;
 		}
-
-
-
-
 
 		String equipos[] = new String[equipos_cant];
 		apostar = false;
-		if(!Efuse[0]||!Efuse[1]||!Efuse[2]){
-		for (int i = 0; i < equipos.length; i++) {
-			equipos[i] = fixture.get(i).getNombre() ;
+		if (!Efuse[0] || !Efuse[1] || !Efuse[2]) {
+			for (int i = 0; i < equipos.length; i++) {
+				equipos[i] = fixture.get(i).getNombre();
 			}
-		 }
-			
-		if (!Efuse[3]&&Efuse[2]) {
-				for(int j = 0; j < eliminatorias8.length; j++){
-				equipos[j] =  fixture.get(eliminatorias8[j]).getNombre() ;
+		}
+
+		if (!Efuse[3] && Efuse[2]) {
+			for (int j = 0; j < eliminatorias8.length; j++) {
+				equipos[j] = fixture.get(eliminatorias8[j]).getNombre();
 				System.err.println(eliminatorias8[j]);
 			}
+		}
+		if (!Efuse[4] && Efuse[3]) {
+			for (int j = 0; j < eliminatorias4.length; j++) {
+				equipos[j] = fixture.get(eliminatorias4[j]).getNombre();
 			}
-			if(!Efuse[4]&&Efuse[3]){
-			for(int j = 0; j < eliminatorias4.length; j++){
-				equipos[j] =  fixture.get( eliminatorias4[j]).getNombre() ;
-			}
-			}
-			
-			if(!Efuse[5]&&Efuse[4]){
-				for(int j = 0; j < eliminatorias2.length; j++){ 
-				equipos[j] =  fixture.get(eliminatorias2[j]).getNombre() ;
-				}
-				for(int j = 0; j < eliminatorias.length; j++){
-				if (Efuse[5]) {
-				equipos[j+2] =  fixture.get(eliminatorias[j]).getNombre() ;
-				}
-			}
-			}
+		}
 
-		
+		if (!Efuse[5] && Efuse[4]) {
+			for (int j = 0; j < eliminatorias2.length; j++) {
+				equipos[j] = fixture.get(eliminatorias2[j]).getNombre();
+			}
+			for (int j = 0; j < eliminatorias.length; j++) {
+				if (Efuse[5]) {
+					equipos[j + 2] = fixture.get(eliminatorias[j]).getNombre();
+				}
+			}
+		}
+
 		JOptionPane.showMessageDialog(null, "elige 1 seleccion y predice el resultado");
 		JFrame frame = new JFrame();
 		String opcion_elegida = (String) JOptionPane.showInputDialog(frame, "elije 1 seleccion",
 				" predice el resultado", JOptionPane.QUESTION_MESSAGE, null, equipos, 2);
 		System.err.println(opcion_elegida);
 		// JOptionPane.showInputDialog();
-		//JOptionPane.showMessageDialog(null, "elije el resultado");
-		int id_equipo=0;
+		// JOptionPane.showMessageDialog(null, "elije el resultado");
+		int id_equipo = 0;
 		for (int i = 0; i < equipos.length; i++) {
 			if (opcion_elegida.equals(fixture.get(i).getNombre())) {
-				id_equipo=fixture.get(i).getId();
+				id_equipo = fixture.get(i).getId();
 			}
 		}
 
-		
 		// fecha 1
 		int valor = 0;
 		if (!Efuse[0]) {
@@ -1185,53 +1193,132 @@ public class Main {
 
 		opciones_equipo = opciones_apuesta(fixture, equipos, opcion_elegida, valor);
 
-		String	Menuop=opciones_equipo[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones_equipo, opciones_equipo[0])];
-		
-		System.err.println(Menuop);
+		String Menuop = opciones_equipo[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones_equipo, opciones_equipo[0])];
 
+		System.err.println(Menuop);
+		int resultado_prediccion;
+		int[] auxiliar_equipos;
 		if (apostar) {
 			switch (Menuop) {
 				case "octavos":
-					JOptionPane.showMessageDialog(null, "octavos", "octavos", JOptionPane.DEFAULT_OPTION);
+					// JOptionPane.showMessageDialog(null, "octavos", "octavos",
+					// JOptionPane.DEFAULT_OPTION);
+					resultado_prediccion = prediccion(
+							posibilidades[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",
+									JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])]);
+					auxiliar_equipos = fixture.get(id_equipo).getApuesta();
+					if (auxiliar_equipos[3] != 0) {
+						JOptionPane.showMessageDialog(null, "prediccion cambiada");
+					}
+					auxiliar_equipos[3] = resultado_prediccion;
+					System.err.println(resultado_prediccion);
+					fixture.get(id_equipo).setApuesta(auxiliar_equipos);
 					break;
 				case "cuartos":
-				JOptionPane.showMessageDialog(null, "cuartos", "cuartos", JOptionPane.DEFAULT_OPTION);
+					// JOptionPane.showMessageDialog(null, "cuartos", "cuartos",
+					// JOptionPane.DEFAULT_OPTION);
+					resultado_prediccion = prediccion(
+							posibilidades[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",
+									JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])]);
+					auxiliar_equipos = fixture.get(id_equipo).getApuesta();
+					if (auxiliar_equipos[4] != 0) {
+						JOptionPane.showMessageDialog(null, "prediccion cambiada");
+					}
+					auxiliar_equipos[4] = resultado_prediccion;
+					System.err.println(resultado_prediccion);
+					fixture.get(id_equipo).setApuesta(auxiliar_equipos);
 					break;
 				case "semi":
-				JOptionPane.showMessageDialog(null, "semi", "semi", JOptionPane.DEFAULT_OPTION);
+					// JOptionPane.showMessageDialog(null, "semi", "semi",
+					// JOptionPane.DEFAULT_OPTION);
+					resultado_prediccion = prediccion(
+							posibilidades[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",
+									JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])]);
+					auxiliar_equipos = fixture.get(id_equipo).getApuesta();
+					if (auxiliar_equipos[5] != 0) {
+						JOptionPane.showMessageDialog(null, "prediccion cambiada");
+					}
+					auxiliar_equipos[5] = resultado_prediccion;
+					System.err.println(resultado_prediccion);
+					fixture.get(id_equipo).setApuesta(auxiliar_equipos);
+
 					break;
 				case "final":
-				JOptionPane.showMessageDialog(null, "final", "final", JOptionPane.DEFAULT_OPTION);
+					// JOptionPane.showMessageDialog(null, "final", "final",
+					// JOptionPane.DEFAULT_OPTION);
+					resultado_prediccion = prediccion(
+							posibilidades[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",
+									JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])]);
+					auxiliar_equipos = fixture.get(id_equipo).getApuesta();
+					if (auxiliar_equipos[6] != 0) {
+						JOptionPane.showMessageDialog(null, "prediccion cambiada");
+					}
+					auxiliar_equipos[6] = resultado_prediccion;
+					System.err.println(resultado_prediccion);
+					fixture.get(id_equipo).setApuesta(auxiliar_equipos);
 					break;
 			}
-		}else{
+		} else {
 			switch (Menuop) {
 				case "fecha 1":
-					//JOptionPane.showMessageDialog(null, "fecha 1", "fecha 1", JOptionPane.DEFAULT_OPTION);
-					int resultado_prediccion = prediccion(posibilidades[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])]);
-					int auxiliar_equipos[]=fixture.get(id_equipo).getApuesta();
-					auxiliar_equipos[0]=resultado_prediccion;
+					// JOptionPane.showMessageDialog(null, "fecha 1", "fecha 1",
+					// JOptionPane.DEFAULT_OPTION);
+					resultado_prediccion = prediccion(
+							posibilidades[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",
+									JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])]);
+					auxiliar_equipos = fixture.get(id_equipo).getApuesta();
+					if (auxiliar_equipos[0] != 0) {
+						JOptionPane.showMessageDialog(null, "prediccion cambiada");
+					}
+					auxiliar_equipos[0] = resultado_prediccion;
 					System.err.println(resultado_prediccion);
 					fixture.get(id_equipo).setApuesta(auxiliar_equipos);
 					break;
 				case "fecha 2":
-				JOptionPane.showMessageDialog(null, "fecha 2", "fecha 2", JOptionPane.DEFAULT_OPTION);
+					// JOptionPane.showMessageDialog(null, "fecha 2", "fecha 2",
+					// JOptionPane.DEFAULT_OPTION);
+					resultado_prediccion = prediccion(
+							posibilidades[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",
+									JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])]);
+					auxiliar_equipos = fixture.get(id_equipo).getApuesta();
+					if (auxiliar_equipos[1] != 0) {
+						JOptionPane.showMessageDialog(null, "prediccion cambiada");
+					}
+					auxiliar_equipos[1] = resultado_prediccion;
+					System.err.println(resultado_prediccion);
+					fixture.get(id_equipo).setApuesta(auxiliar_equipos);
 					break;
 				case "fecha 3":
-				JOptionPane.showMessageDialog(null, "fecha 3", "fecha 3", JOptionPane.DEFAULT_OPTION);
+					// JOptionPane.showMessageDialog(null, "fecha 3", "fecha 3",
+					// JOptionPane.DEFAULT_OPTION);
+					resultado_prediccion = prediccion(
+							posibilidades[JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Menu principal",
+									JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Menu, Menu[0])]);
+					auxiliar_equipos = fixture.get(id_equipo).getApuesta();
+					if (auxiliar_equipos[2] != 0) {
+						JOptionPane.showMessageDialog(null, "prediccion cambiada");
+					}
+					auxiliar_equipos[2] = resultado_prediccion;
+					System.err.println(resultado_prediccion);
+					fixture.get(id_equipo).setApuesta(auxiliar_equipos);
 					break;
 			}
+		}
+
+		if (Menuop.equals("puntos")) {
+			JOptionPane.showMessageDialog(null,"la cantidad de puntos es: "+ puntos(fixture));
 		}
 
 	}
 
 	public static String[] opciones_apuesta(LinkedList<Equipo> fixture, String[] equipos, String opcion_elegida,
 			int valor) {
-				
+
 		int equipo_seleccionado = 0;
-		String opciones_equipo[] = new String[valor];
+		String opciones_equipo[] = new String[valor+1];
 		// String[] opciones_equipos = null;
-		
+
 		for (int i = 0; i < fixture.size(); i++) {
 			if (fixture.get(i).getNombre().equals(opcion_elegida)) {
 				equipo_seleccionado = fixture.get(i).getId();
@@ -1243,18 +1330,21 @@ public class Main {
 			opciones_equipo[0] = "fecha 1";
 			opciones_equipo[1] = "fecha 2";
 			opciones_equipo[2] = "fecha 3";
-			opciones_equipo[3] = "salir";
+			opciones_equipo[3] = "puntos" ;
+			opciones_equipo[4] = "salir";
 		}
 		// fecha 2
-		if (!Efuse[1]&&Efuse[0]) {
+		if (!Efuse[1] && Efuse[0]) {
 			opciones_equipo[0] = "fecha 2";
 			opciones_equipo[1] = "fecha 3";
-			opciones_equipo[2] = "salir";
+			opciones_equipo[2] = "puntos";
+			opciones_equipo[3] = "salir";
 		}
 		// fecha 3
-		if (!Efuse[2]&&Efuse[1]) {
+		if (!Efuse[2] && Efuse[1]) {
 			opciones_equipo[0] = "fecha 3";
-			opciones_equipo[1] = "salir";
+			opciones_equipo[2] = "salir";
+			opciones_equipo[1] = "puntos";
 		}
 		// octavos
 		if (!Efuse[3] && Efuse[2]) {
@@ -1265,9 +1355,12 @@ public class Main {
 			}
 			if (apostar) {
 				opciones_equipo[0] = "octavos";
-				opciones_equipo[1] = "salir";
+				opciones_equipo[2] = "salir";
+				opciones_equipo[1] = "puntos";
 			} else {
 				JOptionPane.showMessageDialog(null, "este equipo no esta en octavos de final");
+				opciones_equipo[1] = "puntos";
+				opciones_equipo[2] = "salir";
 			}
 
 		}
@@ -1281,9 +1374,12 @@ public class Main {
 
 			if (apostar) {
 				opciones_equipo[0] = "cuartos";
-				opciones_equipo[1] = "salir";
+				opciones_equipo[1] = "puntos";
+				opciones_equipo[2] = "salir";
 			} else {
 				JOptionPane.showMessageDialog(null, "este equipo no esta en cuartos de final");
+				opciones_equipo[1] = "puntos";
+				opciones_equipo[2] = "salir";
 			}
 
 		}
@@ -1297,9 +1393,12 @@ public class Main {
 
 			if (apostar) {
 				opciones_equipo[0] = "semi";
-				opciones_equipo[1] = "salir";
+				opciones_equipo[1] = "puntos";
+				opciones_equipo[2] = "salir";
 			} else {
 				JOptionPane.showMessageDialog(null, "este equipo no esta en semifinal");
+				opciones_equipo[1] = "puntos";
+				opciones_equipo[2] = "salir";
 			}
 
 		}
@@ -1317,34 +1416,60 @@ public class Main {
 
 			if (apostar) {
 				opciones_equipo[0] = "final";
-				opciones_equipo[1] = "salir";
+				opciones_equipo[1] = "puntos";
+				opciones_equipo[2] = "salir";
 			} else {
 				JOptionPane.showMessageDialog(null, "este equipo no esta en la final o el tercer puesto");
+				opciones_equipo[1] = "puntos";
+				opciones_equipo[2] = "salir";
 			}
 
 		}
 
-
 		return opciones_equipo;
 	}
 
-
 	public static int prediccion(String x) {
-		int z=0; 
+		int z = 0;
 		switch (x) {
 			case "gana":
-			z=1;
+				z = 1;
 				break;
 			case "pierde":
-			z=2;
+				z = 2;
 				break;
 			case "empata":
-			z=3;
+				z = 3;
 				break;
 		}
 
 		return z;
 	}
 
+	public static int puntos(LinkedList<Equipo> fixture) {
+		int puntos = 0;
+		for (int i = 0; i < fixture.size(); i++) {
+			int aux12[] = fixture.get(i).getApuesta();
+			int respuesta;
+			int lineas = fixture.get(i).getFutbol().size();
+			if (lineas == null) {
+				lineas=0;
+			}
+			for (int j = 0; j < lineas; j++) {
+				if (aux12[j]!=0) {
+				respuesta=prediccion(fixture.get(i).getFutbol().get(j).getEstado());
+				if (respuesta==aux12[j]) {
+					if (j<=3) {
+						puntos+=3;
+					}else{
+						puntos++;
+					}
+					
+				}	
+			}
+		}
+	}
+	return puntos;
+}
 
 }
