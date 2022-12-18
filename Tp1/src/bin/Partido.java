@@ -1,10 +1,10 @@
 package bin;
 
 public class Partido {
-	private String equipo_1,equipo_2,estado;
-	private int goles_1,goles_2,ID,p1,p2;
+	private String equipo_1,equipo_2;
+	private int goles_1,goles_2,ID,p1,p2,estado;
 	
-	public Partido(String equipo_1, String equipo_2, String estado, int goles_1, int goles_2, int iD) {
+	public Partido(String equipo_1, String equipo_2, int estado, int goles_1, int goles_2, int iD) {
 		this.equipo_1 = equipo_1;
 		this.equipo_2 = equipo_2;
 		this.estado = estado;
@@ -24,11 +24,11 @@ public class Partido {
 	public void setEquipo_2(String equipo_2) {
 		this.equipo_2 = equipo_2;
 	}
-	public String getEstado() {
+	public int getEstado() {
 		return estado;
 	}
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setEstado(int aux2) {
+		this.estado = aux2;
 	}
 	public int getGoles_1() {
 		return goles_1;

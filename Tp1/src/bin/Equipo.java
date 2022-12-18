@@ -8,18 +8,24 @@ public class Equipo {
 	private int goles,puntos,grupo,id;
 	// 0 - no jugado 1- ganado - 2 perdido 3- empate
 	private int grupos[] = new int [3];
-	private int apuesta[]= new int [7];
+	private int apuesta,apuesta1,apuesta2,apuesta3,apuesta4,apuesta5,apuesta6;
 	private boolean clasificado;
 	private LinkedList<Partido> futbol = new LinkedList<Partido>();
 
-	public Equipo(String nombre, int goles, int[] grupos,int[] apuesta, boolean clasificado,
+	public Equipo(String nombre, int goles, int[] grupos, boolean clasificado,
 			LinkedList<Partido> futbol,int id) {
 		Nombre = nombre;
 		this.goles = goles;
 		this.puntos = 0;
 		this.grupos = grupos;
 		this.grupo=0;
-		this.apuesta=apuesta;
+		this.apuesta=0;
+		this.apuesta1=0;
+		this.apuesta2=0;
+		this.apuesta3=0;
+		this.apuesta4=0;
+		this.apuesta5=0;
+		this.apuesta6=0;
 		this.clasificado = clasificado;
 		this.futbol = futbol;
 		this.id=id;
@@ -133,13 +139,64 @@ public class Equipo {
 		this.grupo = grupo;
 	}
 
-	public int[] getApuesta() {
+	
+	
+	public int getApuesta() {
 		return apuesta;
 	}
 
-	public void setApuesta(int apuesta[]) {
+	public void setApuesta(int apuesta) {
 		this.apuesta = apuesta;
 	}
+
+	public int getApuesta1() {
+		return apuesta1;
+	}
+
+	public void setApuesta1(int apuesta1) {
+		this.apuesta1 = apuesta1;
+	}
+
+	public int getApuesta2() {
+		return apuesta2;
+	}
+
+	public void setApuesta2(int apuesta2) {
+		this.apuesta2 = apuesta2;
+	}
+
+	public int getApuesta3() {
+		return apuesta3;
+	}
+
+	public void setApuesta3(int apuesta3) {
+		this.apuesta3 = apuesta3;
+	}
+
+	public int getApuesta4() {
+		return apuesta4;
+	}
+
+	public void setApuesta4(int apuesta4) {
+		this.apuesta4 = apuesta4;
+	}
+
+	public int getApuesta5() {
+		return apuesta5;
+	}
+
+	public void setApuesta5(int apuesta5) {
+		this.apuesta5 = apuesta5;
+	}
+
+	public int getApuesta6() {
+		return apuesta6;
+	}
+
+	public void setApuesta6(int apuesta6) {
+		this.apuesta6 = apuesta6;
+	}
+
 	
 	@Override
 	public String toString() {
